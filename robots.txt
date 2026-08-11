@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://syamchand123.github.io/GlassMarbleWebsite/sitemap.xml

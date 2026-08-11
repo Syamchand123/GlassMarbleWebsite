@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="8" fill="#1a1a1a"/>
+  <text x="16" y="21"
+        font-family="-apple-system, Inter, sans-serif"
+        font-size="14"
+        font-weight="400"
+        fill="#f6f6f6"
+        text-anchor="middle">GM</text>
+</svg>

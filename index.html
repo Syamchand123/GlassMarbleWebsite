@@ -1,0 +1,1872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>GlassMarble — AI Architecture Intelligence for Developers</title>
+  <meta name="description" content="GlassMarble is a free, open-source CLI that builds a living Architecture Knowledge Graph from your codebase. 31 diagram types, hotspot detection, and a grounded AI architect. 14 languages. No backend.">
+  <meta name="robots" content="index, follow">
+  <!-- TODO: replace with the live GitHub Pages URL before launch -->
+  <link rel="canonical" href="https://syamchand123.github.io/GlassMarbleWebsite/">
+  <meta name="theme-color" content="#f6f6f6">
+  <link rel="icon" type="image/png" href="assets/LOGO_PIXEL.png">
+  <link rel="apple-touch-icon" href="assets/LOGO_PIXEL.png">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="GlassMarble — Your codebase, understood.">
+  <meta property="og:description" content="Free CLI. 14 languages. 31 architecture diagrams. Grounded AI architect. No backend required. Open source under MIT.">
+  <meta property="og:url" content="https://syamchand123.github.io/GlassMarbleWebsite/">
+  <meta property="og:site_name" content="GlassMarble">
+  <meta name="twitter:card" content="summary">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+/* ═══════════════════════════════════════
+   RESET
+═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; border: 0; margin: 0; padding: 0; }
+html { scrollbar-width: none; }
+::-webkit-scrollbar { display: none; }
+
+/* ═══════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════ */
+:root {
+  --bg:     #f6f6f6;
+  --black:  #1a1a1a;
+  --grey:   #9f9f9f;
+  --white:  #ffffff;
+  --border: #e4e4e4;
+  --h1-size: 3.2rem;
+  --h2-size: 2.4rem;
+  --ease-spring: cubic-bezier(0.075, 0.82, 0.165, 1);
+  --ease-out:    cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* ═══════════════════════════════════════
+   ROOT
+═══════════════════════════════════════ */
+html {
+  font-size: 0.694445vw; /* ~10px @ 1440px */
+  font-family: 'Inter', -apple-system, 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background: var(--bg);
+  color: var(--black);
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  overflow-x: hidden;
+  line-height: 1;
+  min-height: 100vh;
+}
+
+a  { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+button { font: inherit; cursor: pointer; background: none; color: inherit; }
+img, svg, canvas { display: block; vertical-align: middle; }
+h1, h2, h3 { font-weight: 400; }
+a:focus-visible, button:focus-visible, input:focus-visible {
+  outline: 2px solid var(--black);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ═══════════════════════════════════════
+   TOP/BOTTOM EDGE FADES
+═══════════════════════════════════════ */
+#edge-fade {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 200;
+}
+#edge-fade::before, #edge-fade::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 3rem;
+}
+#edge-fade::before { top: 0;    background: linear-gradient(to bottom, var(--bg), transparent); }
+#edge-fade::after  { bottom: 0; background: linear-gradient(to top,   var(--bg), transparent); }
+
+/* ═══════════════════════════════════════
+   SITE LOGO — fixed top-left, all pages
+═══════════════════════════════════════ */
+.site-logo {
+  position: fixed;
+  top: 3.5rem;
+  left: 3.5rem;
+  z-index: 210;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 1.2rem;
+  overflow: hidden;
+  box-shadow: 0 0.4rem 1.6rem rgba(0, 0, 0, 0.14);
+  transition: transform 0.3s var(--ease-spring), box-shadow 0.3s var(--ease-out);
+}
+.site-logo:hover {
+  transform: translateY(-0.2rem);
+  box-shadow: 0 0.8rem 2.4rem rgba(0, 0, 0, 0.18);
+}
+.site-logo:focus-visible {
+  outline: 2px solid var(--black);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.site-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ═══════════════════════════════════════
+   SOCIAL BUTTON — pill
+═══════════════════════════════════════ */
+.social-button {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  height: 5.4rem;
+  min-width: 5.4rem;
+  padding-inline: 2rem;
+  border-radius: 15.5417px;
+  background: var(--white);
+  cursor: pointer;
+  position: relative;
+  pointer-events: auto;
+  transition:
+    scale       0.3s cubic-bezier(0.075, 0.82, 0.165, 1),
+    background  0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86),
+    color       0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  will-change: transform;
+  white-space: nowrap;
+  gap: 1rem;
+}
+.social-button:hover { scale: 1.037; }
+.social-button:active { scale: 0.97; }
+.social-button--icon { padding-inline: 0; width: 5.4rem; }
+.social-button--dark { background: var(--black); color: var(--white); }
+.social-button--dark:hover { background: #333; }
+.social-button:disabled { opacity: 0.55; pointer-events: none; }
+
+/* ═══════════════════════════════════════
+   WAITLIST FORM
+═══════════════════════════════════════ */
+.waitlist-form {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.waitlist-input {
+  height: 5.4rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 15.5417px;
+  padding: 0 1.6rem;
+  font-family: inherit;
+  font-size: 1.4rem;
+  color: var(--black);
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  width: 12rem;
+}
+.waitlist-input[type="email"] { width: 18rem; }
+.waitlist-input::placeholder { color: var(--grey); }
+.waitlist-input:focus {
+  border-color: var(--black);
+  box-shadow: 0 0 0 1px var(--black);
+}
+.submit-btn { padding: 0 2.4rem; width: auto; }
+.waitlist-status {
+  min-height: 1.6rem;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: var(--grey);
+  margin-top: 1rem;
+}
+.waitlist-status.ok  { color: #2f7d43; }
+.waitlist-status.err { color: #b3382c; }
+
+/* ═══════════════════════════════════════
+   HOME VIEW — fixed left identity panel
+═══════════════════════════════════════ */
+.home-left {
+  position: fixed;
+  top: 0;
+  left: 25.7rem;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 5rem;
+  z-index: 50;
+  pointer-events: none;
+  transition: opacity 0.45s var(--ease-out), transform 0.45s var(--ease-spring);
+}
+.home-left.hidden {
+  opacity: 0;
+  transform: translateX(-5.7rem);
+  pointer-events: none !important;
+}
+
+.identity { display: flex; flex-direction: column; gap: 0.2rem; }
+
+.name-wrap, .role-wrap { overflow: hidden; position: relative; width: 40rem; }
+.name-wrap { padding-bottom: 0.4rem; }
+.role-wrap { padding-bottom: 0.8rem; }
+
+h1.site-name {
+  font-size: var(--h1-size);
+  line-height: 1;
+  color: var(--black);
+  animation: slideUp 0.7s 0.05s var(--ease-out) both;
+}
+.site-role {
+  font-size: var(--h1-size);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--grey);
+  animation: slideUp 0.7s 0.13s var(--ease-out) both;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(100%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.home-btns {
+  display: flex;
+  gap: 0.4rem;
+  pointer-events: auto;
+  animation: fadeUp 0.6s 0.28s var(--ease-out) both;
+  clip-path: inset(-6% -100%);
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(1.5rem); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.home-note {
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--grey);
+  animation: fadeUp 0.6s 0.34s var(--ease-out) both;
+  clip-path: inset(-6% -100%);
+}
+
+/* ═══════════════════════════════════════
+   HOME RIGHT — project cards
+═══════════════════════════════════════ */
+#home-cards {
+  position: fixed;
+  top: 50%;
+  right: 25rem;
+  left: auto;
+  transform: translateY(-50%);
+  z-index: 30;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-spring);
+  display: grid;
+}
+#home-cards.hidden {
+  opacity: 0;
+  transform: translateY(-50%) translateX(3rem);
+  pointer-events: none !important;
+}
+
+.home-card {
+  grid-area: 1 / 1;
+  position: relative;
+  width: 33.5rem;
+  height: 34.4rem;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform, opacity, filter;
+  transform-origin: center center;
+}
+
+.hcard-reflection {
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: -5.5rem;
+  height: 3.5rem;
+  background: rgba(0,0,0,0.5);
+  transform: perspective(20rem) rotateX(65deg);
+  filter: blur(1.2rem);
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: -2;
+}
+
+.hcard-ambient-shadow {
+  position: absolute;
+  inset: 0;
+  border-radius: 3rem;
+  box-shadow: 0 2.5rem 6rem rgba(0,0,0,0.08), 0 0.8rem 2rem rgba(0,0,0,0.04);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.hcard-visual {
+  width: 33.5rem;
+  height: 34.4rem;
+  border-radius: 3rem;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: scale 0.4s var(--ease-spring);
+  will-change: transform;
+}
+.hcard-visual:hover { scale: 1.012; }
+.hcard-visual:active { scale: 0.99; }
+.hcard-visual svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.hcard-title {
+  position: absolute;
+  bottom: 3rem;
+  left: 3rem;
+  font-size: var(--h2-size);
+  color: var(--white);
+  mix-blend-mode: exclusion;
+  margin: 0;
+  pointer-events: none;
+}
+
+/* Instant-swap helper — used so the zoomed home card and the detail
+   hero swap without a visible crossfade (they are pixel-identical). */
+.no-fade { transition: none !important; }
+
+/* The detail hero card is the zoomed home card, continued:
+   same size/position at reveal, then scrolls normally with the page. */
+.pcard.pcard-hero { position: static; }
+.pcard-visual { position: relative; }
+.pcard-hero-title {
+  position: absolute;
+  bottom: 6.2rem;
+  left: 6.2rem;
+  font-size: 4.9rem;
+  color: var(--white);
+  mix-blend-mode: exclusion;
+  margin: 0;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════
+   SCROLL SPACER
+═══════════════════════════════════════ */
+#scroll-spacer { pointer-events: none; width: 1px; }
+
+/* ═══════════════════════════════════════
+   SCROLL DOTS + HINT
+═══════════════════════════════════════ */
+.scroll-dots {
+  position: fixed;
+  top: 50%;
+  right: 8rem;
+  left: auto;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  z-index: 50;
+  transition: opacity 0.3s;
+}
+.scroll-dots.hidden { opacity: 0; pointer-events: none; }
+
+.sdot {
+  width: 0.3rem;
+  height: 0.3rem;
+  border-radius: 50%;
+  background: var(--border);
+  cursor: pointer;
+  border: none;
+  transition: background 0.25s, transform 0.25s var(--ease-spring);
+  pointer-events: auto;
+}
+.sdot.active { background: var(--black); transform: scale(1.6); }
+
+.scroll-hint {
+  position: fixed;
+  bottom: 3.2rem;
+  right: 8.1rem;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  opacity: 0;
+  animation: fadeIn 0.5s 1.3s ease forwards;
+  transition: opacity 0.4s ease;
+}
+.scroll-hint.gone { opacity: 0 !important; animation: none; }
+.scroll-hint__line {
+  width: 1px; height: 4rem;
+  background: var(--border);
+  position: relative; overflow: hidden;
+}
+.scroll-hint__line::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--grey);
+  animation: slideDown 1.6s 1.5s ease infinite;
+}
+@keyframes slideDown { 0%{transform:translateY(-100%)} 100%{transform:translateY(100%)} }
+.scroll-hint__text {
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--grey);
+  writing-mode: vertical-rl;
+}
+@keyframes fadeIn { to { opacity: 1; } }
+
+/* ═══════════════════════════════════════
+   PROJECT DETAIL VIEW
+═══════════════════════════════════════ */
+#project-view {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--bg);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease-out);
+  will-change: opacity;
+}
+#project-view.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#back-btn-wrap {
+  position: fixed;
+  top: 50%;
+  left: 65.6rem;
+  margin-top: -30rem;
+  margin-left: -7rem;
+  z-index: 150;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(1rem);
+  transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out);
+}
+#back-btn-wrap.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+
+/* Project left panel */
+#project-left {
+  position: fixed;
+  top: 0;
+  left: 20.0rem;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 5rem;
+  z-index: 120;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(5.7rem);
+  transition: opacity 0.45s var(--ease-out), transform 0.45s var(--ease-spring);
+}
+#project-left.open {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.proj-name {
+  font-size: var(--h1-size);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--black);
+  width: 40rem;
+}
+.proj-sub {
+  font-size: var(--h1-size);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--grey);
+  width: 40rem;
+}
+
+.proj-btns {
+  display: flex;
+  gap: 0.4rem;
+  pointer-events: auto;
+}
+
+/* Right scrollable area */
+#project-scroll {
+  position: fixed;
+  top: 0;
+  right: 7.25rem;
+  width: 69rem;
+  left: auto;
+  height: 100vh;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  z-index: 110;
+}
+#project-scroll::-webkit-scrollbar { display: none; }
+
+.proj-cards {
+  padding-top: 15rem;
+  padding-bottom: 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+}
+
+/* Content cards */
+.pcard {
+  width: 69rem;
+  aspect-ratio: 0.973837 / 1;
+  background: hsl(0, 0%, calc(85% + (var(--card-index, 0) * 5%)));
+  border-radius: 6.4rem;
+  overflow: hidden;
+  box-shadow: 0 -0.5rem 2rem rgba(0,0,0,0.03), 0 2rem 4rem rgba(0,0,0,0.06);
+  opacity: 0;
+  transform: translateY(6rem);
+  transition: opacity 0.55s var(--ease-out), transform 0.6s var(--ease-spring);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: calc(4rem + (var(--card-index, 0) * 2.4rem));
+  transform-origin: center top;
+}
+.pcard.vis {
+  opacity: 1;
+  transform: none;
+}
+
+.pcard-inner {
+  padding: 5.6rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.pcard__num {
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--grey);
+  margin-bottom: 2.4rem;
+}
+
+.pcard__title {
+  font-size: 3.6rem;
+  font-weight: 500;
+  line-height: 1.24;
+  letter-spacing: -0.015em;
+  color: var(--black);
+  margin-bottom: 2.4rem;
+}
+
+.pcard__body {
+  font-size: 1.6rem;
+  line-height: 1.65;
+  color: var(--grey);
+}
+.pcard__body p + p { margin-top: 1.6rem; }
+.pcard__body code {
+  font-family: ui-monospace, monospace;
+  background: rgba(0,0,0,0.05);
+  padding: 0.15em 0.45em;
+  border-radius: 0.4rem;
+  font-size: 0.9em;
+  color: var(--black);
+}
+
+.pcard-visual { width: 100%; height: 100%; }
+.pcard-visual svg { width: 100%; height: 100%; display: block; }
+
+/* Terminal */
+.terminal {
+  background: #111;
+  border-radius: 1.4rem;
+  padding: 2rem 2.4rem;
+  margin-top: auto;
+  width: 100%;
+  overflow: hidden;
+}
+.term-hdr { display: flex; gap: 0.6rem; margin-bottom: 1.6rem; }
+.dot { width: 1rem; height: 1rem; border-radius: 50%; }
+.dr { background: #ff5f56; } .dy { background: #ffbd2e; } .dg { background: #27c93f; }
+.term-body { font-family: ui-monospace, 'SFMono-Regular', monospace; font-size: 1.05rem; line-height: 1.85; }
+.tl { display: block; color: #d4d4d4; }
+.tc { color: #7dd3fc; } .tv { color: #a78bfa; } .ts { color: #86efac; }
+.td { color: #525252; } .tw { color: #fbbf24; }
+.cursor { display: inline-block; width: 0.5em; height: 1.1em; background: #7dd3fc; vertical-align: text-bottom; animation: blink 1s step-end infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* Feature grid */
+.fgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2.4rem; }
+.fi { border: 1px solid var(--border); border-radius: 1.4rem; padding: 2.4rem; background: var(--white); }
+.fi__title { font-size: 1.3rem; font-weight: 500; color: var(--black); margin-bottom: 0.8rem; }
+.fi__desc  { font-size: 1.15rem; line-height: 1.6; color: var(--grey); }
+
+/* Stats */
+.stats { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--border); margin-top: 2.4rem; }
+.stat { padding: 2.8rem 0; border-bottom: 1px solid var(--border); }
+.stat:nth-child(odd)  { border-right: 1px solid var(--border); padding-right: 2.8rem; }
+.stat:nth-child(even) { padding-left: 2.8rem; }
+.stat__n { display: block; font-size: 4.6rem; font-weight: 300; line-height: 1.1; letter-spacing: -0.04em; color: var(--black); }
+.stat__l { display: block; font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey); margin-top: 1rem; }
+
+/* Tags */
+.ptags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2.4rem; }
+.ptag {
+  display: inline-flex; align-items: center;
+  padding: 0.55rem 1.2rem; border-radius: 999px;
+  border: 1px solid var(--border); font-size: 1.05rem;
+  color: var(--grey); background: var(--white);
+}
+
+/* CTA buttons */
+.pcta { display: flex; gap: 1rem; margin-top: 3.2rem; }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.8rem;
+  height: 4.8rem; padding-inline: 2.4rem; border-radius: 999px;
+  font-size: 1.2rem; font-weight: 400; cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s, scale 0.2s var(--ease-spring);
+}
+.btn:active { scale: 0.97; }
+.btn-d { background: var(--black); color: var(--white); }
+.btn-d:hover { background: #333; }
+
+/* ═══════════════════════════════════════
+   COMPACT — ≤1024px (tablet & phone)
+═══════════════════════════════════════ */
+@media (max-width: 1024px) {
+  html { font-size: 0.8vw; }
+
+  .home-left {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 3.2rem;
+    padding: 9rem 6rem 0;
+    background: linear-gradient(to bottom, rgba(246,246,246,0.96) 35%, rgba(246,246,246,0) 95%);
+  }
+  .name-wrap, .role-wrap { width: 100%; }
+
+  #home-cards {
+    top: 66%;
+    right: auto;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  #home-cards.hidden { transform: translate(-50%, -50%) translateX(3rem); }
+
+  .scroll-dots { right: 3rem; }
+  .scroll-hint { right: 3.2rem; }
+
+  .site-logo { top: 2.4rem; left: 2.4rem; width: 4rem; height: 4rem; border-radius: 1rem; }
+  #back-btn-wrap { top: 2.4rem; left: calc(2.4rem + 4rem + 1.4rem); margin: 0; }
+
+  #project-view { overflow-y: auto; }
+
+  #project-left {
+    position: static;
+    width: 100%;
+    height: auto;
+    padding: 10rem 6rem 0;
+    gap: 3.2rem;
+  }
+  #project-left .name-wrap, #project-left .role-wrap { width: 100%; }
+
+  #project-scroll {
+    position: static;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .proj-cards { padding: 0 6rem 8rem; }
+  .pcard { width: 100%; }
+}
+
+/* ═══════════════════════════════════════
+   PHONE — ≤768px
+═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  html { font-size: 2.6667vw; }
+
+  .home-left { padding: 7rem 4rem 0; gap: 2.8rem; }
+  #project-left { padding: 9rem 4rem 0; }
+  .proj-cards { padding: 0 4rem 6rem; gap: 2.4rem; }
+
+  .waitlist-input, .waitlist-input[type="email"] { width: 100%; }
+
+  .scroll-dots { right: 2rem; gap: 0.2rem; }
+  .sdot { width: 1rem; height: 1rem; margin: 0.5rem 0; }
+  .scroll-hint { right: 2.6rem; bottom: 2.4rem; }
+
+  .pcard { border-radius: 3rem; aspect-ratio: auto; min-height: 42rem; }
+  .pcard-inner { padding: 3.2rem; }
+  .pcard__title { font-size: 2.6rem; margin-bottom: 1.8rem; }
+  .pcard__body { font-size: 1.5rem; }
+  .pcard__num { margin-bottom: 1.6rem; }
+  .fgrid { grid-template-columns: 1fr; }
+  .fi { padding: 1.8rem; }
+  .stats { grid-template-columns: 1fr; }
+  .stat:nth-child(odd) { border-right: none; }
+  .stat { padding: 2rem 0; }
+  .stat__n { font-size: 3.6rem; }
+  #home-cards { top: 88%; }
+  .home-card, .hcard-visual { width: 24rem; height: 24.7rem; border-radius: 2.4rem; }
+  .hcard-title { bottom: 2.2rem; left: 2.2rem; font-size: 2rem; }
+}
+
+@media (max-width: 640px) {
+  .waitlist-form { flex-direction: column; align-items: stretch; gap: 1.2rem; }
+}
+
+@media (max-width: 380px) {
+  .home-card, .hcard-visual { width: 20rem; height: 20.6rem; border-radius: 2rem; }
+  .hcard-title { font-size: 1.6rem; }
+  #home-cards { top: 88%; }
+  .home-left { padding: 4rem 2.4rem 0; }
+  .proj-cards { padding-inline: 2.4rem; }
+  #project-left { padding: 8rem 2.4rem 0; }
+}
+
+/* ═══════════════════════════════════════
+   REDUCED MOTION
+═══════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .scroll-hint__line::after { animation: none; }
+  .cursor { animation: none; }
+  h1.site-name, .site-role, .home-btns, .home-note { animation-duration: 0.01s; }
+}
+  </style>
+</head>
+<body>
+
+<a class="site-logo" href="#/" aria-label="GlassMarble — back to home">
+  <img src="assets/LOGO_PIXEL.png" alt="GlassMarble">
+</a>
+
+<div id="edge-fade" aria-hidden="true"></div>
+
+<!-- SR nav -->
+<nav aria-label="Site" style="position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden;">
+  <ul id="sr-nav"></ul>
+</nav>
+
+<noscript>
+  <div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#f6f6f6;z-index:999;font-family:Inter,sans-serif;padding:4rem;text-align:center;">
+    <div>
+      <h1 style="font-size:2.4rem;font-weight:400;margin-bottom:1.2rem;">GlassMarble</h1>
+      <p style="color:#9f9f9f;font-size:1.4rem;line-height:1.6;">AI Architecture Intelligence — this site needs JavaScript for the interactive tour.<br>
+      To join the waitlist, email <a href="mailto:hello@glassmarble.dev" style="text-decoration:underline;">hello@glassmarble.dev</a>.</p>
+    </div>
+  </div>
+</noscript>
+
+<!-- ════════════════════════════════════
+     HOME VIEW
+════════════════════════════════════ -->
+<div id="home-view">
+
+  <!-- Fixed left identity panel -->
+  <div class="home-left" id="homeLeft">
+    <div class="identity">
+      <div class="name-wrap">
+        <h1 class="site-name">GlassMarble</h1>
+      </div>
+      <div class="role-wrap">
+        <p class="site-role">AI Architecture Intelligence</p>
+      </div>
+    </div>
+
+    <div class="home-btns">
+      <form class="waitlist-form" id="waitlistForm" novalidate>
+        <input type="text" class="waitlist-input" name="name" placeholder="Name" required autocomplete="name" aria-label="Name">
+        <input type="email" class="waitlist-input" name="email" placeholder="Email" required autocomplete="email" aria-label="Email">
+        <button type="submit" class="social-button social-button--dark submit-btn">Join Waitlist</button>
+      </form>
+    </div>
+    <p class="waitlist-status" id="waitlistStatus" role="status" aria-live="polite"></p>
+    <p class="home-note">v1.0 launching soon &middot; Free &middot; MIT &middot; No backend</p>
+  </div>
+
+  <!-- Fixed right cards — one per project, swap on scroll -->
+  <div id="home-cards">
+    <!-- Populated by JS -->
+  </div>
+
+  <!-- Scroll dots -->
+  <nav class="scroll-dots" id="scrollDots" aria-label="Feature navigation">
+    <!-- Populated by JS -->
+  </nav>
+
+  <!-- Scroll hint -->
+  <div class="scroll-hint" id="scrollHint" aria-hidden="true">
+    <div class="scroll-hint__line"></div>
+    <span class="scroll-hint__text">Scroll</span>
+  </div>
+
+  <!-- Scroll spacer — gives body height for scrolling -->
+  <div id="scroll-spacer"></div>
+
+</div>
+
+<!-- ════════════════════════════════════
+     PROJECT DETAIL VIEW
+════════════════════════════════════ -->
+<div id="project-view" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Project detail">
+  <!-- Back button -->
+  <div id="back-btn-wrap">
+    <button type="button" aria-label="Back to Home" id="backBtn" class="social-button social-button--icon">
+      <svg width="1.4rem" height="1.4rem" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <path d="M8.09085 5.36372V2.63658C8.09085 2.49193 8.14832 2.3532 8.2506 2.25091C8.35289 2.14862 8.49162 2.09116 8.63628 2.09116C8.78094 2.09116 8.91967 2.14862 9.02196 2.25091C9.12424 2.3532 9.18171 2.49193 9.18171 2.63658V4.04719L12.0684 1.15984C12.1707 1.0575 12.3095 1 12.4543 1C12.599 1 12.7378 1.0575 12.8402 1.15984C12.9425 1.26213 13 1.40086 13 1.54551C13 1.69017 12.9425 1.8289 12.8402 1.93119L9.95286 4.81855H11.3635C11.5081 4.81855 11.6469 4.87602 11.7491 4.97831C11.8514 5.0806 11.9089 5.21933 11.9089 5.36399C11.9089 5.50864 11.8514 5.64737 11.7491 5.74966C11.6469 5.85195 11.5081 5.90942 11.3635 5.90942H8.63628C8.49162 5.90942 8.35289 5.85195 8.2506 5.74966C8.14832 5.64737 8.09085 5.50864 8.09085 5.36399V5.36372ZM5.36371 8.09085H2.63658C2.49192 8.09085 2.35319 8.14832 2.2509 8.25061C2.14862 8.3529 2.09115 8.49162 2.09115 8.63628C2.09115 8.78094 2.14862 8.91967 2.2509 9.02196C2.35319 9.12425 2.49192 9.18171 2.63658 9.18171H4.04718L1.15983 12.069C1.0575 12.1713 1 12.3101 1 12.4547C1 12.5994 1.0575 12.7381 1.15983 12.8404C1.26213 12.9427 1.40085 13.0002 1.54551 13.0002C1.69016 13.0002 1.82889 12.9427 1.93118 12.8404L4.81854 9.95304V11.3637C4.81854 11.5083 4.87601 11.647 4.9783 11.7493C5.08059 11.8516 5.21932 11.9091 5.36398 11.9091C5.50863 11.9091 5.64736 11.8516 5.74965 11.7493C5.85194 11.647 5.90941 11.5083 5.90941 11.3637V8.63645C5.90941 8.4918 5.85194 8.35306 5.74965 8.25078C5.64736 8.14849 5.50863 8.09085 5.36398 8.09085H5.36371Z" fill="currentColor"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Left panel — project identity -->
+  <div id="project-left">
+    <div style="display:flex;flex-direction:column;gap:0.5rem">
+      <div class="name-wrap" style="overflow:hidden;width:40rem;padding-bottom:0.4rem">
+        <p class="proj-name" id="projName"></p>
+      </div>
+      <div class="role-wrap" style="overflow:hidden;width:40rem;padding-bottom:0.8rem">
+        <p class="proj-sub" id="projSub"></p>
+      </div>
+    </div>
+
+    <div class="proj-btns">
+      <button type="button" class="social-button social-button--icon" aria-label="Project info">
+        <svg width="1.4rem" height="1.4rem" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M7 1C5.813 1 4.653 1.352 3.667 2.011 2.68 2.67 1.911 3.608 1.457 4.704c-.455 1.096-.573 2.303-.342 3.467.231 1.163.803 2.232 1.642 3.072.839.839 1.908 1.41 3.072 1.642 1.163.23 2.37.112 3.466-.342 1.096-.454 2.035-1.223 2.694-2.21.659-.987 1-2.147 1-3.333C12.973 5.409 12.34 3.884 11.215 2.76 10.09 1.634 8.565 1.002 7 1Zm0 11.077c-1.004 0-1.986-.298-2.82-.854A5.077 5.077 0 0 1 2.31 9.057a5.077 5.077 0 0 1-.342-3.102 5.077 5.077 0 0 1 1.393-2.566 5.077 5.077 0 0 1 2.566-1.393A5.077 5.077 0 0 1 9.029 2.31c.927.384 1.72 1.035 2.278 1.87.558.834.856 1.816.856 2.82-.002 1.346-.536 2.637-1.488 3.589C9.724 11.54 8.433 12.075 7 12.077ZM7.923 9.77a.462.462 0 0 1-.462.461.923.923 0 0 1-.923-.923V7a.462.462 0 0 1 0-.923.923.923 0 0 1 .923.923v2.308c.122 0 .24.048.326.134.086.086.134.204.134.326Zm-1.846-5.308a.692.692 0 1 1 1.384 0 .692.692 0 0 1-1.384 0Z" fill="currentColor" stroke="currentColor" stroke-width="0.3"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Scrollable details -->
+  <div id="project-scroll">
+    <div class="proj-cards" id="projCards"></div>
+  </div>
+</div>
+
+<script>
+'use strict';
+
+/* ═══════════════════════════════════════
+   CONFIG
+═══════════════════════════════════════ */
+/* Google Sheets waitlist backend — see waitlist-apps-script.gs in this folder
+   for the one-time setup. Paste the deployed Web App URL below, e.g.
+   'https://script.google.com/macros/s/XXXX/exec'.
+   Until configured, the form shows a local success message. */
+const WAITLIST_ENDPOINT = 'https://script.google.com/macros/s/AKfycby_OiqsppAntWLMX-RI3MsiUsy-ei_JYrRIXCZz1i36mFp0QnVB4V7AHPRiVc0ZwNc3mQ/exec';
+
+/* ═══════════════════════════════════════
+   PROJECT DATA — all facts verified against
+   G:/GlassMarble (README, docs/, CHANGELOG)
+═══════════════════════════════════════ */
+const PROJECTS = [
+  {
+    id: 'analysis-engine',
+    num: '01',
+    name: 'Analysis Engine',
+    sub: '14 languages. One graph.',
+    visual: `
+<svg viewBox="0 0 670 688" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Analysis Engine pipeline">
+  <rect width="670" height="688" fill="#111111"/>
+  <rect x="40" y="40" width="590" height="608" rx="24" fill="#151515" stroke="#2a2a2a"/>
+  <circle cx="66" cy="68" r="5" fill="#ff5f56"/><circle cx="84" cy="68" r="5" fill="#ffbd2e"/><circle cx="102" cy="68" r="5" fill="#27c93f"/>
+  <text x="122" y="74" font-family="ui-monospace,Consolas,monospace" font-size="20" fill="#808080">gmb analyze --full</text>
+  <line x1="40" y1="96" x2="630" y2="96" stroke="#262626"/>
+  <rect x="40" y="96" width="150" height="552" fill="#1a1a1a"/>
+  <text x="60" y="142" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#6b6b6b">cmd/</text>
+  <text x="60" y="176" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#6b6b6b">internal/</text>
+  <text x="60" y="210" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#6b6b6b">viz/</text>
+  <rect x="52" y="228" width="126" height="32" rx="6" fill="#1e2f3a"/>
+  <text x="62" y="250" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#7dd3fc">analyze.go</text>
+  <text x="60" y="286" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#6b6b6b">ai_engine/</text>
+  <text x="60" y="320" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#6b6b6b">akg/</text>
+  <text x="210" y="142" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#6b6b6b">Stage 1</text>
+  <text x="310" y="142" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#d4d4d4">Ingesting 214 files &middot; 14 languages</text>
+  <rect x="210" y="156" width="380" height="10" rx="5" fill="#232323"/>
+  <rect x="210" y="156" width="380" height="10" rx="5" fill="#7dd3fc"/>
+  <text x="210" y="206" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#6b6b6b">Stage 2</text>
+  <text x="310" y="206" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#d4d4d4">Normalizing to GAST</text>
+  <rect x="210" y="220" width="380" height="10" rx="5" fill="#232323"/>
+  <rect x="210" y="220" width="380" height="10" rx="5" fill="#a78bfa"/>
+  <text x="210" y="270" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#6b6b6b">Stage 3</text>
+  <text x="310" y="270" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#d4d4d4">Mapping topology</text>
+  <rect x="210" y="284" width="380" height="10" rx="5" fill="#232323"/>
+  <rect x="210" y="284" width="380" height="10" rx="5" fill="#fbbf24"/>
+  <text x="210" y="334" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#6b6b6b">Stage 4</text>
+  <text x="310" y="334" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#d4d4d4">Semantic graph linking</text>
+  <rect x="210" y="348" width="380" height="10" rx="5" fill="#232323"/>
+  <rect x="210" y="348" width="380" height="10" rx="5" fill="#86efac"/>
+  <text x="210" y="404" font-family="ui-monospace,Consolas,monospace" font-size="24" fill="#86efac">AKG ready &mdash; 3,847 nodes &middot; 12,091 edges</text>
+  <line x1="470" y1="452" x2="560" y2="492" stroke="#3a3a3a"/>
+  <line x1="560" y1="492" x2="520" y2="534" stroke="#3a3a3a"/>
+  <line x1="470" y1="452" x2="520" y2="534" stroke="#3a3a3a"/>
+  <circle cx="470" cy="452" r="15" fill="#1e2f3a" stroke="#7dd3fc"/>
+  <circle cx="560" cy="492" r="15" fill="#2f263d" stroke="#a78bfa"/>
+  <circle cx="520" cy="534" r="15" fill="#1f3327" stroke="#86efac"/>
+  <text x="470" y="458" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#7dd3fc">f</text>
+  <text x="560" y="498" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#a78bfa">p</text>
+  <text x="520" y="540" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#86efac">g</text>
+  <text x="210" y="530" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#6b6b6b">cross-package call edges resolved</text>
+  <rect x="40" y="596" width="590" height="52" fill="#101010"/>
+  <text x="60" y="630" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#86efac">&check; Analysis complete in 18.2s</text>
+  <text x="560" y="630" text-anchor="end" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#6b6b6b">v1.0</text>
+</svg>`,
+    cards: [
+      {
+        num: '01',
+        title: 'Every codebase. One canonical graph.',
+        body: `<p>GlassMarble's analysis engine compiles your source code into a semantic <strong>Architecture Knowledge Graph (AKG)</strong> — every function, file, package, and dependency represented with real structure, not guesses.</p>
+<p>Native Tree-sitter grammars ingest <strong>14 languages</strong> through a single unified pipeline, and the result is stored as a deterministic, diff-friendly graph you can inspect.</p>`,
+        terminal: `<span class="tl"><span class="tc">$</span> gmb init</span>
+<span class="tl"><span class="ts">  &check; Initialized</span> <span class="td">.glassmarble workspace</span></span>
+<span class="tl"> </span>
+<span class="tl"><span class="tc">$</span> gmb analyze --full</span>
+<span class="tl"><span class="td">  Stage 1</span>  Ingesting 214 files across 14 languages...</span>
+<span class="tl"><span class="td">  Stage 2</span>  Normalizing to GAST...</span>
+<span class="tl"><span class="td">  Stage 3</span>  Mapping topology...</span>
+<span class="tl"><span class="td">  Stage 4</span>  Committing to AKG &mdash; 3,847 nodes &middot; 12,091 edges</span>
+<span class="tl"><span class="ts">  &check; Analysis complete in 18.2s</span></span>`
+      },
+      {
+        num: '02',
+        title: 'Four stages. No shortcuts.',
+        grid: [
+          { title: '01 &middot; Ingestion', desc: 'Tree-sitter parses every file into precise syntax trees — native grammars for all 14 languages.' },
+          { title: '02 &middot; Normalization', desc: 'Language-specific trees are lifted to a unified Generic AST (GAST) — one schema, every language.' },
+          { title: '03 &middot; Topology', desc: 'Files cluster into packages, namespaces resolve, and the call queue and definition index are built.' },
+          { title: '04 &middot; Semantic Linking', desc: 'Calls resolve to definitions, interfaces are inferred, and the graph commits via an MVCC transaction.' }
+        ]
+      },
+      {
+        num: '03',
+        title: 'Git-aware. Incremental by default.',
+        body: `<p>On git repositories, <code>gmb analyze</code> diffs against HEAD and re-parses only the files that changed — the delta is merged into the persisted graph. Re-analyzing the same commit is <strong>idempotent</strong>: events are never duplicated.</p>`,
+        tags: ['Go', 'Python', 'JavaScript', 'TypeScript', 'Java', 'C', 'C++', 'C#', 'Rust', 'Ruby', 'PHP', 'HTML', 'CSS', 'JSON']
+      }
+    ]
+  },
+  {
+    id: 'architecture-diagrams',
+    num: '02',
+    name: 'Architecture Diagrams',
+    sub: '31 diagram types. Always current.',
+    visual: `
+<svg viewBox="0 0 670 688" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Architecture diagram visualization">
+  <rect width="670" height="688" fill="#111111"/>
+  <rect x="40" y="40" width="590" height="608" rx="24" fill="#151515" stroke="#2a2a2a"/>
+  <circle cx="66" cy="68" r="5" fill="#ff5f56"/><circle cx="84" cy="68" r="5" fill="#ffbd2e"/><circle cx="102" cy="68" r="5" fill="#27c93f"/>
+  <text x="122" y="74" font-family="ui-monospace,Consolas,monospace" font-size="20" fill="#808080">gmb visualize c4container</text>
+  <line x1="40" y1="96" x2="630" y2="96" stroke="#262626"/>
+  <rect x="90" y="140" width="250" height="150" rx="14" fill="#1c1c1c" stroke="#3a3a3a"/>
+  <rect x="90" y="140" width="250" height="40" rx="14" fill="#1e2f3a"/>
+  <rect x="90" y="166" width="250" height="14" fill="#1e2f3a"/>
+  <text x="112" y="167" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#7dd3fc">PaymentService</text>
+  <text x="112" y="212" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#9a9a9a">POST /payments</text>
+  <text x="112" y="246" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#9a9a9a">+ process(order)</text>
+  <rect x="90" y="330" width="250" height="150" rx="14" fill="#1c1c1c" stroke="#3a3a3a"/>
+  <rect x="90" y="330" width="250" height="40" rx="14" fill="#1f3327"/>
+  <rect x="90" y="356" width="250" height="14" fill="#1f3327"/>
+  <text x="112" y="357" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#86efac">RefundService</text>
+  <text x="112" y="402" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#9a9a9a">+ refund(order)</text>
+  <text x="112" y="436" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#9a9a9a">&rarr; db.queries</text>
+  <rect x="380" y="240" width="220" height="130" rx="14" fill="#1c1c1c" stroke="#3a3a3a"/>
+  <rect x="380" y="240" width="220" height="40" rx="14" fill="#2f263d"/>
+  <rect x="380" y="266" width="220" height="14" fill="#2f263d"/>
+  <text x="402" y="267" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#a78bfa">OrderService</text>
+  <text x="402" y="312" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#9a9a9a">+ checkout()</text>
+  <line x1="380" y1="285" x2="342" y2="285" stroke="#555555"/>
+  <polygon points="342,285 352,279 352,291" fill="#555555"/>
+  <text x="352" y="276" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#7dd3fc">calls</text>
+  <line x1="342" y1="360" x2="342" y2="376" stroke="#555555" stroke-dasharray="5 5"/>
+  <polygon points="342,376 350,370 350,382" fill="#555555"/>
+  <text x="356" y="392" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#86efac">queries</text>
+  <rect x="380" y="420" width="170" height="40" rx="20" fill="#1e2f3a" stroke="#2e4a5e"/>
+  <text x="400" y="446" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#7dd3fc">mermaid</text>
+  <rect x="380" y="474" width="170" height="40" rx="20" fill="#2f263d" stroke="#4a3e63"/>
+  <text x="400" y="500" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#a78bfa">plantuml</text>
+  <rect x="380" y="528" width="170" height="40" rx="20" fill="#1f3327" stroke="#2e4a3e"/>
+  <text x="400" y="554" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#86efac">dot</text>
+  <text x="90" y="560" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#6b6b6b">scopes: global &middot; package &middot; file</text>
+  <rect x="40" y="596" width="590" height="52" fill="#101010"/>
+  <text x="60" y="630" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#86efac">&check; 31 types &middot; deterministic output</text>
+</svg>`,
+    cards: [
+      {
+        num: '01',
+        title: '31 diagram types. Always current.',
+        body: `<p>Every diagram is a <strong>projection of the live AKG</strong> — regenerate it any time and it reflects the latest code. No hand-drawn artifacts, no stale snapshots.</p>
+<p>Render UML, C4 model, and specialized diagrams as <strong>Mermaid, PlantUML, or Graphviz DOT</strong>, scoped globally, per package, or per single file.</p>`,
+        terminal: `<span class="tl"><span class="tc">$</span> gmb visualize c4container --save architecture</span>
+<span class="tl"><span class="ts">  &check; Saved</span> <span class="td">to .glassmarble/marbles/architecture.mmd</span></span>
+<span class="tl"> </span>
+<span class="tl"><span class="tc">$</span> gmb visualize class --scope package --save models</span>
+<span class="tl"><span class="ts">  &check; Saved</span> <span class="td">to .glassmarble/marbles/models.mmd</span></span>
+<span class="tl"> </span>
+<span class="tl"><span class="tc">$</span> gmb visualize sequence --entry symbol:main.main --depth 3</span>
+<span class="tl"><span class="ts">  &check; 14 nodes &middot; 23 edges</span> <span class="td">&mdash; deterministic order</span></span>`
+      },
+      {
+        num: '02',
+        title: 'Three families. Three formats.',
+        grid: [
+          { title: 'UML &mdash; 14 types', desc: 'class, sequence, component, object, package, activity, state, usecase, deployment, er and more.' },
+          { title: 'C4 Model &mdash; 7 types', desc: 'c4context, c4container, c4component, c4code, c4landscape, c4dynamic, c4deployment.' },
+          { title: 'Specialized &mdash; 10 types', desc: 'callgraph, dataflow, dependency, hotspot, impact, layered, security, memory and more.' },
+          { title: '3 output formats', desc: 'Mermaid, PlantUML, and Graphviz DOT — pick your toolchain, keep one source of truth.' }
+        ]
+      },
+      {
+        num: '03',
+        title: 'Deterministic. Byte-identical.',
+        body: `<p>Nodes and edges are sorted lexicographically before rendering, so the same diagram is <strong>byte-identical across runs</strong> — golden-testable in CI, and safe to commit alongside your code.</p>`,
+        tags: ['Mermaid', 'PlantUML', 'Graphviz DOT', 'global', 'package', 'file']
+      }
+    ]
+  },
+  {
+    id: 'ai-architect',
+    num: '03',
+    name: 'AI Architect',
+    sub: 'Grounded answers from real code.',
+    visual: `
+<svg viewBox="0 0 670 688" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AI Architect chat">
+  <rect width="670" height="688" fill="#111111"/>
+  <rect x="40" y="40" width="590" height="608" rx="24" fill="#151515" stroke="#2a2a2a"/>
+  <circle cx="66" cy="68" r="5" fill="#ff5f56"/><circle cx="84" cy="68" r="5" fill="#ffbd2e"/><circle cx="102" cy="68" r="5" fill="#27c93f"/>
+  <text x="122" y="74" font-family="ui-monospace,Consolas,monospace" font-size="20" fill="#808080">gmb ai &mdash; grounded agent</text>
+  <line x1="40" y1="96" x2="630" y2="96" stroke="#262626"/>
+  <rect x="70" y="130" width="380" height="58" rx="16" fill="#262626"/>
+  <text x="92" y="160" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#e8e8e8">which services depend on the</text>
+  <text x="92" y="182" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#e8e8e8">payment module?</text>
+  <text x="70" y="236" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#7dd3fc">&rarr; akg_search({pattern: "payment"})</text>
+  <text x="70" y="266" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#808080">&larr; 3 nodes found: PaymentService, PaymentGateway, BillingController</text>
+  <text x="70" y="306" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#7dd3fc">&rarr; akg_edges({node: "PaymentService", direction: "inbound"})</text>
+  <text x="70" y="336" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#808080">&larr; 7 inbound edges from: OrderService, CheckoutController...</text>
+  <rect x="70" y="366" width="500" height="150" rx="16" fill="#1c1c1c" stroke="#2c2c2c"/>
+  <text x="92" y="404" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#86efac">The payment module is used by:</text>
+  <text x="92" y="438" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#d4d4d4">&bull; OrderService (order/service.go:47)</text>
+  <text x="92" y="468" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#d4d4d4">&bull; CheckoutController (checkout/controller.go:23)</text>
+  <text x="92" y="498" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#d4d4d4">&bull; RefundService (billing/refund.go:89)</text>
+  <rect x="70" y="540" width="500" height="56" rx="14" fill="#111111" stroke="#262626"/>
+  <text x="92" y="574" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#7dd3fc">gmb ai chat</text>
+  <rect x="180" y="560" width="12" height="20" fill="#7dd3fc"/>
+  <text x="270" y="630" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#6b6b6b">BYOK &middot; streaming &middot; token &amp; cost guardrails</text>
+</svg>`,
+    cards: [
+      {
+        num: '01',
+        title: 'Answers grounded in real code.',
+        body: `<p>The AI Architect queries the <strong>live AKG</strong> and reads real source files through structured tools — <code>akg_search</code>, <code>akg_edges</code>, <code>akg_traverse</code>, <code>code_read_file</code>, <code>diagram_generate</code>. It never invents architecture.</p>
+<p>Every answer is built from facts the graph returned, with real paths and line numbers you can inspect.</p>`,
+        terminal: `<span class="tl"><span class="tc">$</span> gmb ai "which services depend on the payment module?"</span>
+<span class="tl"> </span>
+<span class="tl"><span class="tc">&rarr;</span> akg_search({pattern: "payment"})</span>
+<span class="tl"><span class="td">&larr;</span> Found 3 nodes: PaymentService, PaymentGateway, BillingController</span>
+<span class="tl"> </span>
+<span class="tl"><span class="tc">&rarr;</span> akg_edges({node: "PaymentService", direction: "inbound"})</span>
+<span class="tl"><span class="td">&larr;</span> 7 inbound edges from: OrderService, CheckoutController, RefundService...</span>
+<span class="tl"> </span>
+<span class="tl"><span class="tw">The payment module is used by:</span></span>
+<span class="tl">  &bull; OrderService (order/service.go:47)</span>
+<span class="tl">  &bull; CheckoutController (checkout/controller.go:23)</span>
+<span class="tl">  &bull; RefundService (billing/refund.go:89)</span>
+<span class="tl">  &bull; NotificationService (notify/payment.go:12)</span>
+<span class="tl"><span class="td">  ...and 3 more.</span></span>`
+      },
+      {
+        num: '02',
+        title: 'Bring your own key. 11 providers.',
+        grid: [
+          { title: 'BYOK', desc: 'Keys live in your config with 0600 permissions, never logged, redacted in errors. Your key, your provider, your call.' },
+          { title: 'Streaming', desc: 'Answers stream token-by-token over SSE — native OpenAI, Anthropic, and Gemini adapters included.' },
+          { title: 'Guardrails', desc: 'Token and cost budgets cap every run: --max-total-tokens, --max-cost. An agentic loop cannot burn unbounded spend.' },
+          { title: 'Artifacts', desc: 'Save answers and diagrams straight to .glassmarble/ — save_artifact and diagram_generate write files, not chat noise.' }
+        ]
+      },
+      {
+        num: '03',
+        title: 'Chat with session memory.',
+        body: `<p><code>gmb ai chat</code> keeps a rolling session saved under <code>.glassmarble/ai/sessions/</code> — context carries across invocations. One-shot questions work too, and tool access can be scoped per call with <code>--tools akg,code,diagram</code>.</p>`,
+        tags: ['OpenAI', 'Anthropic', 'Gemini', 'DeepSeek', 'Mistral', 'GLM', 'NVIDIA', 'OpenRouter', 'Groq', 'Ollama', 'Custom']
+      }
+    ]
+  },
+  {
+    id: 'developer-memory',
+    num: '04',
+    name: 'Developer Memory',
+    sub: 'What changed. Why. What it means.',
+    visual: `
+<svg viewBox="0 0 670 688" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Developer memory timeline">
+  <rect width="670" height="688" fill="#111111"/>
+  <rect x="40" y="40" width="590" height="608" rx="24" fill="#151515" stroke="#2a2a2a"/>
+  <circle cx="66" cy="68" r="5" fill="#ff5f56"/><circle cx="84" cy="68" r="5" fill="#ffbd2e"/><circle cx="102" cy="68" r="5" fill="#27c93f"/>
+  <text x="122" y="74" font-family="ui-monospace,Consolas,monospace" font-size="20" fill="#808080">gmb memory --ask</text>
+  <line x1="40" y1="96" x2="630" y2="96" stroke="#262626"/>
+  <line x1="140" y1="130" x2="140" y2="560" stroke="#2c2c2c" stroke-width="3"/>
+  <circle cx="140" cy="170" r="9" fill="#7dd3fc"/>
+  <text x="170" y="164" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#d4d4d4">07-02 &middot; auth: JWT validation added</text>
+  <rect x="170" y="178" width="66" height="26" rx="13" fill="#1e2f3a"/>
+  <text x="184" y="197" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#7dd3fc">FACT</text>
+  <circle cx="140" cy="250" r="9" fill="#86efac"/>
+  <text x="170" y="244" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#d4d4d4">07-14 &middot; "avoid key rotation"</text>
+  <rect x="170" y="258" width="150" height="26" rx="13" fill="#1f3327"/>
+  <text x="184" y="277" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#86efac">EXPLICIT_REASON</text>
+  <circle cx="140" cy="330" r="9" fill="#fbbf24"/>
+  <text x="170" y="324" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#d4d4d4">07-21 &middot; switched to OAuth provider</text>
+  <rect x="170" y="338" width="66" height="26" rx="13" fill="#3a3018"/>
+  <text x="184" y="357" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#fbbf24">FACT</text>
+  <circle cx="140" cy="410" r="9" fill="#a78bfa"/>
+  <text x="170" y="404" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#d4d4d4">08-02 &middot; refresh token rotation</text>
+  <rect x="170" y="418" width="104" height="26" rx="13" fill="#2f263d"/>
+  <text x="184" y="437" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#a78bfa">INFERENCE</text>
+  <rect x="70" y="470" width="500" height="108" rx="16" fill="#1c1c1c" stroke="#2c2c2c"/>
+  <text x="92" y="506" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#7dd3fc">gmb memory --correct "AuthService" --kind STATE --value "..."</text>
+  <text x="92" y="540" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#86efac">&check; Correction recorded &mdash; replayed on every view</text>
+  <text x="92" y="566" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#6b6b6b">audited in corrections.jsonl &middot; idempotent</text>
+</svg>`,
+    cards: [
+      {
+        num: '01',
+        title: 'What changed. Why. What it means.',
+        body: `<p>Every structural event — additions, removals, dependency shifts — lands in <strong>developer memory</strong> with deterministic retrieval. No LLM guessing about your history.</p>
+<p>Reasons are never invented: every claim carries a label explaining how it was established.</p>`,
+        terminal: `<span class="tl"><span class="tc">$</span> gmb memory --ask "how did authentication evolve?"</span>
+<span class="tl"> </span>
+<span class="tl">  auth/service.go &mdash; AuthService</span>
+<span class="tl">    &middot; 07-02  added JWT validation          <span class="ts">FACT</span></span>
+<span class="tl">    &middot; 07-14  "avoid key rotation"         <span class="tw">EXPLICIT_REASON</span></span>
+<span class="tl">    &middot; 07-21  switched to OAuth provider   <span class="ts">FACT</span></span>
+<span class="tl">    &middot; 08-02  refresh token rotation       <span class="tv">INFERENCE</span></span>
+<span class="tl"> </span>
+<span class="tl"><span class="tc">$</span> gmb memory --correct "AuthService" --kind STATE --value "..."</span>
+<span class="tl"><span class="ts">  &check; Correction recorded &mdash; replayed on every view</span></span>`
+      },
+      {
+        num: '02',
+        title: 'Every claim is labelled.',
+        grid: [
+          { title: 'FACT', desc: 'Observed directly from the graph diff — not derived.' },
+          { title: 'EXPLICIT_REASON', desc: 'Stated by a human in a commit, PR, issue, or docs.' },
+          { title: 'INFERENCE', desc: 'Derived by GlassMarble from structure and evidence.' },
+          { title: 'SPECULATION', desc: 'Low-confidence guess — always flagged as such.' }
+        ]
+      },
+      {
+        num: '03',
+        title: 'Self-correcting by design.',
+        body: `<p><code>gmb memory --correct</code> records human feedback; corrections replay over every view — deterministic, idempotent, and audited in <code>corrections.jsonl</code>. Project conventions are learned from your corrections and refreshed on every analysis.</p>`,
+        tags: ['--ask', '--component', '--correct', '--corrections', 'corrections.jsonl']
+      }
+    ]
+  },
+  {
+    id: 'under-the-hood',
+    num: '05',
+    name: 'Under the Hood',
+    sub: 'Enterprise storage. Zero infrastructure.',
+    visual: `
+<svg viewBox="0 0 670 688" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Storage internals">
+  <rect width="670" height="688" fill="#111111"/>
+  <rect x="40" y="40" width="590" height="608" rx="24" fill="#151515" stroke="#2a2a2a"/>
+  <circle cx="66" cy="68" r="5" fill="#ff5f56"/><circle cx="84" cy="68" r="5" fill="#ffbd2e"/><circle cx="102" cy="68" r="5" fill="#27c93f"/>
+  <text x="122" y="74" font-family="ui-monospace,Consolas,monospace" font-size="20" fill="#808080">gmb status</text>
+  <line x1="40" y1="96" x2="630" y2="96" stroke="#262626"/>
+  <text x="70" y="150" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#808080">Nodes Count: 3847</text>
+  <text x="70" y="186" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#808080">Outbound Edges: 12091</text>
+  <text x="70" y="222" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#808080">Indexed Files: 214</text>
+  <text x="70" y="258" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#808080">Entrypoints: 18</text>
+  <text x="70" y="294" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#808080">Storage: TTL 2.4 MB | WAL 0.0 KB</text>
+  <rect x="380" y="130" width="220" height="110" rx="16" fill="#1c1c1c" stroke="#3a3a3a"/>
+  <text x="404" y="172" font-family="ui-monospace,Consolas,monospace" font-size="20" fill="#7dd3fc">akg.json</text>
+  <text x="404" y="206" font-family="ui-monospace,Consolas,monospace" font-size="16" fill="#808080">GraphJSON &middot; RDF-star</text>
+  <text x="404" y="226" font-family="ui-monospace,Consolas,monospace" font-size="16" fill="#808080">diff-friendly &middot; 2.4 MB</text>
+  <rect x="380" y="262" width="220" height="70" rx="16" fill="#1c1c1c" stroke="#3a3a3a"/>
+  <text x="404" y="298" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#a78bfa">wal/ &mdash; write-ahead log</text>
+  <text x="404" y="320" font-family="ui-monospace,Consolas,monospace" font-size="16" fill="#808080">crash durability</text>
+  <rect x="380" y="354" width="220" height="70" rx="16" fill="#1c1c1c" stroke="#3a3a3a"/>
+  <text x="404" y="390" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#fbbf24">db.lock</text>
+  <text x="404" y="412" font-family="ui-monospace,Consolas,monospace" font-size="16" fill="#808080">prevents write collisions</text>
+  <circle cx="230" cy="420" r="48" fill="#1f3327" stroke="#86efac" stroke-width="2"/>
+  <path d="M212 420 L226 434 L250 406" stroke="#86efac" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="230" y="500" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#d4d4d4">atomic writes</text>
+  <text x="230" y="524" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#808080">tmp + rename, no half-writes</text>
+  <text x="70" y="500" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#808080">&check; verified (no dangling edges)</text>
+  <text x="70" y="530" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#86efac">freshness: ok &middot; health errors: 0</text>
+  <rect x="40" y="596" width="590" height="52" fill="#101010"/>
+  <text x="60" y="630" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#86efac">MVCC &middot; WAL &middot; self-healing</text>
+</svg>`,
+    cards: [
+      {
+        num: '01',
+        title: 'The graph is just a file.',
+        body: `<p>The AKG lives in <code>.glassmarble/akg.json</code> — a deterministic, diff-friendly <strong>GraphJSON</strong> document with W3C <strong>RDF-star</strong> edge metadata. No database to install. No service to run. No cloud.</p>`,
+        terminal: `<span class="tl"><span class="tc">$</span> gmb status</span>
+<span class="tl"> </span>
+<span class="tl"><span class="td">  Storage Dir:</span>    .glassmarble</span>
+<span class="tl"><span class="td">  Schema Version:</span> 2</span>
+<span class="tl"><span class="td">  Graph Version:</span>  14</span>
+<span class="tl"><span class="td">  Nodes Count:</span>    3847</span>
+<span class="tl"><span class="td">  Outbound Edges:</span> 12091</span>
+<span class="tl"><span class="td">  Indexed Files:</span>  214</span>
+<span class="tl"><span class="td">  Health Errors:</span>  0 dangling reference(s)</span>
+<span class="tl"><span class="td">  Storage:</span>        TTL 2.4 MB | WAL 0.0 KB</span>
+<span class="tl"><span class="td">  Verification:</span>   verified (no dangling edges)</span>
+<span class="tl"><span class="td">  Freshness:</span>      ok</span>`
+      },
+      {
+        num: '02',
+        title: 'Crash-safe by construction.',
+        grid: [
+          { title: 'MVCC', desc: 'Atomic snapshot swaps keep concurrent reads consistent.' },
+          { title: 'Write-Ahead Log', desc: 'Every transaction is logged to .glassmarble/wal/ before commit — crash durability without a database.' },
+          { title: 'Atomic writes', desc: 'Writes go to a temp file, then rename. No corrupt half-writes, ever.' },
+          { title: 'Self-healing', desc: 'Legacy stores migrate in place on first run; db.lock prevents concurrent write collisions.' }
+        ]
+      },
+      {
+        num: '03',
+        title: 'Runs entirely on your machine.',
+        body: `<p>Analysis is fully local — <strong>no backend, no account</strong>. AI keys stay in your config with 0600 permissions and are never logged; telemetry is local pipeline timing, and nothing leaves your machine.</p>`,
+        tags: ['100% local', 'No backend', 'No account', 'BYOK', 'Air-gap friendly']
+      }
+    ]
+  },
+  {
+    id: 'performance',
+    num: '06',
+    name: 'Performance',
+    sub: 'Benchmarked. Budgeted. Fast.',
+    visual: `
+<svg viewBox="0 0 670 688" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Performance benchmarks">
+  <rect width="670" height="688" fill="#111111"/>
+  <rect x="40" y="40" width="590" height="608" rx="24" fill="#151515" stroke="#2a2a2a"/>
+  <circle cx="66" cy="68" r="5" fill="#ff5f56"/><circle cx="84" cy="68" r="5" fill="#ffbd2e"/><circle cx="102" cy="68" r="5" fill="#27c93f"/>
+  <text x="122" y="74" font-family="ui-monospace,Consolas,monospace" font-size="20" fill="#808080">gmb analyze --bench</text>
+  <line x1="40" y1="96" x2="630" y2="96" stroke="#262626"/>
+  <text x="70" y="170" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#d4d4d4">Full scan</text>
+  <rect x="190" y="150" width="300" height="28" rx="6" fill="#333333"/>
+  <text x="200" y="170" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#9a9a9a">2m06s</text>
+  <rect x="510" y="150" width="62" height="28" rx="6" fill="#86efac"/>
+  <text x="517" y="170" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#062b12">&lt;20s</text>
+  <line x1="510" y1="136" x2="510" y2="260" stroke="#4a4a4a" stroke-dasharray="4 4"/>
+  <text x="418" y="128" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#6b6b6b">budget gate</text>
+  <text x="70" y="270" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#d4d4d4">Graph commit</text>
+  <rect x="190" y="250" width="240" height="28" rx="6" fill="#333333"/>
+  <text x="200" y="270" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#9a9a9a">19.9s</text>
+  <rect x="510" y="250" width="62" height="28" rx="6" fill="#86efac"/>
+  <text x="517" y="270" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#062b12">&lt;8s</text>
+  <text x="70" y="370" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#d4d4d4">AKG storage</text>
+  <rect x="190" y="350" width="260" height="28" rx="6" fill="#333333"/>
+  <text x="200" y="370" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#9a9a9a">19.3MB</text>
+  <rect x="510" y="350" width="62" height="28" rx="6" fill="#86efac"/>
+  <text x="517" y="370" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#062b12">&lt;12MB</text>
+  <text x="70" y="430" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#6b6b6b">before &rarr; after &middot; v1.0 overhaul</text>
+  <text x="70" y="480" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#86efac">&check; all budget gates passed</text>
+  <text x="70" y="512" font-family="ui-monospace,Consolas,monospace" font-size="16" fill="#808080">determinism: byte-identical across runs</text>
+  <rect x="40" y="596" width="590" height="52" fill="#101010"/>
+  <text x="60" y="630" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#86efac">2m06s &rarr; &lt;20s &middot; 19.9s &rarr; &lt;8s &middot; 19.3MB &rarr; &lt;12MB</text>
+</svg>`,
+    cards: [
+      {
+        num: '01',
+        title: 'The v1.0 overhaul, measured.',
+        body: `<p>The v1.0 overhaul rebuilt the pipeline end-to-end. Headline wins, verified by hard budget gates in CI:</p>`,
+        stats: [
+          { n: '&lt;20s', l: 'Full scan (was 2m06s)' },
+          { n: '&lt;8s', l: 'Graph commit (was 19.9s)' },
+          { n: '&lt;12MB', l: 'AKG storage (was 19.3MB)' },
+          { n: '8', l: 'Parallel parser workers' }
+        ]
+      },
+      {
+        num: '02',
+        title: 'By the numbers.',
+        stats: [
+          { n: '14', l: 'Programming languages' },
+          { n: '31', l: 'Diagram types' },
+          { n: '11', l: 'AI providers' },
+          { n: '$0', l: 'Free &middot; MIT licensed' }
+        ],
+        tags: ['MIT', 'Open source', 'Go 1.22+']
+      },
+      {
+        num: '03',
+        title: 'Budgets, not vibes.',
+        body: `<p><code>gmb analyze --bench</code> verifies timings and file sizes against hard performance budgets and exits non-zero on overrun. AKG determinism tests guarantee byte-identical serialization across runs.</p>`,
+        tags: ['--bench', 'Budget gates', 'Determinism suite', 'Golden fixtures']
+      }
+    ]
+  },
+  {
+    id: 'launch',
+    num: '07',
+    name: 'Launch',
+    sub: 'Shipping soon — join the waitlist.',
+    visual: `
+<svg viewBox="0 0 670 688" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Launching soon">
+  <rect width="670" height="688" fill="#111111"/>
+  <rect x="40" y="40" width="590" height="608" rx="24" fill="#151515" stroke="#2a2a2a"/>
+  <circle cx="66" cy="68" r="5" fill="#ff5f56"/><circle cx="84" cy="68" r="5" fill="#ffbd2e"/><circle cx="102" cy="68" r="5" fill="#27c93f"/>
+  <text x="122" y="74" font-family="ui-monospace,Consolas,monospace" font-size="20" fill="#808080">glassmarble v1.0</text>
+  <line x1="40" y1="96" x2="630" y2="96" stroke="#262626"/>
+  <text x="335" y="360" text-anchor="middle" font-family="Inter,sans-serif" font-size="130" font-weight="500" letter-spacing="-6" fill="#e8e8e8">v1.0</text>
+  <text x="335" y="412" text-anchor="middle" font-family="Inter,sans-serif" font-size="26" letter-spacing="8" fill="#9f9f9f">LAUNCHING SOON</text>
+  <rect x="150" y="150" width="160" height="46" rx="23" fill="#1e2f3a"/>
+  <text x="230" y="180" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#7dd3fc">4-stage engine</text>
+  <rect x="330" y="150" width="190" height="46" rx="23" fill="#1f3327"/>
+  <text x="425" y="180" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#86efac">31 diagram types</text>
+  <rect x="150" y="212" width="160" height="46" rx="23" fill="#2f263d"/>
+  <text x="230" y="242" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#a78bfa">AI Architect</text>
+  <rect x="330" y="212" width="190" height="46" rx="23" fill="#3a3018"/>
+  <text x="425" y="242" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#fbbf24">Developer memory</text>
+  <path d="M560 150 l6 12 l13 2 l-10 9 l3 13 l-12 -6 l-12 6 l3 -13 l-10 -9 l13 -2 z" fill="#fbbf24"/>
+  <path d="M120 430 l5 10 l11 2 l-8 8 l2 11 l-10 -5 l-10 5 l2 -11 l-8 -8 l11 -2 z" fill="#7dd3fc"/>
+  <rect x="70" y="470" width="530" height="80" rx="40" fill="#1a1a1a" stroke="#3a3a3a"/>
+  <text x="335" y="518" text-anchor="middle" font-family="Inter,sans-serif" font-size="24" fill="#f6f6f6">Join the waitlist</text>
+  <text x="335" y="590" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="16" fill="#6b6b6b">free &middot; open source &middot; MIT &middot; no backend</text>
+</svg>`,
+    cards: [
+      {
+        num: '01',
+        title: 'v1.0 is in the final stretch.',
+        body: `<p>The v1.0 release bundles the four-stage engine, 31 diagram types, the grounded AI Architect, developer memory, <strong>Neo4j export</strong>, and PlantUML/DOT output — one static binary, zero setup.</p>`,
+        tags: ['Four-stage engine', '31 diagram types', 'AI Architect', 'Developer memory', 'Neo4j export', 'PlantUML', 'Graphviz DOT']
+      },
+      {
+        num: '02',
+        title: 'Built in public.',
+        body: `<p>GlassMarble ships with a public changelog, a design manifesto, and a community-driven roadmap. What lands in v1.1 is shaped by the people on the list.</p>`
+      },
+      {
+        num: '03',
+        title: 'Get early access.',
+        body: `<p>Leave your name and email on the home screen and you'll be <strong>first in line</strong> when v1.0 drops.</p>`,
+        cta: 'Join the waitlist'
+      }
+    ]
+  }
+];
+
+/* ═══ CONFIG / STATE ═══ */
+const isCompact = window.matchMedia('(max-width: 1024px)').matches;
+const ZOOM_TARGET = isCompact ? 1 : 2.06;
+
+let currentCardIdx = 0;
+let isProjectOpen  = false;
+let activeProjectIdx = -1;
+
+/* ═══ DOM REFS ═══ */
+const homeLeft     = document.getElementById('homeLeft');
+const homeCardsEl  = document.getElementById('home-cards');
+const scrollDots   = document.getElementById('scrollDots');
+const scrollHint   = document.getElementById('scrollHint');
+const scrollSpacer = document.getElementById('scroll-spacer');
+const projectView  = document.getElementById('project-view');
+const backBtnWrap  = document.getElementById('back-btn-wrap');
+const backBtn      = document.getElementById('backBtn');
+const projectLeft  = document.getElementById('project-left');
+const projName     = document.getElementById('projName');
+const projSub      = document.getElementById('projSub');
+const projCards    = document.getElementById('projCards');
+const projScroll   = document.getElementById('project-scroll');
+const srNav        = document.getElementById('sr-nav');
+const waitlistForm = document.getElementById('waitlistForm');
+const waitlistStatus = document.getElementById('waitlistStatus');
+
+/* ═══ BUILD HOME CARDS ═══ */
+function buildHomeCards() {
+  homeCardsEl.innerHTML = '';
+  scrollDots.innerHTML = '';
+  srNav.innerHTML = '';
+
+  PROJECTS.forEach((p, i) => {
+    const card = document.createElement('div');
+    card.className = 'home-card' + (i === 0 ? ' active' : '');
+    card.id = `hcard-${i}`;
+
+    card.innerHTML = `
+      <div class="hcard-ambient-shadow"></div>
+      <div class="hcard-reflection"></div>
+      <div class="hcard-visual" role="button" tabindex="0"
+           aria-label="Open ${p.name}" data-proj="${i}">
+        ${p.visual}
+        <p class="hcard-title">${p.name}</p>
+      </div>`;
+
+    homeCardsEl.appendChild(card);
+
+    card.querySelectorAll('[data-proj]').forEach(el => {
+      el.addEventListener('click', () => openProject(i));
+      el.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openProject(i); }
+      });
+    });
+
+    const dot = document.createElement('button');
+    dot.className = 'sdot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', `Go to ${p.name}`);
+    dot.addEventListener('click', () => scrollToCard(i));
+    scrollDots.appendChild(dot);
+
+    const li = document.createElement('li');
+    li.innerHTML = `<a href="#hcard-${i}">${p.name}</a>`;
+    srNav.appendChild(li);
+  });
+}
+
+/* ═══ SCROLL SPACER HEIGHT ═══ */
+function setSpacerHeight() {
+  scrollSpacer.style.height = '100000vh';
+  if (window.scrollY < 10 && window.innerWidth > 1024) {
+    const ringJump = (500 - (500 % PROJECTS.length)) * window.innerHeight;
+    window.scrollTo({ top: ringJump, behavior: 'instant' });
+  }
+}
+
+/* ═══ SCROLL ENGINE ═══
+   Continuous progress float (winds forever). Each card's visual state is a
+   pure function of `index - progress` on a wrapped ring. */
+let targetProgress  = 0;
+let currentProgress = null;
+let globalZoom = 1;
+let globalZoomTarget = 1;
+let isZoomingIn = false;
+
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const NEIGHBOR_Y     = prefersReducedMotion ? 28   : 150;
+const NEIGHBOR_BLUR  = prefersReducedMotion ? 0    : 4;
+const NEIGHBOR_SCALE = prefersReducedMotion ? 0.04 : 0.08;
+const SCROLL_LERP    = prefersReducedMotion ? 0.35 : 0.08;
+
+function onScroll() {
+  if (isProjectOpen) return;
+
+  const scrollY = window.scrollY;
+  const winH    = window.innerHeight;
+
+  /* Infinite wrap: keep the float away from the spacer edges */
+  if (scrollY < winH * 10) {
+    window.scrollTo({ top: scrollY + winH * 5000, behavior: 'instant' });
+    return;
+  }
+  if (scrollY > winH * 9000) {
+    window.scrollTo({ top: scrollY - winH * 5000, behavior: 'instant' });
+    return;
+  }
+
+  targetProgress = scrollY / winH;
+
+  if (scrollY > winH * 500 + 10) scrollHint.classList.add('gone');
+}
+
+function revealProjectView() {
+  isZoomingIn = false;
+  projectView.setAttribute('aria-hidden', 'false');
+  if (isCompact) {
+    homeCardsEl.classList.add('hidden');
+    projectView.classList.add('open');
+  } else {
+    /* Desktop: the zoomed home card and the hero card are the same
+       SVG at the same size/position — swap them in one instant frame
+       so the enlarged card visibly BECOMES the first detail card. */
+    globalZoom = ZOOM_TARGET;
+    homeCardsEl.classList.add('no-fade', 'hidden');
+    projectView.classList.add('no-fade', 'open');
+    requestAnimationFrame(() => {
+      homeCardsEl.classList.remove('no-fade');
+      projectView.classList.remove('no-fade');
+    });
+  }
+  backBtnWrap.classList.add('open');
+  projectLeft.classList.add('open');
+  setTimeout(() => backBtn.focus(), 350);
+}
+
+function renderScroll() {
+  globalZoom += (globalZoomTarget - globalZoom) * 0.08;
+
+  if (!isCompact && isZoomingIn && globalZoom >= ZOOM_TARGET * 0.99) {
+    revealProjectView();
+  }
+
+  if (!isProjectOpen || Math.abs(globalZoomTarget - globalZoom) > 0.01) {
+    if (currentProgress === null) currentProgress = targetProgress;
+    currentProgress += (targetProgress - currentProgress) * SCROLL_LERP;
+
+    const cards = homeCardsEl.querySelectorAll('.home-card');
+    const total = PROJECTS.length;
+    const ringProgress = ((currentProgress % total) + total) % total;
+
+    cards.forEach((card, index) => {
+      let distance = index - ringProgress;
+      if (distance < -total / 2) distance += total;
+      if (distance > total / 2) distance -= total;
+
+      const abs = Math.abs(distance);
+
+      if (abs < 0.5 && currentCardIdx !== index) {
+        currentCardIdx = index;
+        updateScrollUI(index);
+      }
+
+      let opacity = 0;
+      if (abs <= 1.5) {
+        opacity = 1 - Math.min(abs, 1) * 0.9 - Math.max(0, abs - 1) * 0.2;
+      }
+
+      if (globalZoom > 1.1 && index !== currentCardIdx) {
+        opacity = Math.max(0, opacity - (globalZoom - 1));
+      }
+
+      const scale = (1 - Math.min(abs, 1) * NEIGHBOR_SCALE) * globalZoom;
+      let y = distance * NEIGHBOR_Y;
+
+      if (index === activeProjectIdx) {
+        const zoomProgress = Math.max(0, Math.min(1, (globalZoom - 1) / 1.06));
+        y -= (projScroll.scrollTop / scale) * zoomProgress;
+      }
+
+      const blur = Math.min(abs, 1) * NEIGHBOR_BLUR;
+      const zIndex = 100 - Math.round(abs * 10);
+
+      card.style.transform = `translate3d(0, ${y}px, 0) scale(${scale})`;
+      card.style.opacity = opacity;
+      card.style.filter = `blur(${blur}px)`;
+      card.style.zIndex = zIndex;
+      card.style.pointerEvents = (index === currentCardIdx) ? 'auto' : 'none';
+    });
+  }
+  requestAnimationFrame(renderScroll);
+}
+
+requestAnimationFrame(renderScroll);
+
+function updateScrollUI(idx) {
+  const dots = scrollDots.querySelectorAll('.sdot');
+  dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+
+  const cards = homeCardsEl.querySelectorAll('.home-card');
+  cards.forEach((c, i) => c.classList.toggle('active', i === idx));
+}
+
+function scrollToCard(idx) {
+  const scrollY = window.scrollY;
+  const winH = window.innerHeight;
+  const total = PROJECTS.length;
+
+  const currentFloat = scrollY / winH;
+  const currentIdx = Math.floor(currentFloat) % total;
+
+  let diff = idx - currentIdx;
+  if (diff < -total / 2) diff += total;
+  if (diff > total / 2) diff -= total;
+
+  window.scrollTo({ top: scrollY + (diff * winH), behavior: 'smooth' });
+}
+
+/* ═══ KEYBOARD NAV ═══ */
+document.addEventListener('keydown', e => {
+  if (e.target.matches('input, textarea, select')) return;
+  if (isProjectOpen) {
+    if (e.key === 'Escape') closeProject();
+    return;
+  }
+  if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+    e.preventDefault();
+    scrollToCard(Math.min(PROJECTS.length - 1, currentCardIdx + 1));
+  }
+  if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+    e.preventDefault();
+    scrollToCard(Math.max(0, currentCardIdx - 1));
+  }
+});
+
+/* ═══ OPEN PROJECT ═══ */
+function openProject(idx) {
+  isProjectOpen = true;
+  activeProjectIdx = idx;
+  const proj = PROJECTS[idx];
+
+  history.pushState({ project: proj.id }, '', `#/project/${proj.id}`);
+
+  homeLeft.classList.add('hidden');
+  scrollDots.classList.add('hidden');
+  scrollHint.classList.add('gone');
+
+  projName.textContent = proj.name;
+  projSub.textContent = proj.sub;
+  buildProjCards(proj);
+
+  document.title = `GlassMarble — ${proj.name}`;
+
+  if (isCompact) {
+    revealProjectView();
+  } else {
+    globalZoomTarget = ZOOM_TARGET;
+    isZoomingIn = true;
+  }
+}
+
+/* ═══ CLOSE PROJECT ═══ */
+function closeProject() {
+  if (!isProjectOpen) return;
+
+  isProjectOpen = false;
+  history.pushState({}, '', '#/');
+
+  projectView.classList.remove('open');
+  backBtnWrap.classList.remove('open');
+  projectLeft.classList.remove('open');
+  projectView.setAttribute('aria-hidden', 'true');
+
+  homeLeft.classList.remove('hidden');
+  scrollDots.classList.remove('hidden');
+  homeCardsEl.classList.remove('hidden');
+
+  globalZoom = ZOOM_TARGET * 1.1;
+  globalZoomTarget = 1;
+  isZoomingIn = false;
+
+  document.title = 'GlassMarble — AI Architecture Intelligence for Developers';
+  activeProjectIdx = -1;
+  window.scrollTo({ top: targetProgress * window.innerHeight, behavior: 'instant' });
+
+  setTimeout(() => {
+    const c = homeCardsEl.querySelector('.home-card.active .hcard-visual');
+    if (c) c.focus();
+  }, 350);
+}
+
+/* ═══ BUILD PROJECT CARDS ═══ */
+function buildProjCards(proj) {
+  projCards.innerHTML = '';
+
+  if (isCompact) {
+    projCards.style.paddingTop = '7rem';
+  }
+
+  const hero = document.createElement('div');
+  hero.className = 'pcard pcard-hero vis';
+  hero.innerHTML = `<div class="pcard-visual">${proj.visual}${isCompact ? '' : `<span class="pcard-hero-title">${proj.name}</span>`}</div>`;
+  projCards.appendChild(hero);
+
+  if (!isCompact) {
+    /* Center the hero exactly where the zoomed home card lands so the
+       enlarged card continues seamlessly into the first detail card. */
+    const winH = window.innerHeight;
+    const heroH = hero.getBoundingClientRect().height;
+    projCards.style.paddingTop = `${Math.max(0, (winH - heroH) / 2)}px`;
+  }
+
+  proj.cards.forEach((c, i) => {
+    const card = document.createElement('div');
+    card.className = 'pcard pcard-detail';
+    card.id = `pcard-${i}`;
+    card.style.setProperty('--card-index', i);
+
+    const body = c.body ? `<div class="pcard__body">${c.body}</div>` : '';
+    const term = c.terminal ? `
+      <div class="terminal">
+        <div class="term-hdr">
+          <div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div>
+        </div>
+        <div class="term-body">${c.terminal}</div>
+      </div>` : '';
+    const grid = c.grid ? `
+      <div class="fgrid">
+        ${c.grid.map(g => `
+          <div class="fi">
+            <h3 class="fi__title">${g.title}</h3>
+            <p class="fi__desc">${g.desc}</p>
+          </div>`).join('')}
+      </div>` : '';
+    const stats = c.stats ? `
+      <div class="stats">
+        ${c.stats.map(s => `
+          <div class="stat">
+            <span class="stat__n">${s.n}</span>
+            <span class="stat__l">${s.l}</span>
+          </div>`).join('')}
+      </div>` : '';
+    const tags = c.tags ? `
+      <div class="ptags">
+        ${c.tags.map(t => `<span class="ptag">${t}</span>`).join('')}
+      </div>` : '';
+    const cta = c.cta ? `
+      <div class="pcta">
+        <button type="button" class="btn btn-d" data-action="waitlist">${c.cta}</button>
+      </div>` : '';
+
+    card.innerHTML = `
+      <div class="pcard-inner">
+        <span class="pcard__num">${c.num}</span>
+        <h2 class="pcard__title">${c.title}</h2>
+        ${body}${term}${grid}${stats}${tags}${cta}
+      </div>`;
+
+    projCards.appendChild(card);
+  });
+
+  observeCards();
+}
+
+/* ═══ REVEAL CARDS ═══ */
+let cardObserver = null;
+
+function observeCards() {
+  if (cardObserver) cardObserver.disconnect();
+  cardObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('vis');
+        cardObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05, rootMargin: '0px 0px -10% 0px' });
+
+  projCards.querySelectorAll('.pcard-detail').forEach(c => cardObserver.observe(c));
+
+  requestAnimationFrame(() => {
+    projCards.querySelectorAll('.pcard-detail').forEach(c => {
+      if (c.getBoundingClientRect().top < window.innerHeight * 0.9) c.classList.add('vis');
+    });
+  });
+}
+
+/* ═══ WAITLIST FORM ═══ */
+waitlistForm.addEventListener('submit', async e => {
+  e.preventDefault();
+
+  const name = waitlistForm.name.value.trim();
+  const email = waitlistForm.email.value.trim();
+
+  if (!name) {
+    waitlistForm.name.reportValidity();
+    return;
+  }
+  if (!waitlistForm.email.checkValidity()) {
+    waitlistForm.email.reportValidity();
+    return;
+  }
+
+  const btn = waitlistForm.querySelector('button[type="submit"]');
+  btn.disabled = true;
+  btn.textContent = 'Joining…';
+  waitlistStatus.textContent = '';
+  waitlistStatus.className = 'waitlist-status';
+
+  try {
+    if (WAITLIST_ENDPOINT) {
+      const res = await fetch(WAITLIST_ENDPOINT, {
+        method: 'POST',
+        mode: 'cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          name,
+          email,
+          ts: new Date().toISOString(),
+          source: 'website'
+        }),
+        redirect: 'follow'
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!data || data.ok !== true) throw new Error('endpoint rejected');
+    } else {
+      console.warn('[GlassMarble] WAITLIST_ENDPOINT not configured — showing local success. Setup: see waitlist-apps-script.gs');
+    }
+
+    waitlistStatus.textContent = "Thank you! You're on the list.";
+    waitlistStatus.className = 'waitlist-status ok';
+    waitlistForm.reset();
+  } catch (err) {
+    waitlistStatus.textContent = 'Something went wrong — please try again.';
+    waitlistStatus.className = 'waitlist-status err';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Join Waitlist';
+  }
+});
+
+/* ═══ CTA (join waitlist from detail cards) ═══ */
+projCards.addEventListener('click', e => {
+  const btn = e.target.closest('[data-action="waitlist"]');
+  if (!btn) return;
+  closeProject();
+  setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    waitlistForm.email.focus();
+  }, 500);
+});
+
+/* ═══ HASH ROUTING ═══ */
+function handleRoute() {
+  const hash = location.hash;
+  if (!hash || hash === '#/' || hash === '#') {
+    if (isProjectOpen) closeProject();
+    return;
+  }
+  const m = hash.match(/^#\/project\/(.+)$/);
+  if (m) {
+    const id  = m[1];
+    const idx = PROJECTS.findIndex(p => p.id === id);
+    if (idx > -1 && (!isProjectOpen || activeProjectIdx !== idx)) {
+      openProject(idx);
+    }
+  }
+}
+
+window.addEventListener('popstate', handleRoute);
+window.addEventListener('hashchange', handleRoute);
+
+/* ═══ BACK BUTTON ═══ */
+backBtn.addEventListener('click', closeProject);
+
+/* ═══ SCROLL ═══ */
+window.addEventListener('scroll', onScroll, { passive: true });
+
+/* ═══ INIT ═══ */
+buildHomeCards();
+setSpacerHeight();
+window.addEventListener('resize', setSpacerHeight);
+handleRoute();
+updateScrollUI(0);
+</script>
+</body>
+</html>
