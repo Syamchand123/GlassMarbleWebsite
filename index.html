@@ -6,7 +6,6 @@
   <title>GlassMarble — AI Architecture Intelligence for Developers</title>
   <meta name="description" content="GlassMarble is a free, open-source CLI that builds a living Architecture Knowledge Graph from your codebase. 31 diagram types, hotspot detection, and a grounded AI architect. 14 languages. No backend.">
   <meta name="robots" content="index, follow">
-  <!-- TODO: replace with the live GitHub Pages URL before launch -->
   <link rel="canonical" href="https://syamchand123.github.io/GlassMarbleWebsite/">
   <meta name="theme-color" content="#f6f6f6">
   <link rel="icon" type="image/png" href="assets/LOGO_PIXEL.png">
@@ -18,7 +17,43 @@
   <meta property="og:description" content="Free CLI. 14 languages. 31 architecture diagrams. Grounded AI architect. No backend required. Open source under MIT.">
   <meta property="og:url" content="https://syamchand123.github.io/GlassMarbleWebsite/">
   <meta property="og:site_name" content="GlassMarble">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://syamchand123.github.io/GlassMarbleWebsite/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="GlassMarble — AI Architecture Intelligence for Developers">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://syamchand123.github.io/GlassMarbleWebsite/assets/og-image.png">
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "name": "GlassMarble",
+        "url": "https://syamchand123.github.io/GlassMarbleWebsite/",
+        "description": "GlassMarble is a free, open-source CLI that builds a living Architecture Knowledge Graph from your codebase.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "GlassMarble",
+          "logo": { "@type": "ImageObject", "url": "https://syamchand123.github.io/GlassMarbleWebsite/assets/LOGO_PIXEL.png" }
+        }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "GlassMarble",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Windows, macOS, Linux",
+        "description": "Free CLI that maps your codebase into a living Architecture Knowledge Graph. 14 languages, 31 diagram types, grounded AI architect. No backend required.",
+        "license": "https://opensource.org/licenses/MIT",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "url": "https://syamchand123.github.io/GlassMarbleWebsite/",
+        "image": "https://syamchand123.github.io/GlassMarbleWebsite/assets/og-image.png"
+      }
+    ]
+  }
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1598,7 +1633,7 @@ function scrollToCard(idx) {
   if (diff < -total / 2) diff += total;
   if (diff > total / 2) diff -= total;
 
-  window.scrollTo({ top: scrollY + (diff * winH), behavior: 'smooth' });
+  window.scrollTo({ top: scrollY + (diff * winH), behavior: prefersReducedMotion ? 'instant' : 'smooth' });
 }
 
 /* ═══ KEYBOARD NAV ═══ */
@@ -1636,7 +1671,9 @@ function openProject(idx) {
 
   document.title = `GlassMarble — ${proj.name}`;
 
-  if (isCompact) {
+  if (isCompact || prefersReducedMotion) {
+    globalZoom = ZOOM_TARGET;
+    globalZoomTarget = ZOOM_TARGET;
     revealProjectView();
   } else {
     globalZoomTarget = ZOOM_TARGET;
@@ -1660,7 +1697,7 @@ function closeProject() {
   scrollDots.classList.remove('hidden');
   homeCardsEl.classList.remove('hidden');
 
-  globalZoom = ZOOM_TARGET * 1.1;
+  globalZoom = prefersReducedMotion ? 1 : ZOOM_TARGET * 1.1;
   globalZoomTarget = 1;
   isZoomingIn = false;
 
