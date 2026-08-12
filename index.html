@@ -969,7 +969,8 @@ h1.site-name {
 @media (max-width: 380px) {
   .home-card, .hcard-visual { width: 18rem; height: 18.5rem; border-radius: 2rem; }
   .hcard-title { font-size: 1.6rem; }
-  .home-left { padding: 4rem 2.4rem 0; }
+  /* keep the identity block clear of the fixed logo (logo bottom = 6.4rem) */
+  .home-left { padding: 7.2rem 2.4rem 0; }
   .proj-cards { padding-inline: 2.4rem; }
   .pcard__ghost { top: 2.2rem; right: 2.4rem; font-size: 7.5rem; }
   #project-left { padding: 8rem 2.4rem 0; }
@@ -1995,7 +1996,10 @@ function renderScroll(now) {
 
       let opacity = 0;
       if (abs <= 1.5) {
-        opacity = 1 - Math.min(abs, 1) * 0.9 - Math.max(0, abs - 1) * 0.2;
+        /* Phones: fade neighbours out fully — a translucent ghost card
+           otherwise floats over the identity panel and waitlist form. */
+        const falloff = isCompact ? 1.6 : 0.9;
+        opacity = Math.max(0, 1 - Math.min(abs, 1) * falloff - Math.max(0, abs - 1) * 0.2);
       }
 
       if (globalZoom > 1.1 && index !== currentCardIdx) {
