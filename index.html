@@ -350,6 +350,20 @@ h1.site-name {
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Open source badge — sits between identity and form */
+.oss-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--black);
+  animation: fadeUp 0.6s 0.20s var(--ease-out) both;
+  clip-path: inset(-6% -100%);
+  user-select: none;
+  line-height: 1;
+}
+
 /* ═══════════════════════════════════════
    HOME RIGHT — project cards
 ═══════════════════════════════════════ */
@@ -1021,6 +1035,71 @@ h1.site-name {
   .hcard-visual svg, .hcard-visual svg *,
   .pcard-hero svg, .pcard-hero svg * { animation: none !important; }
 }
+/* ═══════════════════════════════════════
+   BALLOON
+═══════════════════════════════════════ */
+.balloon {
+  position: fixed;
+  bottom: -14rem;
+  pointer-events: none;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  will-change: transform;
+}
+.balloon__body {
+  width: 6.4rem;
+  height: 7.4rem;
+  border-radius: 50%;
+  position: relative;
+  filter: drop-shadow(0 0.6rem 1.4rem rgba(0,0,0,0.14));
+}
+.balloon__shine {
+  position: absolute;
+  top: 18%;
+  left: 22%;
+  width: 28%;
+  height: 22%;
+  background: rgba(255,255,255,0.45);
+  border-radius: 50%;
+  transform: rotate(-28deg);
+}
+.balloon__knot {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  margin-top: -0.1rem;
+}
+.balloon__thread {
+  width: 1px;
+  height: 5rem;
+  margin-top: 0.1rem;
+}
+@keyframes balloonRise {
+  0%   { transform: translateY(0) rotate(0deg); }
+  20%  { transform: translateY(-20vh) rotate(3deg); }
+  40%  { transform: translateY(-40vh) rotate(-2.5deg); }
+  60%  { transform: translateY(-60vh) rotate(3.5deg); }
+  80%  { transform: translateY(-80vh) rotate(-2deg); }
+  100% { transform: translateY(-110vh) rotate(1deg); }
+}
+@keyframes balloonWobble {
+  0%,100% { transform: skewX(0deg); }
+  25%      { transform: skewX(3deg); }
+  75%      { transform: skewX(-3deg); }
+}
+@keyframes balloonPop {
+  0%   { transform: scale(1);   opacity: 1; filter: drop-shadow(0 0.6rem 1.4rem rgba(0,0,0,0.14)); }
+  30%  { transform: scale(1.28); opacity: 1; }
+  55%  { transform: scale(0.1);  opacity: 0.6; }
+  100% { transform: scale(0);   opacity: 0; }
+}
+@keyframes threadFade {
+  0%   { opacity: 1; }
+  60%  { opacity: 1; }
+  100% { opacity: 0; }
+}
   </style>
 </head>
 <body>
@@ -1066,6 +1145,8 @@ h1.site-name {
         <p class="site-role">AI Architecture Intelligence</p>
       </div>
     </div>
+
+    <p class="oss-badge" aria-label="Free and open source under MIT license">Free &amp; open source &mdash; MIT</p>
 
     <div class="home-btns">
       <form class="waitlist-form" id="waitlistForm" novalidate>
@@ -2149,6 +2230,7 @@ waitlistForm.addEventListener('submit', async e => {
     waitlistStatus.textContent = "Thank you! You're on the list.";
     waitlistStatus.className = 'waitlist-status ok';
     waitlistForm.reset();
+    launchBalloon();
   } catch (err) {
     waitlistStatus.textContent = 'Something went wrong — please try again.';
     waitlistStatus.className = 'waitlist-status err';
@@ -2168,6 +2250,130 @@ projCards.addEventListener('click', e => {
     waitlistForm.email.focus();
   }, 500);
 });
+
+/* ═══ BALLOON ═══ */
+const BALLOON_COLORS = [
+  { body: '#f87171', knot: '#dc2626', thread: '#dc2626' }, // red
+  { body: '#fb923c', knot: '#ea580c', thread: '#ea580c' }, // orange
+  { body: '#facc15', knot: '#ca8a04', thread: '#ca8a04' }, // yellow
+  { body: '#4ade80', knot: '#16a34a', thread: '#16a34a' }, // green
+  { body: '#60a5fa', knot: '#2563eb', thread: '#2563eb' }, // blue
+  { body: '#c084fc', knot: '#9333ea', thread: '#9333ea' }, // purple
+  { body: '#f472b6', knot: '#db2777', thread: '#db2777' }, // pink
+];
+
+function launchBalloon() {
+  const color = BALLOON_COLORS[Math.floor(Math.random() * BALLOON_COLORS.length)];
+  const startX = window.innerWidth * (0.15 + Math.random() * 0.70);
+
+  const balloon = document.createElement('div');
+  balloon.className = 'balloon';
+  balloon.style.cssText = `position:fixed;bottom:0;left:0;pointer-events:none;z-index:9999;display:flex;flex-direction:column;align-items:center;will-change:transform;`;
+  balloon.innerHTML = `
+    <div class="balloon__body" style="background:${color.body};">
+      <div class="balloon__shine"></div>
+    </div>
+    <div class="balloon__knot" style="background:${color.knot};"></div>
+    <svg class="balloon__thread" viewBox="0 0 10 60" style="width:1rem;height:6rem;overflow:visible;">
+      <path d="M5,0 C9,15 1,30 5,45 C9,55 2,60 5,60" stroke="${color.thread}" stroke-width="1.2" fill="none" opacity="0.65"/>
+    </svg>
+  `;
+  document.body.appendChild(balloon);
+
+  // Physics state — y is translateY value.
+  // position:fixed; bottom:0 means:
+  //   translateY(+160px) → 160px below viewport bottom (hidden, ready to enter)
+  //   translateY(0)      → sitting at the very bottom of the screen
+  //   translateY(-100vh) → risen to the top
+  let y       = 160;          // start just below the viewport
+  let x       = startX;
+  let velY    = -1.2;         // px/frame — negative = rising upward
+  let time    = 0;
+  let popped  = false;
+  let raf;
+
+  // Wind parameters — unique per balloon
+  const windAmp1  = 18 + Math.random() * 22;   // px amplitude, slow swell
+  const windFreq1 = 0.012 + Math.random() * 0.008;
+  const windAmp2  = 6  + Math.random() * 10;   // px amplitude, fast gust
+  const windFreq2 = 0.038 + Math.random() * 0.018;
+  const windPhase = Math.random() * Math.PI * 2;
+
+  // Wobble/tilt
+  const tiltFreq  = 0.025 + Math.random() * 0.01;
+  const tiltAmp   = 5 + Math.random() * 4;     // degrees
+
+  const body   = balloon.querySelector('.balloon__body');
+  const knot   = balloon.querySelector('.balloon__knot');
+  const thread = balloon.querySelector('.balloon__thread');
+
+  function pop() {
+    popped = true;
+    cancelAnimationFrame(raf);
+
+    // Kill wobble
+    body.style.animation = 'none';
+
+    // Expand then vanish
+    body.animate([
+      { transform: 'scale(1)',    opacity: 1 },
+      { transform: 'scale(1.45)', opacity: 1,   offset: 0.28 },
+      { transform: 'scale(1.5)',  opacity: 0.8, offset: 0.42 },
+      { transform: 'scale(0)',    opacity: 0 },
+    ], { duration: 320, easing: 'cubic-bezier(0.4,0,0.2,1)', fill: 'forwards' });
+
+    knot.animate(   [{ opacity: 1 }, { opacity: 0 }], { duration: 200, fill: 'forwards' });
+    thread.animate( [{ opacity: 0.65 }, { opacity: 0 }], { duration: 280, fill: 'forwards' });
+
+    setTimeout(() => balloon.remove(), 600);
+  }
+
+  function frame() {
+    time++;
+
+    // Gentle upward acceleration (buoyancy) — slows near top
+    velY -= 0.022;
+    if (velY < -4.8) velY = -4.8;            // terminal velocity cap
+
+    // Rise in Y (negative = up since we use translateY)
+    y += velY;
+
+    // Wind: two overlapping sine waves = natural turbulence
+    const windX = windAmp1 * Math.sin(time * windFreq1 + windPhase)
+                + windAmp2 * Math.sin(time * windFreq2 + windPhase * 1.3);
+
+    x = startX + windX;
+
+    // Tilt follows wind direction (derivative of wind)
+    const tilt  = tiltAmp * Math.cos(time * tiltFreq);
+
+    // Wobble squish on body
+    const wobbleX = 1 + 0.04 * Math.sin(time * 0.07);
+    const wobbleY = 1 - 0.04 * Math.sin(time * 0.07);
+
+    balloon.style.transform  = `translate(${x}px, ${y}px) rotate(${tilt}deg)`;
+    body.style.transform     = `scaleX(${wobbleX}) scaleY(${wobbleY})`;
+
+    // Pop when balloon top reaches ~3% from viewport top
+    const rect = balloon.getBoundingClientRect();
+    if (!popped && rect.top <= window.innerHeight * 0.03) {
+      pop();
+      return;
+    }
+
+    // Safety: remove if somehow gone too far
+    if (!popped && rect.bottom < -200) {
+      balloon.remove();
+      return;
+    }
+
+    raf = requestAnimationFrame(frame);
+  }
+
+  // Start from bottom of screen
+  balloon.style.transform = `translate(${x}px, 0px)`;
+  raf = requestAnimationFrame(frame);
+}
 
 /* ═══ HASH ROUTING ═══ */
 function handleRoute() {
