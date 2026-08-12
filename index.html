@@ -95,7 +95,9 @@ html {
 }
 
 body {
-  background: var(--bg);
+  /* transparent: the #bg-scene layers sit behind content at z-index:-1
+     and must not be covered by body's own background */
+  background: transparent;
   overflow-x: hidden;
   line-height: 1;
   min-height: 100vh;
@@ -130,6 +132,35 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 }
 #edge-fade::before { top: 0;    background: linear-gradient(to bottom, var(--bg), transparent); }
 #edge-fade::after  { bottom: 0; background: linear-gradient(to top,   var(--bg), transparent); }
+
+/* ═══════════════════════════════════════
+   BACKGROUND SCENE
+   Film grain + vignette only — a calm, flat
+   canvas that never competes with content.
+   All layers sit behind the content
+   (z-index -1), transform/opacity only.
+═══════════════════════════════════════ */
+#bg-scene {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bg-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+.bg-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 115% 105% at 50% 40%, transparent 60%, rgba(26,26,26,0.06) 100%);
+}
 
 /* ═══════════════════════════════════════
    SITE LOGO — fixed top-left, all pages
@@ -232,6 +263,33 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 .waitlist-status.ok  { color: #2f7d43; }
 .waitlist-status.err { color: #b3382c; }
 
+/* Live waitlist counter — minimal micro-line beneath the form.
+   Black number, grey uppercase label. */
+.waitlist-count {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--grey);
+  animation: fadeUp 0.6s 0.34s var(--ease-out) both;
+  clip-path: inset(-6% -100%);
+}
+.waitlist-count[hidden] { display: none; }
+.waitlist-count__num {
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--black);
+  font-variant-numeric: tabular-nums;
+}
+@keyframes countTick {
+  from { opacity: 0.4; transform: translateY(0.5rem); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.waitlist-count__num.tick { animation: countTick 0.35s var(--ease-out); }
+
 /* ═══════════════════════════════════════
    HOME VIEW — fixed left identity panel
 ═══════════════════════════════════════ */
@@ -290,15 +348,6 @@ h1.site-name {
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(1.5rem); }
   to   { opacity: 1; transform: translateY(0); }
-}
-
-.home-note {
-  font-size: 1.05rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--grey);
-  animation: fadeUp 0.6s 0.34s var(--ease-out) both;
-  clip-path: inset(-6% -100%);
 }
 
 /* ═══════════════════════════════════════
@@ -694,6 +743,107 @@ h1.site-name {
 .btn-d:hover { background: #333; }
 
 /* ═══════════════════════════════════════
+   CARD COLOR THEMES — brand terminal palette
+   Each project owns one accent color (sky,
+   violet, mint, amber) applied as a light tint
+   + soft ghost numeral + colored accents on
+   detail cards. White text stays white; deep
+   accents keep WCAG AA contrast on their tints.
+═══════════════════════════════════════ */
+.accent-sky    { --accent: #7dd3fc; --accent-deep: #0369a1; --accent-tint: #eef8fe; --accent-soft: #d9effd; --accent-border: #a9ddfb; }
+.accent-violet { --accent: #a78bfa; --accent-deep: #6d28d9; --accent-tint: #f4f1fe; --accent-soft: #e6defc; --accent-border: #cdbef9; }
+.accent-mint   { --accent: #86efac; --accent-deep: #15803d; --accent-tint: #edfaf1; --accent-soft: #d7f3e2; --accent-border: #a9e6c2; }
+.accent-amber  { --accent: #fbbf24; --accent-deep: #b45309; --accent-tint: #fef8ec; --accent-soft: #fceecb; --accent-border: #f8dc9e; }
+
+.pcard-detail {
+  background: var(--accent-tint);
+}
+
+/* Ghost numeral — the section number rendered huge and translucent
+   in the card's accent, breathing color into the top-right corner
+   without a hard stripe. Sits behind all content. */
+.pcard__ghost {
+  position: absolute;
+  top: 4.4rem;
+  right: 5.4rem;
+  font-size: 15rem;
+  font-weight: 300;
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  color: var(--accent);
+  opacity: 0.16;
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
+}
+.pcard-detail:hover .pcard__ghost { opacity: 0.24; }
+
+/* Accent rule under the card title — short, editorial, no stripe. */
+.pcard-detail .pcard__title {
+  position: relative;
+  padding-bottom: 1.8rem;
+}
+.pcard-detail .pcard__title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 4.8rem;
+  height: 0.35rem;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+/* Successive stacked cards sit slightly lighter — keeps the
+   original per-index depth effect on top of the accent tint. */
+.pcard-detail::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255, calc(var(--card-index, 0) * 0.07));
+  pointer-events: none;
+}
+.pcard-detail .pcard-inner { position: relative; z-index: 1; }
+.pcard-detail .pcard__num {
+  color: var(--accent-deep);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.pcard-detail .pcard__num::before {
+  content: '';
+  width: 1.6rem;
+  height: 0.35rem;
+  border-radius: 999px;
+  background: var(--accent);
+  display: inline-block;
+}
+.pcard-detail .pcard__body strong { color: var(--accent-deep); }
+.pcard-detail .pcard__body code {
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+}
+.pcard-detail .fi {
+  background: var(--white);
+  border-color: var(--accent-border);
+}
+.pcard-detail .fi__title { color: var(--accent-deep); }
+.pcard-detail .stats { border-top-color: var(--accent-border); }
+.pcard-detail .stat { border-bottom-color: var(--accent-border); }
+.pcard-detail .stat:nth-child(odd) { border-right-color: var(--accent-border); }
+.pcard-detail .stat__n { color: var(--accent-deep); }
+.pcard-detail .ptag {
+  background: var(--accent-soft);
+  border-color: var(--accent-border);
+  color: var(--accent-deep);
+}
+.pcard-detail .btn-d {
+  background: var(--accent-deep);
+  color: var(--white);
+}
+.pcard-detail .btn-d:hover { background: var(--accent-deep); filter: brightness(0.88); }
+
+/* ═══════════════════════════════════════
    COMPACT — ≤1024px (tablet & phone)
 ═══════════════════════════════════════ */
 @media (max-width: 1024px) {
@@ -766,6 +916,7 @@ h1.site-name {
 
   .pcard { border-radius: 3rem; aspect-ratio: auto; min-height: 42rem; }
   .pcard-inner { padding: 3.2rem; }
+  .pcard__ghost { top: 2.6rem; right: 2.8rem; font-size: 9rem; }
   .pcard__title { font-size: 2.6rem; margin-bottom: 1.8rem; }
   .pcard__body { font-size: 1.5rem; }
   .pcard__num { margin-bottom: 1.6rem; }
@@ -790,8 +941,74 @@ h1.site-name {
   #home-cards { top: 88%; }
   .home-left { padding: 4rem 2.4rem 0; }
   .proj-cards { padding-inline: 2.4rem; }
+  .pcard__ghost { top: 2.2rem; right: 2.4rem; font-size: 7.5rem; }
   #project-left { padding: 8rem 2.4rem 0; }
 }
+
+/* ═══════════════════════════════════════
+   CARD VISUAL MOTION
+   Every card is a live process: progress bars fill,
+   carets blink, packets flow, checkmarks draw.
+   Transform/opacity/stroke-dashoffset only — no layout.
+═══════════════════════════════════════ */
+@keyframes gm-blink   { 0%, 52% { opacity: 1; } 53%, 100% { opacity: 0; } }
+@keyframes gm-pulse   { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+@keyframes gm-glow    { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
+@keyframes gm-flowdown{ from { stroke-dashoffset: 10; } to { stroke-dashoffset: 0; } }
+@keyframes gm-draw    { 0% { stroke-dashoffset: 60; } 32% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 0; } }
+@keyframes gm-fill    { 0% { transform: scaleX(0); } 25% { transform: scaleX(1); } 100% { transform: scaleX(1); } }
+@keyframes gm-before  { 0% { transform: scaleX(0); } 30% { transform: scaleX(1); } 100% { transform: scaleX(1); } }
+@keyframes gm-after   { 0% { transform: scaleX(0); } 45% { transform: scaleX(1); } 100% { transform: scaleX(1); } }
+@keyframes gm-type    { 0%, 40% { opacity: 0; } 48%, 100% { opacity: 1; } }
+@keyframes gm-travel  { 0% { transform: translate(-38px, 0); opacity: 0; } 8% { opacity: 1; } 84% { opacity: 1; } 100% { transform: translate(0, 0); opacity: 0; } }
+@keyframes gm-launchbar { 0% { transform: scaleX(0); } 72% { transform: scaleX(1); } 100% { transform: scaleX(1); } }
+@keyframes gm-boot    { from { opacity: 0; transform: scale(0.985); } to { opacity: 1; transform: scale(1); } }
+@keyframes gm-fadein  { 0%, 45% { opacity: 0; } 62%, 100% { opacity: 1; } }
+@keyframes gm-fadeout { 0%, 30% { opacity: 1; } 50%, 100% { opacity: 0; } }
+@keyframes gm-node    { 0% { transform: scale(0); } 55% { transform: scale(1.14); } 72% { transform: scale(1); } 100% { transform: scale(1); } }
+@keyframes gm-ignite  { 0%, 55% { opacity: 0.2; } 68%, 100% { opacity: 1; } }
+@keyframes gm-strike  { 0%, 45% { transform: scaleX(0); opacity: 0; } 58% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 1; } }
+@keyframes gm-fillv   { 0% { transform: scaleY(0); } 25% { transform: scaleY(1); } 100% { transform: scaleY(1); } }
+@keyframes gm-draw90  { 0% { stroke-dashoffset: 90; } 30% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 0; } }
+
+.m-caret     { animation: gm-blink 1.15s steps(1) infinite; }
+.m-pulse     { animation: gm-pulse 2.6s ease-in-out infinite; }
+.m-glow      { animation: gm-glow 3s ease-in-out infinite; }
+.m-flowdown  { stroke-dasharray: 5 5; animation: gm-flowdown 1.6s linear infinite; }
+.m-draw      { stroke-dasharray: 60 60; animation: gm-draw 3.4s ease-out infinite; }
+.m-fill      { transform-box: fill-box; transform-origin: left center; animation: gm-fill 4s ease-out infinite backwards; }
+.m-before    { transform-box: fill-box; transform-origin: left center; animation: gm-before 6s ease-out infinite backwards; }
+.m-after     { transform-box: fill-box; transform-origin: left center; animation: gm-after 4.5s ease-out infinite backwards; }
+.m-type      { animation: gm-type 4.8s ease-out infinite backwards; }
+.m-travel    { transform-box: fill-box; animation: gm-travel 3.2s ease-in-out infinite; }
+.m-launchbar { transform-box: fill-box; transform-origin: left center; animation: gm-launchbar 6s ease-out infinite backwards; }
+.m-fadein  { animation: gm-fadein 4.5s ease-out infinite backwards; }
+.m-fadeout { animation: gm-fadeout 4.5s ease-out infinite backwards; }
+.m-node    { transform-box: fill-box; transform-origin: center; animation: gm-node 4.5s ease-out infinite backwards; }
+.m-ignite  { animation: gm-ignite 5s ease-out infinite backwards; }
+.m-strike  { transform-box: fill-box; transform-origin: left center; animation: gm-strike 5.5s ease-out infinite backwards; }
+.m-fillv   { transform-box: fill-box; transform-origin: top center; animation: gm-fillv 4s ease-out infinite backwards; }
+.m-draw90  { stroke-dasharray: 90 90; animation: gm-draw90 4.5s ease-out infinite backwards; }
+
+/* phase offsets for sequential motion */
+.d1 { animation-delay: 0.6s; }
+.d2 { animation-delay: 1.2s; }
+.d3 { animation-delay: 1.8s; }
+.d4 { animation-delay: 2.4s; }
+.d5 { animation-delay: 2.6s; }
+.d6 { animation-delay: 2.9s; }
+.d7 { animation-delay: 3.2s; }
+
+/* boot-up: cards fade in on first render (staggered in the ring),
+   and the hero "boots" each time a project opens */
+.hcard-visual svg,
+.pcard-hero svg { animation: gm-boot 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.home-card:nth-child(2) .hcard-visual svg { animation-delay: 0.07s; }
+.home-card:nth-child(3) .hcard-visual svg { animation-delay: 0.14s; }
+.home-card:nth-child(4) .hcard-visual svg { animation-delay: 0.21s; }
+.home-card:nth-child(5) .hcard-visual svg { animation-delay: 0.28s; }
+.home-card:nth-child(6) .hcard-visual svg { animation-delay: 0.35s; }
+.home-card:nth-child(7) .hcard-visual svg { animation-delay: 0.42s; }
 
 /* ═══════════════════════════════════════
    REDUCED MOTION
@@ -800,11 +1017,18 @@ h1.site-name {
   html { scroll-behavior: auto; }
   .scroll-hint__line::after { animation: none; }
   .cursor { animation: none; }
-  h1.site-name, .site-role, .home-btns, .home-note { animation-duration: 0.01s; }
+  h1.site-name, .site-role, .home-btns { animation-duration: 0.01s; }
+  .hcard-visual svg, .hcard-visual svg *,
+  .pcard-hero svg, .pcard-hero svg * { animation: none !important; }
 }
   </style>
 </head>
 <body>
+
+<div id="bg-scene" aria-hidden="true">
+  <i class="bg-grain"></i>
+  <i class="bg-vignette"></i>
+</div>
 
 <a class="site-logo" href="#/" aria-label="GlassMarble — back to home">
   <img src="assets/LOGO_PIXEL.png" alt="GlassMarble">
@@ -851,7 +1075,10 @@ h1.site-name {
       </form>
     </div>
     <p class="waitlist-status" id="waitlistStatus" role="status" aria-live="polite"></p>
-    <p class="home-note">v1.0 launching soon &middot; Free &middot; MIT &middot; No backend</p>
+    <p class="waitlist-count" id="waitlistCount" hidden aria-hidden="true">
+      <span class="waitlist-count__num" id="waitlistCountNum">0</span>
+      <span class="waitlist-count__label">already on the waitlist</span>
+    </p>
   </div>
 
   <!-- Fixed right cards — one per project, swap on scroll -->
@@ -936,48 +1163,52 @@ const PROJECTS = [
     num: '01',
     name: 'Analysis Engine',
     sub: '14 languages. One graph.',
+    accent: 'sky',
     visual: `
 <svg viewBox="0 0 670 688" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Analysis Engine pipeline">
   <rect width="670" height="688" fill="#111111"/>
   <rect x="40" y="40" width="590" height="608" rx="24" fill="#151515" stroke="#2a2a2a"/>
   <circle cx="66" cy="68" r="5" fill="#ff5f56"/><circle cx="84" cy="68" r="5" fill="#ffbd2e"/><circle cx="102" cy="68" r="5" fill="#27c93f"/>
-  <text x="122" y="74" font-family="ui-monospace,Consolas,monospace" font-size="20" fill="#808080">gmb analyze --full</text>
+  <text x="122" y="74" font-family="ui-monospace,Consolas,monospace" font-size="20" fill="#808080">analysis engine</text>
+  <rect class="m-caret" x="350" y="54" width="11" height="24" fill="#e8e8e8"/>
   <line x1="40" y1="96" x2="630" y2="96" stroke="#262626"/>
-  <rect x="40" y="96" width="150" height="552" fill="#1a1a1a"/>
-  <text x="60" y="142" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#6b6b6b">cmd/</text>
-  <text x="60" y="176" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#6b6b6b">internal/</text>
-  <text x="60" y="210" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#6b6b6b">viz/</text>
-  <rect x="52" y="228" width="126" height="32" rx="6" fill="#1e2f3a"/>
-  <text x="62" y="250" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#7dd3fc">analyze.go</text>
-  <text x="60" y="286" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#6b6b6b">ai_engine/</text>
-  <text x="60" y="320" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#6b6b6b">akg/</text>
-  <text x="210" y="142" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#6b6b6b">Stage 1</text>
-  <text x="310" y="142" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#d4d4d4">Ingesting 214 files &middot; 14 languages</text>
-  <rect x="210" y="156" width="380" height="10" rx="5" fill="#232323"/>
-  <rect x="210" y="156" width="380" height="10" rx="5" fill="#7dd3fc"/>
-  <text x="210" y="206" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#6b6b6b">Stage 2</text>
-  <text x="310" y="206" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#d4d4d4">Normalizing to GAST</text>
-  <rect x="210" y="220" width="380" height="10" rx="5" fill="#232323"/>
-  <rect x="210" y="220" width="380" height="10" rx="5" fill="#a78bfa"/>
-  <text x="210" y="270" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#6b6b6b">Stage 3</text>
-  <text x="310" y="270" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#d4d4d4">Mapping topology</text>
-  <rect x="210" y="284" width="380" height="10" rx="5" fill="#232323"/>
-  <rect x="210" y="284" width="380" height="10" rx="5" fill="#fbbf24"/>
-  <text x="210" y="334" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#6b6b6b">Stage 4</text>
-  <text x="310" y="334" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#d4d4d4">Semantic graph linking</text>
-  <rect x="210" y="348" width="380" height="10" rx="5" fill="#232323"/>
-  <rect x="210" y="348" width="380" height="10" rx="5" fill="#86efac"/>
-  <text x="210" y="404" font-family="ui-monospace,Consolas,monospace" font-size="24" fill="#86efac">AKG ready &mdash; 3,847 nodes &middot; 12,091 edges</text>
-  <line x1="470" y1="452" x2="560" y2="492" stroke="#3a3a3a"/>
-  <line x1="560" y1="492" x2="520" y2="534" stroke="#3a3a3a"/>
-  <line x1="470" y1="452" x2="520" y2="534" stroke="#3a3a3a"/>
-  <circle cx="470" cy="452" r="15" fill="#1e2f3a" stroke="#7dd3fc"/>
-  <circle cx="560" cy="492" r="15" fill="#2f263d" stroke="#a78bfa"/>
-  <circle cx="520" cy="534" r="15" fill="#1f3327" stroke="#86efac"/>
-  <text x="470" y="458" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#7dd3fc">f</text>
-  <text x="560" y="498" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#a78bfa">p</text>
-  <text x="520" y="540" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#86efac">g</text>
-  <text x="210" y="530" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#6b6b6b">cross-package call edges resolved</text>
+  <line x1="88" y1="146" x2="88" y2="362" stroke="#262626" stroke-width="3"/>
+  <rect class="m-fillv" x="86.5" y="146" width="3" height="54" fill="#7dd3fc"/>
+  <rect class="m-fillv d1" x="86.5" y="200" width="3" height="54" fill="#a78bfa"/>
+  <rect class="m-fillv d2" x="86.5" y="254" width="3" height="54" fill="#fbbf24"/>
+  <rect class="m-fillv d3" x="86.5" y="308" width="3" height="54" fill="#86efac"/>
+  <circle cx="88" cy="175" r="6" fill="#7dd3fc"/>
+  <circle cx="88" cy="229" r="6" fill="#a78bfa"/>
+  <circle cx="88" cy="283" r="6" fill="#fbbf24"/>
+  <circle cx="88" cy="337" r="6" fill="#86efac"/>
+  <text x="112" y="162" font-family="ui-monospace,Consolas,monospace" font-size="17"><tspan fill="#6b6b6b">Stage 1</tspan><tspan dx="14" fill="#d4d4d4">Reading every file &middot; 14 languages</tspan></text>
+  <rect x="340" y="170" width="270" height="10" rx="5" fill="#232323"/>
+  <rect class="m-fill" x="340" y="170" width="270" height="10" rx="5" fill="#7dd3fc"/>
+  <text x="112" y="216" font-family="ui-monospace,Consolas,monospace" font-size="17"><tspan fill="#6b6b6b">Stage 2</tspan><tspan dx="14" fill="#d4d4d4">Normalizing to one model</tspan></text>
+  <rect x="340" y="224" width="270" height="10" rx="5" fill="#232323"/>
+  <rect class="m-fill d1" x="340" y="224" width="270" height="10" rx="5" fill="#a78bfa"/>
+  <text x="112" y="270" font-family="ui-monospace,Consolas,monospace" font-size="17"><tspan fill="#6b6b6b">Stage 3</tspan><tspan dx="14" fill="#d4d4d4">Mapping packages &amp; calls</tspan></text>
+  <rect x="340" y="278" width="270" height="10" rx="5" fill="#232323"/>
+  <rect class="m-fill d2" x="340" y="278" width="270" height="10" rx="5" fill="#fbbf24"/>
+  <text x="112" y="324" font-family="ui-monospace,Consolas,monospace" font-size="17"><tspan fill="#6b6b6b">Stage 4</tspan><tspan dx="14" fill="#d4d4d4">Linking &middot; commits the graph</tspan></text>
+  <rect x="340" y="332" width="270" height="10" rx="5" fill="#232323"/>
+  <rect class="m-fill d3" x="340" y="332" width="270" height="10" rx="5" fill="#86efac"/>
+  <text class="m-glow" x="112" y="398" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#86efac">one living graph &mdash; always in sync with code</text>
+  <line class="m-draw d3" x1="335" y1="460" x2="335" y2="505" stroke="#3a3a3a" stroke-width="2"/>
+  <line class="m-draw d3" x1="374" y1="483" x2="335" y2="505" stroke="#3a3a3a" stroke-width="2"/>
+  <line class="m-draw d3" x1="374" y1="527" x2="335" y2="505" stroke="#3a3a3a" stroke-width="2"/>
+  <line class="m-draw d3" x1="335" y1="550" x2="335" y2="505" stroke="#3a3a3a" stroke-width="2"/>
+  <line class="m-draw d3" x1="296" y1="527" x2="335" y2="505" stroke="#3a3a3a" stroke-width="2"/>
+  <line class="m-draw d3" x1="296" y1="483" x2="335" y2="505" stroke="#3a3a3a" stroke-width="2"/>
+  <line class="m-draw90 d4" x1="296" y1="483" x2="374" y2="483" stroke="#3a3a3a" stroke-width="2"/>
+  <circle class="m-node d4" cx="335" cy="460" r="10" fill="#1e2f3a" stroke="#7dd3fc" stroke-width="2"/>
+  <circle class="m-node d4" cx="374" cy="483" r="11" fill="#2f263d" stroke="#a78bfa" stroke-width="2"/>
+  <circle class="m-node d4" cx="374" cy="527" r="10" fill="#1e2f3a" stroke="#7dd3fc" stroke-width="2"/>
+  <circle class="m-node d5" cx="335" cy="550" r="10" fill="#3a3018" stroke="#fbbf24" stroke-width="2"/>
+  <circle class="m-node d5" cx="296" cy="527" r="11" fill="#2f263d" stroke="#a78bfa" stroke-width="2"/>
+  <circle class="m-node d5" cx="296" cy="483" r="10" fill="#1e2f3a" stroke="#7dd3fc" stroke-width="2"/>
+  <circle class="m-node d3" cx="335" cy="505" r="16" fill="#1f3327" stroke="#86efac" stroke-width="2"/>
+  <text x="335" y="510" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="12" fill="#86efac">AKG</text>
   <rect x="40" y="596" width="590" height="52" fill="#101010"/>
   <text x="60" y="630" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#86efac">&check; Analysis complete in 18.2s</text>
   <text x="560" y="630" text-anchor="end" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#6b6b6b">v1.0</text>
@@ -1021,45 +1252,49 @@ const PROJECTS = [
     num: '02',
     name: 'Architecture Diagrams',
     sub: '31 diagram types. Always current.',
+    accent: 'violet',
     visual: `
-<svg viewBox="0 0 670 688" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Architecture diagram visualization">
+<svg viewBox="0 0 670 688" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="C4 container diagram rendered from the AKG">
   <rect width="670" height="688" fill="#111111"/>
-  <rect x="40" y="40" width="590" height="608" rx="24" fill="#151515" stroke="#2a2a2a"/>
-  <circle cx="66" cy="68" r="5" fill="#ff5f56"/><circle cx="84" cy="68" r="5" fill="#ffbd2e"/><circle cx="102" cy="68" r="5" fill="#27c93f"/>
-  <text x="122" y="74" font-family="ui-monospace,Consolas,monospace" font-size="20" fill="#808080">gmb visualize c4container</text>
-  <line x1="40" y1="96" x2="630" y2="96" stroke="#262626"/>
-  <rect x="90" y="140" width="250" height="150" rx="14" fill="#1c1c1c" stroke="#3a3a3a"/>
-  <rect x="90" y="140" width="250" height="40" rx="14" fill="#1e2f3a"/>
-  <rect x="90" y="166" width="250" height="14" fill="#1e2f3a"/>
-  <text x="112" y="167" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#7dd3fc">PaymentService</text>
-  <text x="112" y="212" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#9a9a9a">POST /payments</text>
-  <text x="112" y="246" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#9a9a9a">+ process(order)</text>
-  <rect x="90" y="330" width="250" height="150" rx="14" fill="#1c1c1c" stroke="#3a3a3a"/>
-  <rect x="90" y="330" width="250" height="40" rx="14" fill="#1f3327"/>
-  <rect x="90" y="356" width="250" height="14" fill="#1f3327"/>
-  <text x="112" y="357" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#86efac">RefundService</text>
-  <text x="112" y="402" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#9a9a9a">+ refund(order)</text>
-  <text x="112" y="436" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#9a9a9a">&rarr; db.queries</text>
-  <rect x="380" y="240" width="220" height="130" rx="14" fill="#1c1c1c" stroke="#3a3a3a"/>
-  <rect x="380" y="240" width="220" height="40" rx="14" fill="#2f263d"/>
-  <rect x="380" y="266" width="220" height="14" fill="#2f263d"/>
-  <text x="402" y="267" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#a78bfa">OrderService</text>
-  <text x="402" y="312" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#9a9a9a">+ checkout()</text>
-  <line x1="380" y1="285" x2="342" y2="285" stroke="#555555"/>
-  <polygon points="342,285 352,279 352,291" fill="#555555"/>
-  <text x="352" y="276" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#7dd3fc">calls</text>
-  <line x1="342" y1="360" x2="342" y2="376" stroke="#555555" stroke-dasharray="5 5"/>
-  <polygon points="342,376 350,370 350,382" fill="#555555"/>
-  <text x="356" y="392" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#86efac">queries</text>
-  <rect x="380" y="420" width="170" height="40" rx="20" fill="#1e2f3a" stroke="#2e4a5e"/>
-  <text x="400" y="446" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#7dd3fc">mermaid</text>
-  <rect x="380" y="474" width="170" height="40" rx="20" fill="#2f263d" stroke="#4a3e63"/>
-  <text x="400" y="500" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#a78bfa">plantuml</text>
-  <rect x="380" y="528" width="170" height="40" rx="20" fill="#1f3327" stroke="#2e4a3e"/>
-  <text x="400" y="554" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#86efac">dot</text>
-  <text x="90" y="560" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#6b6b6b">scopes: global &middot; package &middot; file</text>
-  <rect x="40" y="596" width="590" height="52" fill="#101010"/>
-  <text x="60" y="630" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#86efac">&check; 31 types &middot; deterministic output</text>
+  <text x="40" y="54" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#9a9a9a">c4container &middot; rendered from the live AKG</text>
+  <rect x="430" y="36" width="200" height="34" rx="17" fill="#1c1c1c" stroke="#262626"/>
+  <text x="446" y="58" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#7dd3fc">architecture.mmd</text>
+  <path class="m-draw" d="M604 50 L610 56 L622 42" stroke="#86efac" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="40" y1="84" x2="630" y2="84" stroke="#262626"/>
+  <rect x="40" y="104" width="590" height="400" rx="20" fill="#141414" stroke="#2c2c2c"/>
+  <text x="58" y="128" font-family="ui-monospace,Consolas,monospace" font-size="13" fill="#6b6b6b">system: payments</text>
+  <rect x="60" y="146" width="220" height="142" rx="14" fill="#1c1c1c" stroke="#2e4a5e"/>
+  <rect x="60" y="146" width="220" height="38" rx="14" fill="#1e2f3a"/>
+  <rect x="60" y="170" width="220" height="14" fill="#1e2f3a"/>
+  <text x="80" y="172" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#7dd3fc">PaymentService</text>
+  <text x="80" y="214" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#9a9a9a">POST /payments</text>
+  <text x="80" y="244" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#9a9a9a">+ process(order)</text>
+  <rect x="390" y="146" width="220" height="142" rx="14" fill="#1c1c1c" stroke="#4a3e63"/>
+  <rect x="390" y="146" width="220" height="38" rx="14" fill="#2f263d"/>
+  <rect x="390" y="170" width="220" height="14" fill="#2f263d"/>
+  <text x="410" y="172" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#a78bfa">OrderService</text>
+  <text x="410" y="214" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#9a9a9a">+ checkout()</text>
+  <text x="410" y="244" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#9a9a9a">+ getOrder()</text>
+  <rect x="200" y="330" width="270" height="118" rx="14" fill="#1c1c1c" stroke="#2e4a3e"/>
+  <rect x="200" y="330" width="270" height="38" rx="14" fill="#1f3327"/>
+  <rect x="200" y="354" width="270" height="14" fill="#1f3327"/>
+  <text x="220" y="356" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#86efac">RefundService</text>
+  <text x="220" y="398" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#9a9a9a">+ refund(order)</text>
+  <text x="220" y="428" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#9a9a9a">&rarr; db.ledger</text>
+  <line x1="280" y1="220" x2="390" y2="220" stroke="#555555" stroke-width="2"/>
+  <polygon points="390,220 378,214 378,226" fill="#555555"/>
+  <text x="330" y="210" font-family="ui-monospace,Consolas,monospace" font-size="13" fill="#7dd3fc">calls</text>
+  <circle class="m-travel" cx="355" cy="220" r="4" fill="#7dd3fc"/>
+  <line class="m-flowdown" x1="335" y1="288" x2="335" y2="330" stroke="#555555" stroke-width="2"/>
+  <polygon points="335,330 329,318 341,318" fill="#555555"/>
+  <text x="345" y="316" font-family="ui-monospace,Consolas,monospace" font-size="13" fill="#86efac">queries</text>
+  <text x="145" y="560" text-anchor="middle" font-family="Inter,sans-serif" font-size="32" font-weight="500" fill="#d4d4d4">14</text>
+  <text x="145" y="586" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="13" fill="#9a9a9a">UML</text>
+  <text x="335" y="560" text-anchor="middle" font-family="Inter,sans-serif" font-size="32" font-weight="500" fill="#d4d4d4">7</text>
+  <text x="335" y="586" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="13" fill="#9a9a9a">C4</text>
+  <text x="525" y="560" text-anchor="middle" font-family="Inter,sans-serif" font-size="32" font-weight="500" fill="#d4d4d4">10</text>
+  <text x="525" y="586" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="13" fill="#9a9a9a">SPECIALIZED</text>
+  <text x="335" y="640" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#6b6b6b">mermaid &middot; plantuml &middot; dot &mdash; deterministic &middot; byte-identical</text>
 </svg>`,
     cards: [
       {
@@ -1099,29 +1334,32 @@ const PROJECTS = [
     num: '03',
     name: 'AI Architect',
     sub: 'Grounded answers from real code.',
+    accent: 'mint',
     visual: `
-<svg viewBox="0 0 670 688" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AI Architect chat">
+<svg viewBox="0 0 670 688" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AI Architect grounded chat">
   <rect width="670" height="688" fill="#111111"/>
-  <rect x="40" y="40" width="590" height="608" rx="24" fill="#151515" stroke="#2a2a2a"/>
-  <circle cx="66" cy="68" r="5" fill="#ff5f56"/><circle cx="84" cy="68" r="5" fill="#ffbd2e"/><circle cx="102" cy="68" r="5" fill="#27c93f"/>
-  <text x="122" y="74" font-family="ui-monospace,Consolas,monospace" font-size="20" fill="#808080">gmb ai &mdash; grounded agent</text>
-  <line x1="40" y1="96" x2="630" y2="96" stroke="#262626"/>
-  <rect x="70" y="130" width="380" height="58" rx="16" fill="#262626"/>
-  <text x="92" y="160" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#e8e8e8">which services depend on the</text>
-  <text x="92" y="182" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#e8e8e8">payment module?</text>
-  <text x="70" y="236" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#7dd3fc">&rarr; akg_search({pattern: "payment"})</text>
-  <text x="70" y="266" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#808080">&larr; 3 nodes found: PaymentService, PaymentGateway, BillingController</text>
-  <text x="70" y="306" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#7dd3fc">&rarr; akg_edges({node: "PaymentService", direction: "inbound"})</text>
-  <text x="70" y="336" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#808080">&larr; 7 inbound edges from: OrderService, CheckoutController...</text>
-  <rect x="70" y="366" width="500" height="150" rx="16" fill="#1c1c1c" stroke="#2c2c2c"/>
-  <text x="92" y="404" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#86efac">The payment module is used by:</text>
-  <text x="92" y="438" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#d4d4d4">&bull; OrderService (order/service.go:47)</text>
-  <text x="92" y="468" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#d4d4d4">&bull; CheckoutController (checkout/controller.go:23)</text>
-  <text x="92" y="498" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#d4d4d4">&bull; RefundService (billing/refund.go:89)</text>
-  <rect x="70" y="540" width="500" height="56" rx="14" fill="#111111" stroke="#262626"/>
-  <text x="92" y="574" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#7dd3fc">gmb ai chat</text>
-  <rect x="180" y="560" width="12" height="20" fill="#7dd3fc"/>
-  <text x="270" y="630" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#6b6b6b">BYOK &middot; streaming &middot; token &amp; cost guardrails</text>
+  <text x="40" y="54" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#9a9a9a">gmb ai &mdash; grounded agent</text>
+  <line x1="40" y1="84" x2="630" y2="84" stroke="#262626"/>
+  <rect x="330" y="110" width="300" height="66" rx="16" fill="#262626"/>
+  <text x="620" y="146" text-anchor="end" font-family="ui-monospace,Consolas,monospace" font-size="16" fill="#e8e8e8"><tspan x="620">which services depend on the</tspan><tspan x="620" dy="26">payment module?</tspan></text>
+  <rect class="m-type" x="70" y="210" width="360" height="38" rx="19" fill="#1e2f3a" stroke="#2e4a5e"/>
+  <text class="m-type" x="92" y="234" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#7dd3fc">&rarr; akg_search &nbsp;{ pattern: "payment" }</text>
+  <rect class="m-type d1" x="70" y="262" width="360" height="38" rx="19" fill="#1e2f3a" stroke="#2e4a5e"/>
+  <text class="m-type d1" x="92" y="286" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#7dd3fc">&rarr; akg_edges &nbsp;{ PaymentService, inbound }</text>
+  <rect x="70" y="330" width="530" height="200" rx="16" fill="#1c1c1c" stroke="#2c2c2c"/>
+  <rect x="70" y="330" width="4" height="200" fill="#a78bfa"/>
+  <text x="92" y="370" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#86efac">The payment module is used by:</text>
+  <text x="92" y="406" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#d4d4d4">&bull; OrderService</text>
+  <text class="m-ignite" x="580" y="406" text-anchor="end" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#86efac">order/service.go:47</text>
+  <text x="92" y="442" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#d4d4d4">&bull; CheckoutController</text>
+  <text class="m-ignite d1" x="580" y="442" text-anchor="end" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#86efac">checkout/controller.go:23</text>
+  <text x="92" y="478" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#d4d4d4">&bull; RefundService</text>
+  <text class="m-ignite d2" x="580" y="478" text-anchor="end" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#86efac">billing/refund.go:89</text>
+  <text x="92" y="518" font-family="ui-monospace,Consolas,monospace" font-size="13" fill="#6b6b6b">3 of 7 inbound edges &mdash; verified against the live AKG</text>
+  <rect x="70" y="556" width="530" height="52" rx="14" fill="#111111" stroke="#262626"/>
+  <text x="92" y="588" font-family="ui-monospace,Consolas,monospace" font-size="16" fill="#7dd3fc">gmb ai chat</text>
+  <rect class="m-caret" x="200" y="572" width="12" height="20" fill="#7dd3fc"/>
+  <text x="40" y="650" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#6b6b6b">BYOK &middot; streaming &middot; token &amp; cost guardrails</text>
 </svg>`,
     cards: [
       {
@@ -1167,34 +1405,38 @@ const PROJECTS = [
     num: '04',
     name: 'Developer Memory',
     sub: 'What changed. Why. What it means.',
+    accent: 'amber',
     visual: `
-<svg viewBox="0 0 670 688" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Developer memory timeline">
+<svg viewBox="0 0 670 688" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Developer memory timeline with correction">
   <rect width="670" height="688" fill="#111111"/>
-  <rect x="40" y="40" width="590" height="608" rx="24" fill="#151515" stroke="#2a2a2a"/>
-  <circle cx="66" cy="68" r="5" fill="#ff5f56"/><circle cx="84" cy="68" r="5" fill="#ffbd2e"/><circle cx="102" cy="68" r="5" fill="#27c93f"/>
-  <text x="122" y="74" font-family="ui-monospace,Consolas,monospace" font-size="20" fill="#808080">gmb memory --ask</text>
-  <line x1="40" y1="96" x2="630" y2="96" stroke="#262626"/>
-  <line x1="140" y1="130" x2="140" y2="560" stroke="#2c2c2c" stroke-width="3"/>
-  <circle cx="140" cy="170" r="9" fill="#7dd3fc"/>
-  <text x="170" y="164" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#d4d4d4">07-02 &middot; auth: JWT validation added</text>
-  <rect x="170" y="178" width="66" height="26" rx="13" fill="#1e2f3a"/>
-  <text x="184" y="197" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#7dd3fc">FACT</text>
-  <circle cx="140" cy="250" r="9" fill="#86efac"/>
-  <text x="170" y="244" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#d4d4d4">07-14 &middot; "avoid key rotation"</text>
-  <rect x="170" y="258" width="150" height="26" rx="13" fill="#1f3327"/>
-  <text x="184" y="277" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#86efac">EXPLICIT_REASON</text>
-  <circle cx="140" cy="330" r="9" fill="#fbbf24"/>
-  <text x="170" y="324" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#d4d4d4">07-21 &middot; switched to OAuth provider</text>
-  <rect x="170" y="338" width="66" height="26" rx="13" fill="#3a3018"/>
-  <text x="184" y="357" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#fbbf24">FACT</text>
-  <circle cx="140" cy="410" r="9" fill="#a78bfa"/>
-  <text x="170" y="404" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#d4d4d4">08-02 &middot; refresh token rotation</text>
-  <rect x="170" y="418" width="104" height="26" rx="13" fill="#2f263d"/>
-  <text x="184" y="437" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#a78bfa">INFERENCE</text>
-  <rect x="70" y="470" width="500" height="108" rx="16" fill="#1c1c1c" stroke="#2c2c2c"/>
-  <text x="92" y="506" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#7dd3fc">gmb memory --correct "AuthService" --kind STATE --value "..."</text>
-  <text x="92" y="540" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#86efac">&check; Correction recorded &mdash; replayed on every view</text>
-  <text x="92" y="566" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#6b6b6b">audited in corrections.jsonl &middot; idempotent</text>
+  <text x="40" y="54" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#9a9a9a">gmb memory --ask</text>
+  <line x1="40" y1="84" x2="630" y2="84" stroke="#262626"/>
+  <line x1="70" y1="110" x2="70" y2="560" stroke="#2c2c2c" stroke-width="3"/>
+  <text x="70" y="150" font-family="ui-monospace,Consolas,monospace" font-size="13" letter-spacing="3" fill="#7dd3fc">WHAT CHANGED.</text>
+  <circle class="m-pulse" cx="70" cy="190" r="6" fill="#7dd3fc"/>
+  <text x="100" y="196" font-family="ui-monospace,Consolas,monospace" font-size="16"><tspan fill="#9a9a9a">07-02 &middot; </tspan><tspan fill="#d4d4d4">auth: JWT validation added</tspan></text>
+  <rect x="470" y="180" width="90" height="28" rx="14" fill="#1e2f3a"/>
+  <text x="484" y="199" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#7dd3fc">FACT</text>
+  <circle class="m-pulse d1" cx="70" cy="250" r="6" fill="#7dd3fc"/>
+  <text x="100" y="256" font-family="ui-monospace,Consolas,monospace" font-size="16"><tspan fill="#9a9a9a">07-21 &middot; </tspan><tspan fill="#d4d4d4">switched to OAuth provider</tspan></text>
+  <rect x="470" y="240" width="90" height="28" rx="14" fill="#1e2f3a"/>
+  <text x="484" y="259" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#7dd3fc">FACT</text>
+  <text x="70" y="320" font-family="ui-monospace,Consolas,monospace" font-size="13" letter-spacing="3" fill="#86efac">WHY.</text>
+  <circle class="m-pulse d2" cx="70" cy="360" r="6" fill="#86efac"/>
+  <text x="100" y="366" font-family="ui-monospace,Consolas,monospace" font-size="16"><tspan fill="#9a9a9a">07-14 &middot; </tspan><tspan fill="#d4d4d4">"avoid key rotation"</tspan></text>
+  <rect x="442" y="350" width="158" height="28" rx="14" fill="#1f3327"/>
+  <text x="456" y="369" font-family="ui-monospace,Consolas,monospace" font-size="13" fill="#86efac">EXPLICIT_REASON</text>
+  <circle class="m-pulse d3" cx="70" cy="420" r="6" fill="#a78bfa"/>
+  <text x="100" y="426" font-family="ui-monospace,Consolas,monospace" font-size="16"><tspan fill="#9a9a9a">08-02 &middot; </tspan><tspan fill="#d4d4d4">refresh token rotation</tspan></text>
+  <rect x="470" y="410" width="104" height="28" rx="14" fill="#2f263d"/>
+  <text x="484" y="429" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#a78bfa">INFERENCE</text>
+  <rect x="70" y="470" width="530" height="120" rx="16" fill="#1c1c1c" stroke="#2c2c2c"/>
+  <text x="92" y="506" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#9a9a9a">gmb memory --correct AuthService --kind STATE</text>
+  <rect class="m-strike" x="92" y="537" width="150" height="3" rx="1.5" fill="#fbbf24"/>
+  <text x="92" y="548" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#fbbf24">rotating-keys</text>
+  <text x="262" y="548" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#6b6b6b">&rarr;</text>
+  <text class="m-fadein d3" x="294" y="548" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#86efac">oauth-managed</text>
+  <text x="92" y="580" font-family="ui-monospace,Consolas,monospace" font-size="13" fill="#6b6b6b">replayed on every view &middot; audited in corrections.jsonl &middot; idempotent</text>
 </svg>`,
     cards: [
       {
@@ -1236,36 +1478,42 @@ const PROJECTS = [
     num: '05',
     name: 'Under the Hood',
     sub: 'Enterprise storage. Zero infrastructure.',
+    accent: 'sky',
     visual: `
-<svg viewBox="0 0 670 688" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Storage internals">
+<svg viewBox="0 0 670 688" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Storage internals and GraphJSON store">
   <rect width="670" height="688" fill="#111111"/>
   <rect x="40" y="40" width="590" height="608" rx="24" fill="#151515" stroke="#2a2a2a"/>
   <circle cx="66" cy="68" r="5" fill="#ff5f56"/><circle cx="84" cy="68" r="5" fill="#ffbd2e"/><circle cx="102" cy="68" r="5" fill="#27c93f"/>
   <text x="122" y="74" font-family="ui-monospace,Consolas,monospace" font-size="20" fill="#808080">gmb status</text>
+  <rect class="m-caret" x="270" y="54" width="11" height="24" fill="#e8e8e8"/>
   <line x1="40" y1="96" x2="630" y2="96" stroke="#262626"/>
-  <text x="70" y="150" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#808080">Nodes Count: 3847</text>
-  <text x="70" y="186" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#808080">Outbound Edges: 12091</text>
-  <text x="70" y="222" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#808080">Indexed Files: 214</text>
-  <text x="70" y="258" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#808080">Entrypoints: 18</text>
-  <text x="70" y="294" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#808080">Storage: TTL 2.4 MB | WAL 0.0 KB</text>
-  <rect x="380" y="130" width="220" height="110" rx="16" fill="#1c1c1c" stroke="#3a3a3a"/>
-  <text x="404" y="172" font-family="ui-monospace,Consolas,monospace" font-size="20" fill="#7dd3fc">akg.json</text>
-  <text x="404" y="206" font-family="ui-monospace,Consolas,monospace" font-size="16" fill="#808080">GraphJSON &middot; RDF-star</text>
-  <text x="404" y="226" font-family="ui-monospace,Consolas,monospace" font-size="16" fill="#808080">diff-friendly &middot; 2.4 MB</text>
-  <rect x="380" y="262" width="220" height="70" rx="16" fill="#1c1c1c" stroke="#3a3a3a"/>
-  <text x="404" y="298" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#a78bfa">wal/ &mdash; write-ahead log</text>
-  <text x="404" y="320" font-family="ui-monospace,Consolas,monospace" font-size="16" fill="#808080">crash durability</text>
-  <rect x="380" y="354" width="220" height="70" rx="16" fill="#1c1c1c" stroke="#3a3a3a"/>
-  <text x="404" y="390" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#fbbf24">db.lock</text>
-  <text x="404" y="412" font-family="ui-monospace,Consolas,monospace" font-size="16" fill="#808080">prevents write collisions</text>
-  <circle cx="230" cy="420" r="48" fill="#1f3327" stroke="#86efac" stroke-width="2"/>
-  <path d="M212 420 L226 434 L250 406" stroke="#86efac" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="230" y="500" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#d4d4d4">atomic writes</text>
-  <text x="230" y="524" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#808080">tmp + rename, no half-writes</text>
-  <text x="70" y="500" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#808080">&check; verified (no dangling edges)</text>
-  <text x="70" y="530" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#86efac">freshness: ok &middot; health errors: 0</text>
+  <rect x="40" y="130" width="132" height="74" rx="12" fill="#1c1c1c" stroke="#262626"/>
+  <text x="106" y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="30" font-weight="500" fill="#d4d4d4">3,847</text>
+  <text x="106" y="194" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="13" fill="#9a9a9a">nodes</text>
+  <rect x="180" y="130" width="132" height="74" rx="12" fill="#1c1c1c" stroke="#262626"/>
+  <text x="246" y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="30" font-weight="500" fill="#d4d4d4">12,091</text>
+  <text x="246" y="194" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="13" fill="#9a9a9a">outbound edges</text>
+  <rect x="320" y="130" width="132" height="74" rx="12" fill="#1c1c1c" stroke="#262626"/>
+  <text x="386" y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="30" font-weight="500" fill="#d4d4d4">214</text>
+  <text x="386" y="194" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="13" fill="#9a9a9a">files</text>
+  <rect x="460" y="130" width="132" height="74" rx="12" fill="#1c1c1c" stroke="#262626"/>
+  <text x="526" y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="30" font-weight="500" fill="#d4d4d4">18</text>
+  <text x="526" y="194" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="13" fill="#9a9a9a">entrypoints</text>
+  <rect x="40" y="226" width="590" height="254" rx="16" fill="#131313" stroke="#262626"/>
+  <text x="62" y="262" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#7dd3fc">akg.json &mdash; GraphJSON &middot; RDF-star &middot; diff-friendly</text>
+  <text class="m-type" x="62" y="306" font-family="ui-monospace,Consolas,monospace" font-size="15"><tspan fill="#a78bfa">&lt;auth/service.go#AuthService&gt;</tspan> <tspan fill="#7dd3fc">&lt;defines&gt;</tspan> <tspan fill="#86efac">&lt;AuthService&gt;</tspan> <tspan fill="#6b6b6b">.</tspan></text>
+  <text class="m-type d1" x="62" y="344" font-family="ui-monospace,Consolas,monospace" font-size="15"><tspan fill="#a78bfa">&lt;AuthService&gt;</tspan> <tspan fill="#7dd3fc">&lt;calls&gt;</tspan> <tspan fill="#86efac">&lt;JWTValidator&gt;</tspan> <tspan fill="#6b6b6b">.</tspan></text>
+  <text class="m-type d2" x="62" y="382" font-family="ui-monospace,Consolas,monospace" font-size="15"><tspan fill="#a78bfa">&lt;order/CheckoutController&gt;</tspan> <tspan fill="#7dd3fc">&lt;depends_on&gt;</tspan> <tspan fill="#86efac">&lt;PaymentService&gt;</tspan> <tspan fill="#6b6b6b">.</tspan></text>
+  <text class="m-type d3" x="62" y="420" font-family="ui-monospace,Consolas,monospace" font-size="15"><tspan fill="#a78bfa">&lt;billing/RefundService&gt;</tspan> <tspan fill="#7dd3fc">&lt;queries&gt;</tspan> <tspan fill="#86efac">&lt;db.ledger&gt;</tspan> <tspan fill="#6b6b6b">.</tspan></text>
+  <text x="62" y="458" font-family="ui-monospace,Consolas,monospace" font-size="13" fill="#6b6b6b">a single diffable file &mdash; no database, no service, no cloud</text>
+  <text x="40" y="522" font-family="ui-monospace,Consolas,monospace" font-size="16" fill="#a78bfa">wal/</text>
+  <text x="110" y="522" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#808080">write-ahead log &middot; crash durability</text>
+  <text x="40" y="556" font-family="ui-monospace,Consolas,monospace" font-size="16" fill="#fbbf24">db.lock</text>
+  <text x="110" y="556" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#808080">prevents write collisions</text>
+  <text x="40" y="590" font-family="ui-monospace,Consolas,monospace" font-size="16" fill="#7dd3fc">tmp+rename</text>
+  <text x="170" y="590" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#808080">atomic writes &middot; no half-writes</text>
   <rect x="40" y="596" width="590" height="52" fill="#101010"/>
-  <text x="60" y="630" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#86efac">MVCC &middot; WAL &middot; self-healing</text>
+  <text x="60" y="630" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#86efac">&check; verified (no dangling edges) &middot; health errors: 0</text>
 </svg>`,
     cards: [
       {
@@ -1308,35 +1556,39 @@ const PROJECTS = [
     num: '06',
     name: 'Performance',
     sub: 'Benchmarked. Budgeted. Fast.',
+    accent: 'mint',
     visual: `
-<svg viewBox="0 0 670 688" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Performance benchmarks">
+<svg viewBox="0 0 670 688" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Performance benchmarks with budget gates">
   <rect width="670" height="688" fill="#111111"/>
   <rect x="40" y="40" width="590" height="608" rx="24" fill="#151515" stroke="#2a2a2a"/>
   <circle cx="66" cy="68" r="5" fill="#ff5f56"/><circle cx="84" cy="68" r="5" fill="#ffbd2e"/><circle cx="102" cy="68" r="5" fill="#27c93f"/>
   <text x="122" y="74" font-family="ui-monospace,Consolas,monospace" font-size="20" fill="#808080">gmb analyze --bench</text>
+  <rect class="m-caret" x="390" y="54" width="11" height="24" fill="#e8e8e8"/>
   <line x1="40" y1="96" x2="630" y2="96" stroke="#262626"/>
-  <text x="70" y="170" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#d4d4d4">Full scan</text>
-  <rect x="190" y="150" width="300" height="28" rx="6" fill="#333333"/>
-  <text x="200" y="170" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#9a9a9a">2m06s</text>
-  <rect x="510" y="150" width="62" height="28" rx="6" fill="#86efac"/>
-  <text x="517" y="170" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#062b12">&lt;20s</text>
-  <line x1="510" y1="136" x2="510" y2="260" stroke="#4a4a4a" stroke-dasharray="4 4"/>
-  <text x="418" y="128" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#6b6b6b">budget gate</text>
-  <text x="70" y="270" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#d4d4d4">Graph commit</text>
-  <rect x="190" y="250" width="240" height="28" rx="6" fill="#333333"/>
-  <text x="200" y="270" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#9a9a9a">19.9s</text>
-  <rect x="510" y="250" width="62" height="28" rx="6" fill="#86efac"/>
-  <text x="517" y="270" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#062b12">&lt;8s</text>
-  <text x="70" y="370" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#d4d4d4">AKG storage</text>
-  <rect x="190" y="350" width="260" height="28" rx="6" fill="#333333"/>
-  <text x="200" y="370" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#9a9a9a">19.3MB</text>
-  <rect x="510" y="350" width="62" height="28" rx="6" fill="#86efac"/>
-  <text x="517" y="370" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#062b12">&lt;12MB</text>
-  <text x="70" y="430" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#6b6b6b">before &rarr; after &middot; v1.0 overhaul</text>
-  <text x="70" y="480" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#86efac">&check; all budget gates passed</text>
-  <text x="70" y="512" font-family="ui-monospace,Consolas,monospace" font-size="16" fill="#808080">determinism: byte-identical across runs</text>
+  <line x1="560" y1="140" x2="560" y2="400" stroke="#4a4a4a" stroke-width="2" stroke-dasharray="4 4"/>
+  <text x="568" y="156" font-family="ui-monospace,Consolas,monospace" font-size="12" fill="#6b6b6b">budget</text>
+  <text x="70" y="196" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#d4d4d4">Full scan</text>
+  <rect class="m-before" x="210" y="170" width="230" height="28" rx="6" fill="#2a2a2a"/>
+  <text class="m-fadeout" x="222" y="190" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#9a9a9a">2m06s</text>
+  <rect class="m-after d3" x="210" y="170" width="37" height="28" rx="6" fill="#86efac"/>
+  <text class="m-fadein d3" x="545" y="196" text-anchor="end" font-family="Inter,sans-serif" font-size="38" font-weight="500" fill="#86efac">&lt;20s</text>
+  <circle class="m-glow d4" cx="560" cy="184" r="3" fill="#86efac"/>
+  <text x="70" y="286" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#d4d4d4">Graph commit</text>
+  <rect class="m-before d1" x="210" y="260" width="230" height="28" rx="6" fill="#2a2a2a"/>
+  <text class="m-fadeout d1" x="222" y="280" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#9a9a9a">19.9s</text>
+  <rect class="m-after d4" x="210" y="260" width="92" height="28" rx="6" fill="#86efac"/>
+  <text class="m-fadein d4" x="545" y="286" text-anchor="end" font-family="Inter,sans-serif" font-size="38" font-weight="500" fill="#86efac">&lt;8s</text>
+  <circle class="m-glow d5" cx="560" cy="274" r="3" fill="#86efac"/>
+  <text x="70" y="376" font-family="ui-monospace,Consolas,monospace" font-size="18" fill="#d4d4d4">AKG storage</text>
+  <rect class="m-before d2" x="210" y="350" width="230" height="28" rx="6" fill="#2a2a2a"/>
+  <text class="m-fadeout d2" x="222" y="370" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#9a9a9a">19.3MB</text>
+  <rect class="m-after d5" x="210" y="350" width="143" height="28" rx="6" fill="#86efac"/>
+  <text class="m-fadein d5" x="545" y="376" text-anchor="end" font-family="Inter,sans-serif" font-size="38" font-weight="500" fill="#86efac">&lt;12MB</text>
+  <circle class="m-glow d6" cx="560" cy="364" r="3" fill="#86efac"/>
+  <text x="70" y="450" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#6b6b6b">before &rarr; after &middot; v1.0 overhaul</text>
   <rect x="40" y="596" width="590" height="52" fill="#101010"/>
-  <text x="60" y="630" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#86efac">2m06s &rarr; &lt;20s &middot; 19.9s &rarr; &lt;8s &middot; 19.3MB &rarr; &lt;12MB</text>
+  <text x="60" y="630" font-family="ui-monospace,Consolas,monospace" font-size="19" fill="#86efac">&check; all budget gates passed</text>
+  <text x="560" y="630" text-anchor="end" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#6b6b6b">determinism: byte-identical</text>
 </svg>`,
     cards: [
       {
@@ -1374,28 +1626,19 @@ const PROJECTS = [
     num: '07',
     name: 'Launch',
     sub: 'Shipping soon — join the waitlist.',
+    accent: 'amber',
     visual: `
-<svg viewBox="0 0 670 688" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Launching soon">
+<svg viewBox="0 0 670 688" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GlassMarble v1.0 launching soon, join the waitlist">
   <rect width="670" height="688" fill="#111111"/>
-  <rect x="40" y="40" width="590" height="608" rx="24" fill="#151515" stroke="#2a2a2a"/>
-  <circle cx="66" cy="68" r="5" fill="#ff5f56"/><circle cx="84" cy="68" r="5" fill="#ffbd2e"/><circle cx="102" cy="68" r="5" fill="#27c93f"/>
-  <text x="122" y="74" font-family="ui-monospace,Consolas,monospace" font-size="20" fill="#808080">glassmarble v1.0</text>
-  <line x1="40" y1="96" x2="630" y2="96" stroke="#262626"/>
-  <text x="335" y="360" text-anchor="middle" font-family="Inter,sans-serif" font-size="130" font-weight="500" letter-spacing="-6" fill="#e8e8e8">v1.0</text>
-  <text x="335" y="412" text-anchor="middle" font-family="Inter,sans-serif" font-size="26" letter-spacing="8" fill="#9f9f9f">LAUNCHING SOON</text>
-  <rect x="150" y="150" width="160" height="46" rx="23" fill="#1e2f3a"/>
-  <text x="230" y="180" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#7dd3fc">4-stage engine</text>
-  <rect x="330" y="150" width="190" height="46" rx="23" fill="#1f3327"/>
-  <text x="425" y="180" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#86efac">31 diagram types</text>
-  <rect x="150" y="212" width="160" height="46" rx="23" fill="#2f263d"/>
-  <text x="230" y="242" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#a78bfa">AI Architect</text>
-  <rect x="330" y="212" width="190" height="46" rx="23" fill="#3a3018"/>
-  <text x="425" y="242" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="17" fill="#fbbf24">Developer memory</text>
-  <path d="M560 150 l6 12 l13 2 l-10 9 l3 13 l-12 -6 l-12 6 l3 -13 l-10 -9 l13 -2 z" fill="#fbbf24"/>
-  <path d="M120 430 l5 10 l11 2 l-8 8 l2 11 l-10 -5 l-10 5 l2 -11 l-8 -8 l11 -2 z" fill="#7dd3fc"/>
-  <rect x="70" y="470" width="530" height="80" rx="40" fill="#1a1a1a" stroke="#3a3a3a"/>
-  <text x="335" y="518" text-anchor="middle" font-family="Inter,sans-serif" font-size="24" fill="#f6f6f6">Join the waitlist</text>
-  <text x="335" y="590" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="16" fill="#6b6b6b">free &middot; open source &middot; MIT &middot; no backend</text>
+  <text x="335" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" letter-spacing="8" fill="#9f9f9f">LAUNCHING SOON</text>
+  <text x="335" y="400" text-anchor="middle" font-family="Inter,sans-serif" font-size="150" font-weight="500" letter-spacing="-6" fill="#e8e8e8">v1.0</text>
+  <rect x="235" y="436" width="200" height="4" rx="2" fill="#262626"/>
+  <rect class="m-launchbar" x="235" y="436" width="200" height="4" rx="2" fill="#86efac"/>
+  <text x="335" y="496" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#808080">4-stage engine &middot; 31 diagram types &middot; AI Architect &middot; Developer memory</text>
+  <rect x="185" y="528" width="300" height="64" rx="32" fill="#1a1a1a" stroke="#3a3a3a"/>
+  <text x="335" y="568" text-anchor="middle" font-family="Inter,sans-serif" font-size="22" fill="#f6f6f6">Join the waitlist</text>
+  <text x="335" y="630" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="16" fill="#9a9a9a"><tspan class="launch-count-num" style="opacity:0" fill="#86efac" font-family="Inter,sans-serif" font-weight="500">0</tspan> <tspan style="opacity:0">already on the waitlist</tspan></text>
+  <text x="335" y="664" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#6b6b6b">free &middot; open source &middot; MIT &middot; no backend</text>
 </svg>`,
     cards: [
       {
@@ -1444,6 +1687,8 @@ const projScroll   = document.getElementById('project-scroll');
 const srNav        = document.getElementById('sr-nav');
 const waitlistForm = document.getElementById('waitlistForm');
 const waitlistStatus = document.getElementById('waitlistStatus');
+const waitlistCount = document.getElementById('waitlistCount');
+const waitlistCountNum = document.getElementById('waitlistCountNum');
 
 /* ═══ BUILD HOME CARDS ═══ */
 function buildHomeCards() {
@@ -1723,6 +1968,7 @@ function buildProjCards(proj) {
   hero.className = 'pcard pcard-hero vis';
   hero.innerHTML = `<div class="pcard-visual">${proj.visual}${isCompact ? '' : `<span class="pcard-hero-title">${proj.name}</span>`}</div>`;
   projCards.appendChild(hero);
+  if (waitlistTotal !== null) syncLaunchCounts(waitlistTotal);
 
   if (!isCompact) {
     /* Center the hero exactly where the zoomed home card lands so the
@@ -1734,7 +1980,7 @@ function buildProjCards(proj) {
 
   proj.cards.forEach((c, i) => {
     const card = document.createElement('div');
-    card.className = 'pcard pcard-detail';
+    card.className = `pcard pcard-detail accent-${proj.accent}`;
     card.id = `pcard-${i}`;
     card.style.setProperty('--card-index', i);
 
@@ -1772,6 +2018,7 @@ function buildProjCards(proj) {
       </div>` : '';
 
     card.innerHTML = `
+      <span class="pcard__ghost" aria-hidden="true">${c.num}</span>
       <div class="pcard-inner">
         <span class="pcard__num">${c.num}</span>
         <h2 class="pcard__title">${c.title}</h2>
@@ -1805,6 +2052,48 @@ function observeCards() {
       if (c.getBoundingClientRect().top < window.innerHeight * 0.9) c.classList.add('vis');
     });
   });
+}
+
+/* ═══ LIVE WAITLIST COUNTER ═══ */
+let waitlistTotal = null;
+
+function syncLaunchCounts(n) {
+  if (typeof n !== 'number') return;
+  document.querySelectorAll('.launch-count-num').forEach(el => {
+    el.textContent = n.toLocaleString('en-US');
+    el.style.opacity = '1';
+  });
+  document.querySelectorAll('.launch-count-num ~ tspan').forEach(el => {
+    el.style.opacity = '1';
+  });
+}
+
+function setWaitlistCount(n) {
+  waitlistTotal = n;
+  if (typeof n !== 'number') return;
+  waitlistCountNum.textContent = n.toLocaleString('en-US');
+  waitlistCount.hidden = false;
+  waitlistCountNum.classList.remove('tick');
+  void waitlistCountNum.offsetWidth; /* restart animation */
+  waitlistCountNum.classList.add('tick');
+  syncLaunchCounts(n);
+}
+
+async function loadWaitlistCount() {
+  if (!WAITLIST_ENDPOINT) return;
+  try {
+    /* unique query param busts Apps Script GET caching */
+    const res = await fetch(`${WAITLIST_ENDPOINT}?action=count&t=${Date.now()}`, {
+      mode: 'cors',
+      redirect: 'follow'
+    });
+    const data = await res.json().catch(() => ({}));
+    if (data && data.ok === true && typeof data.count === 'number') {
+      setWaitlistCount(data.count);
+    }
+  } catch (err) {
+    /* keep the counter hidden — non-critical */
+  }
 }
 
 /* ═══ WAITLIST FORM ═══ */
@@ -1845,6 +2134,14 @@ waitlistForm.addEventListener('submit', async e => {
       });
       const data = await res.json().catch(() => ({}));
       if (!data || data.ok !== true) throw new Error('endpoint rejected');
+
+      /* Sync the counter with the authoritative count from the sheet.
+         If the backend lacks it (old deployment), fall back to +1. */
+      if (typeof data.count === 'number') {
+        setWaitlistCount(data.count);
+      } else if (data.message !== 'already-registered' && waitlistTotal !== null) {
+        setWaitlistCount(waitlistTotal + 1);
+      }
     } else {
       console.warn('[GlassMarble] WAITLIST_ENDPOINT not configured — showing local success. Setup: see waitlist-apps-script.gs');
     }
@@ -1900,6 +2197,7 @@ window.addEventListener('scroll', onScroll, { passive: true });
 
 /* ═══ INIT ═══ */
 buildHomeCards();
+loadWaitlistCount();
 setSpacerHeight();
 window.addEventListener('resize', setSpacerHeight);
 handleRoute();
