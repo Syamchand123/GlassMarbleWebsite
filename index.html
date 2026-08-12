@@ -549,6 +549,7 @@ h1.site-name {
   pointer-events: none;
   transition: opacity 0.4s var(--ease-out);
   will-change: opacity;
+  overscroll-behavior: contain;
 }
 #project-view.open {
   opacity: 1;
@@ -627,6 +628,7 @@ h1.site-name {
   height: 100vh;
   overflow-y: scroll;
   scrollbar-width: none;
+  overscroll-behavior: contain;
   z-index: 110;
 }
 #project-scroll::-webkit-scrollbar { display: none; }
@@ -903,6 +905,7 @@ h1.site-name {
     gap: 3.2rem;
   }
   #project-left .name-wrap, #project-left .role-wrap { width: 100%; }
+  #project-left .proj-name, #project-left .proj-sub { width: 100%; }
 
   #project-scroll {
     position: static;
@@ -942,9 +945,21 @@ h1.site-name {
   .stat:nth-child(odd) { border-right: none; }
   .stat { padding: 2rem 0; }
   .stat__n { font-size: 3.6rem; }
-  #home-cards { top: 88%; }
-  .home-card, .hcard-visual { width: 24rem; height: 24.7rem; border-radius: 2.4rem; }
-  .hcard-title { bottom: 2.2rem; left: 2.2rem; font-size: 2rem; }
+  /* Anchor the card ring to the bottom edge so it never clips off-screen
+     or collides with the waitlist form, whatever the viewport height. */
+  #home-cards {
+    top: auto;
+    bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
+    transform: translate(-50%, 0);
+  }
+  #home-cards.hidden { transform: translate(-50%, 0) translateX(3rem); }
+  .hcard-reflection { display: none; }
+  .home-card, .hcard-visual { width: 20rem; height: 20.6rem; border-radius: 2rem; }
+  .hcard-title { bottom: 2.2rem; left: 2.2rem; font-size: 1.8rem; }
+  /* Hero card: let the SVG's own aspect ratio size the card — no grey
+     strip under the artwork. */
+  .pcard.pcard-hero { min-height: 0; }
+  .pcard-hero .pcard-visual svg { height: auto; }
 }
 
 @media (max-width: 640px) {
@@ -952,10 +967,10 @@ h1.site-name {
 }
 
 @media (max-width: 380px) {
-  .home-card, .hcard-visual { width: 20rem; height: 20.6rem; border-radius: 2rem; }
+  .home-card, .hcard-visual { width: 18rem; height: 18.5rem; border-radius: 2rem; }
   .hcard-title { font-size: 1.6rem; }
-  #home-cards { top: 88%; }
-  .home-left { padding: 4rem 2.4rem 0; }
+  /* keep the identity block clear of the fixed logo (logo bottom = 6.4rem) */
+  .home-left { padding: 7.2rem 2.4rem 0; }
   .proj-cards { padding-inline: 2.4rem; }
   .pcard__ghost { top: 2.2rem; right: 2.4rem; font-size: 7.5rem; }
   #project-left { padding: 8rem 2.4rem 0; }
@@ -1014,6 +1029,13 @@ h1.site-name {
 .d5 { animation-delay: 2.6s; }
 .d6 { animation-delay: 2.9s; }
 .d7 { animation-delay: 3.2s; }
+
+/* Perf: SVG animations only run on cards that are actually visible.
+   Off-ring cards and the whole ring behind an open project view are
+   paused — dozens of infinite stroke/transform animations otherwise
+   keep repainting invisible layers on every frame. */
+.home-card.asleep svg *,
+#home-cards.hidden svg * { animation-play-state: paused !important; }
 
 /* boot-up: cards fade in on first render (staggered in the ring),
    and the hero "boots" each time a project opens */
@@ -1201,10 +1223,10 @@ h1.site-name {
   <!-- Left panel — project identity -->
   <div id="project-left">
     <div style="display:flex;flex-direction:column;gap:0.5rem">
-      <div class="name-wrap" style="overflow:hidden;width:40rem;padding-bottom:0.4rem">
+      <div class="name-wrap" style="overflow:hidden;padding-bottom:0.4rem">
         <p class="proj-name" id="projName"></p>
       </div>
-      <div class="role-wrap" style="overflow:hidden;width:40rem;padding-bottom:0.8rem">
+      <div class="role-wrap" style="overflow:hidden;padding-bottom:0.8rem">
         <p class="proj-sub" id="projSub"></p>
       </div>
     </div>
@@ -1746,8 +1768,29 @@ const PROJECTS = [
 ];
 
 /* ═══ CONFIG / STATE ═══ */
-const isCompact = window.matchMedia('(max-width: 1024px)').matches;
-const ZOOM_TARGET = isCompact ? 1 : 2.06;
+const compactMQ = window.matchMedia('(max-width: 1024px)');
+let isCompact = compactMQ.matches;
+let ZOOM_TARGET = isCompact ? 1 : 2.06;
+
+/* Crossing the breakpoint (tablet rotation, window resize) must not
+   strand the page in the other mode's layout. */
+compactMQ.addEventListener('change', e => {
+  isCompact = e.matches;
+  ZOOM_TARGET = isCompact ? 1 : 2.06;
+  NEIGHBOR_BLUR = (prefersReducedMotion || isCompact) ? 0 : 4;
+  if (isProjectOpen) {
+    globalZoom = ZOOM_TARGET;
+    globalZoomTarget = ZOOM_TARGET;
+    isZoomingIn = false;
+    buildProjCards(PROJECTS[activeProjectIdx]);
+    projectView.classList.add('open');
+    homeCardsEl.classList.add('hidden');
+  } else {
+    globalZoom = 1;
+    globalZoomTarget = 1;
+    isZoomingIn = false;
+  }
+});
 
 let currentCardIdx = 0;
 let isProjectOpen  = false;
@@ -1812,15 +1855,25 @@ function buildHomeCards() {
     li.innerHTML = `<a href="#hcard-${i}">${p.name}</a>`;
     srNav.appendChild(li);
   });
+
+  homeCardEls = Array.from(homeCardsEl.querySelectorAll('.home-card'));
 }
 
 /* ═══ SCROLL SPACER HEIGHT ═══ */
 function setSpacerHeight() {
   scrollSpacer.style.height = '100000vh';
-  if (window.scrollY < 10 && window.innerWidth > 1024) {
+  /* Park the scroll position mid-spacer on every viewport (phones too —
+     previously desktop-only, which made the first mobile scroll teleport
+     ~5000 viewports and visibly spin the ring). */
+  if (window.scrollY < 10) {
     const ringJump = (500 - (500 % PROJECTS.length)) * window.innerHeight;
     window.scrollTo({ top: ringJump, behavior: 'instant' });
   }
+  /* Re-sync progress to the (possibly new) viewport height without
+     moving the ring — otherwise a resize/rotation spins the carousel. */
+  const t = window.scrollY / window.innerHeight;
+  if (currentProgress !== null) currentProgress += t - targetProgress;
+  targetProgress = t;
 }
 
 /* ═══ SCROLL ENGINE ═══
@@ -1834,9 +1887,12 @@ let isZoomingIn = false;
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const NEIGHBOR_Y     = prefersReducedMotion ? 28   : 150;
-const NEIGHBOR_BLUR  = prefersReducedMotion ? 0    : 4;
+/* blur() is brutal on mobile GPUs — neighbours are near-invisible there anyway */
+let NEIGHBOR_BLUR    = (prefersReducedMotion || isCompact) ? 0 : 4;
 const NEIGHBOR_SCALE = prefersReducedMotion ? 0.04 : 0.08;
 const SCROLL_LERP    = prefersReducedMotion ? 0.35 : 0.08;
+
+let hintDist = 0; /* cumulative scroll, in viewports, since load */
 
 function onScroll() {
   if (isProjectOpen) return;
@@ -1844,19 +1900,27 @@ function onScroll() {
   const scrollY = window.scrollY;
   const winH    = window.innerHeight;
 
-  /* Infinite wrap: keep the float away from the spacer edges */
+  /* Infinite wrap: keep the float away from the spacer edges.
+     Shift the animation state by the same amount so the teleport is
+     invisible — the ring must not lerp across the 5000-viewport jump. */
   if (scrollY < winH * 10) {
     window.scrollTo({ top: scrollY + winH * 5000, behavior: 'instant' });
+    targetProgress += 5000;
+    if (currentProgress !== null) currentProgress += 5000;
     return;
   }
   if (scrollY > winH * 9000) {
     window.scrollTo({ top: scrollY - winH * 5000, behavior: 'instant' });
+    targetProgress -= 5000;
+    if (currentProgress !== null) currentProgress -= 5000;
     return;
   }
 
-  targetProgress = scrollY / winH;
+  const next = scrollY / winH;
+  hintDist += Math.abs(next - targetProgress);
+  targetProgress = next;
 
-  if (scrollY > winH * 500 + 10) scrollHint.classList.add('gone');
+  if (hintDist > 0.35) scrollHint.classList.add('gone');
 }
 
 function revealProjectView() {
@@ -1882,18 +1946,39 @@ function revealProjectView() {
   setTimeout(() => backBtn.focus(), 350);
 }
 
-function renderScroll() {
-  globalZoom += (globalZoomTarget - globalZoom) * 0.08;
+let homeCardEls = [];      /* cached — querying the DOM every frame is waste */
+let lastFrameTime = null;
+let lastDrawnProgress = null;
+let lastDrawnZoom = null;
+
+function renderScroll(now) {
+  /* Frame-rate-independent easing: identical feel at 60Hz and 120Hz. */
+  const dt = lastFrameTime === null ? 16.7 : Math.min(48, now - lastFrameTime);
+  lastFrameTime = now;
+  const frames = dt / 16.7;
+  const zoomK = 1 - Math.pow(1 - 0.08, frames);
+  const lerpK = 1 - Math.pow(1 - SCROLL_LERP, frames);
+
+  globalZoom += (globalZoomTarget - globalZoom) * zoomK;
+  if (Math.abs(globalZoomTarget - globalZoom) < 0.0015) globalZoom = globalZoomTarget;
 
   if (!isCompact && isZoomingIn && globalZoom >= ZOOM_TARGET * 0.99) {
     revealProjectView();
   }
 
-  if (!isProjectOpen || Math.abs(globalZoomTarget - globalZoom) > 0.01) {
-    if (currentProgress === null) currentProgress = targetProgress;
-    currentProgress += (targetProgress - currentProgress) * SCROLL_LERP;
+  if (currentProgress === null) currentProgress = targetProgress;
+  currentProgress += (targetProgress - currentProgress) * lerpK;
+  if (Math.abs(targetProgress - currentProgress) < 0.0006) currentProgress = targetProgress;
 
-    const cards = homeCardsEl.querySelectorAll('.home-card');
+  /* Skip the whole style pass when nothing moved — an idle page burns
+     zero layout/paint work instead of restyling 7 cards per frame. */
+  const dirty = currentProgress !== lastDrawnProgress || globalZoom !== lastDrawnZoom;
+
+  if (dirty && (!isProjectOpen || globalZoom !== globalZoomTarget)) {
+    lastDrawnProgress = currentProgress;
+    lastDrawnZoom = globalZoom;
+
+    const cards = homeCardEls;
     const total = PROJECTS.length;
     const ringProgress = ((currentProgress % total) + total) % total;
 
@@ -1911,7 +1996,10 @@ function renderScroll() {
 
       let opacity = 0;
       if (abs <= 1.5) {
-        opacity = 1 - Math.min(abs, 1) * 0.9 - Math.max(0, abs - 1) * 0.2;
+        /* Phones: fade neighbours out fully — a translucent ghost card
+           otherwise floats over the identity panel and waitlist form. */
+        const falloff = isCompact ? 1.6 : 0.9;
+        opacity = Math.max(0, 1 - Math.min(abs, 1) * falloff - Math.max(0, abs - 1) * 0.2);
       }
 
       if (globalZoom > 1.1 && index !== currentCardIdx) {
@@ -1928,12 +2016,15 @@ function renderScroll() {
 
       const blur = Math.min(abs, 1) * NEIGHBOR_BLUR;
       const zIndex = 100 - Math.round(abs * 10);
+      const invisible = opacity <= 0.001;
 
       card.style.transform = `translate3d(0, ${y}px, 0) scale(${scale})`;
       card.style.opacity = opacity;
-      card.style.filter = `blur(${blur}px)`;
+      card.style.filter = blur > 0.02 ? `blur(${blur}px)` : '';
       card.style.zIndex = zIndex;
       card.style.pointerEvents = (index === currentCardIdx) ? 'auto' : 'none';
+      card.style.visibility = invisible ? 'hidden' : '';
+      card.classList.toggle('asleep', invisible);
     });
   }
   requestAnimationFrame(renderScroll);
@@ -1945,8 +2036,7 @@ function updateScrollUI(idx) {
   const dots = scrollDots.querySelectorAll('.sdot');
   dots.forEach((d, i) => d.classList.toggle('active', i === idx));
 
-  const cards = homeCardsEl.querySelectorAll('.home-card');
-  cards.forEach((c, i) => c.classList.toggle('active', i === idx));
+  homeCardEls.forEach((c, i) => c.classList.toggle('active', i === idx));
 }
 
 function scrollToCard(idx) {
@@ -1973,21 +2063,28 @@ document.addEventListener('keydown', e => {
   }
   if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
     e.preventDefault();
-    scrollToCard(Math.min(PROJECTS.length - 1, currentCardIdx + 1));
+    scrollToCard((currentCardIdx + 1) % PROJECTS.length);
   }
   if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
     e.preventDefault();
-    scrollToCard(Math.max(0, currentCardIdx - 1));
+    scrollToCard((currentCardIdx - 1 + PROJECTS.length) % PROJECTS.length);
   }
 });
 
 /* ═══ OPEN PROJECT ═══ */
-function openProject(idx) {
+/* `push` is false when we are REACTING to a history change (popstate /
+   hashchange / initial load) — pushing again in that case duplicates
+   entries and traps the browser Back button on the site. */
+function openProject(idx, push = true) {
   isProjectOpen = true;
   activeProjectIdx = idx;
   const proj = PROJECTS[idx];
 
-  history.pushState({ project: proj.id }, '', `#/project/${proj.id}`);
+  if (push) history.pushState({ project: proj.id }, '', `#/project/${proj.id}`);
+
+  /* A previously viewed project must not leak its scroll position */
+  projScroll.scrollTop = 0;
+  projectView.scrollTop = 0;
 
   homeLeft.classList.add('hidden');
   scrollDots.classList.add('hidden');
@@ -2010,11 +2107,11 @@ function openProject(idx) {
 }
 
 /* ═══ CLOSE PROJECT ═══ */
-function closeProject() {
+function closeProject(push = true) {
   if (!isProjectOpen) return;
 
   isProjectOpen = false;
-  history.pushState({}, '', '#/');
+  if (push) history.pushState({}, '', '#/');
 
   projectView.classList.remove('open');
   backBtnWrap.classList.remove('open');
@@ -2381,7 +2478,7 @@ function launchBalloon() {
 function handleRoute() {
   const hash = location.hash;
   if (!hash || hash === '#/' || hash === '#') {
-    if (isProjectOpen) closeProject();
+    if (isProjectOpen) closeProject(false);
     return;
   }
   const m = hash.match(/^#\/project\/(.+)$/);
@@ -2389,7 +2486,7 @@ function handleRoute() {
     const id  = m[1];
     const idx = PROJECTS.findIndex(p => p.id === id);
     if (idx > -1 && (!isProjectOpen || activeProjectIdx !== idx)) {
-      openProject(idx);
+      openProject(idx, false);
     }
   }
 }
