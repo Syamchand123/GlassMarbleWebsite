@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Docs — GlassMarble v1.0.0</title>
+  <meta name="description" content="GlassMarble documentation — install, architecture, CLI, 31 diagrams, AKG format, configuration, and grounded AI. 17 languages. Deterministic. Local.">
+  <meta name="theme-color" content="#f6f6f6">
+  <link rel="icon" type="image/png" href="assets/LOGO_PIXEL.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;border:0;margin:0;padding:0}
+    html{font-size:0.694445vw;font-family:'Inter',-apple-system,'Helvetica Neue',sans-serif;-webkit-font-smoothing:antialiased;background:#f6f6f6;color:#1a1a1a;scroll-behavior:smooth}
+    ::-webkit-scrollbar{display:none}
+    :root{--bg:#f6f6f6;--black:#1a1a1a;--grey:#9f9f9f;--muted:#6b7280;--white:#fff;--border:#e4e4e4;--border2:#ececec;--violet:#7c5cfb;--violet2:#6d28d9;--ease-spring:cubic-bezier(0.075,0.82,0.165,1);--ease-out:cubic-bezier(0,0,0.2,1)}
+    body{background:transparent;line-height:1;min-height:100vh}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit;cursor:pointer;background:none}
+    a:focus-visible,button:focus-visible{outline:2px solid var(--black);outline-offset:3px;border-radius:4px}
+    #bg-scene{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+    .bg-grain{position:absolute;inset:0;opacity:0.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px 180px}
+    .bg-vignette{position:absolute;inset:0;background:radial-gradient(ellipse 115% 105% at 50% 40%, transparent 60%, rgba(26,26,26,0.06) 100%)}
+    .site-logo{position:fixed;top:3.5rem;left:3.5rem;z-index:211;width:5rem;height:5rem;border-radius:1.2rem;overflow:hidden;box-shadow:0 0.4rem 1.6rem rgba(0,0,0,0.14)}
+    .site-logo img{width:100%;height:100%;object-fit:cover;display:block}
+    .site-nav{position:fixed;top:3.5rem;right:3.5rem;z-index:211;display:flex;align-items:center;gap:0.6rem}
+    .nav-link{font-size:1.35rem;letter-spacing:-0.01em;color:var(--grey);padding:0.7rem 1.4rem;border-radius:999px;transition:background 0.2s,color 0.2s}
+    .nav-link:hover{color:var(--black);background:var(--white)}
+    .nav-link.is-active{color:var(--black);background:var(--white);box-shadow:0 0.4rem 1.6rem rgba(0,0,0,0.06)}
+    .nav-cta{height:4rem;padding:0 1.8rem;border-radius:999px;background:var(--black);color:var(--white);display:inline-flex;align-items:center;gap:0.7rem;font-size:1.25rem;font-weight:500}
+    .nav-cta:hover{background:#2a2a2a}
+    /* layout */
+    .layout{max-width:136rem;margin:0 auto;display:grid;grid-template-columns:28rem 1fr;gap:3.5rem;padding:12rem 3.5rem 6rem}
+    @media(max-width:1100px){.layout{grid-template-columns:1fr;padding:11rem 2.4rem 4rem}}
+    /* sidebar */
+    .sidebar{position:sticky;top:9rem;align-self:start;max-height:calc(100vh - 10rem);overflow:auto;scrollbar-width:thin;padding-right:1rem}
+    @media(max-width:1100px){.sidebar{display:none}}
+    .sidebar-head{display:flex;align-items:center;gap:1rem;margin-bottom:1.6rem}
+    .sidebar-head span{font-size:1.15rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--grey);font-weight:600}
+    .search{width:100%;height:3.8rem;border:1px solid var(--border);border-radius:999px;padding:0 1.4rem 0 3.2rem;font-size:1.25rem;color:var(--black);background:var(--white) url("data:image/svg+xml,%3Csvg width='14' height='14' viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 11A5 5 0 1 1 6 1a5 5 0 0 1 0 10Zm4-1 2.5 2.5' stroke='%239f9f9f' stroke-width='1.3' stroke-linecap='round'/%3E%3C/svg%3E") 1.1rem center no-repeat;outline:none;margin-bottom:1.4rem}
+    .search:focus{border-color:var(--black);box-shadow:0 0 0 1px var(--black)}
+    .nav-group{margin-bottom:1.8rem}
+    .nav-group h4{font-size:1.05rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--grey);font-weight:600;margin:1.6rem 0 0.8rem}
+    .nav-group a{display:block;font-size:1.3rem;line-height:1.4;color:var(--muted);padding:0.45rem 0 0.45rem 1.2rem;border-left:2px solid transparent;margin-left:0.2rem}
+    .nav-group a:hover{color:var(--black)}
+    .nav-group a.active{color:var(--black);border-left-color:var(--black);font-weight:500}
+    .nav-group a.sub{font-size:1.22rem;color:#8a8f98;padding-left:2.2rem}
+    /* content */
+    .content{min-width:0}
+    .prose{max-width:84rem}
+    .kicker{font-size:1.1rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--violet);font-weight:600;margin-bottom:0.8rem;display:flex;align-items:center;gap:0.8rem}
+    .kicker i{width:0.7rem;height:0.7rem;border-radius:50%;background:var(--violet)}
+    h1{font-size:4.6rem;letter-spacing:-0.04em;font-weight:600;line-height:0.95;color:var(--black)}
+    h1 em{font-weight:300;color:var(--grey);font-style:normal}
+    .desc{font-size:1.6rem;line-height:1.6;color:var(--muted);margin-top:1rem;max-width:68rem}
+    .pill-row{display:flex;flex-wrap:wrap;gap:0.8rem;margin-top:1.6rem}
+    .pill{font-family:'JetBrains Mono',monospace;font-size:1.15rem;background:var(--white);border:1px solid var(--border);padding:0.4rem 0.9rem;border-radius:999px;color:#374151}
+    hr{height:1px;background:var(--border);margin:3rem 0}
+    h2{font-size:2.6rem;letter-spacing:-0.03em;font-weight:600;color:var(--black);margin:3.6rem 0 1rem;scroll-margin-top:9rem}
+    h2 span{font-weight:300;color:var(--grey)}
+    h3{font-size:1.75rem;letter-spacing:-0.02em;font-weight:600;color:var(--black);margin:2.4rem 0 0.8rem;scroll-margin-top:9rem}
+    h4{font-size:1.35rem;font-weight:600;color:var(--black);margin:1.8rem 0 0.6rem}
+    p{font-size:1.45rem;line-height:1.7;color:#374151;margin:0.8rem 0}
+    p strong{color:var(--black)}
+    ul,ol{margin:0.8rem 0 1rem 1.6rem;font-size:1.4rem;line-height:1.7;color:#374151}
+    li{margin:0.35rem 0}
+    blockquote{border-left:3px solid var(--violet);background:#f5f3ff;border-radius:0 1.2rem 1.2rem 0;padding:1.2rem 1.6rem;margin:1.4rem 0;font-size:1.35rem;line-height:1.6;color:#4b5563}
+    .mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:1.25rem;background:#0f1115;color:#e5e7eb;border-radius:1.4rem;padding:1.6rem 1.8rem;overflow:auto;line-height:1.7;margin:1.2rem 0;position:relative}
+    .mono .dim{color:#9ca3af}
+    .mono .cmt{color:#6b7280}
+    .mono.light{background:#f9fafb;color:#111827;border:1px solid var(--border)}
+    .mono.light .dim{color:#9ca3af}
+    .copy{position:relative}
+    .copy-btn{position:absolute;top:0.8rem;right:0.8rem;font-size:1.05rem;letter-spacing:0.06em;text-transform:uppercase;color:#9ca3af;background:var(--white);border:1px solid var(--border);padding:0.45rem 0.85rem;border-radius:999px}
+    .dark .copy-btn{background:#1f2937;border-color:#374151;color:#9ca3af}
+    .table-wrap{background:var(--white);border:1px solid var(--border);border-radius:1.6rem;overflow:hidden;margin:1.4rem 0}
+    table{width:100%;border-collapse:collapse;font-size:1.3rem}
+    th{font-size:1.05rem;letter-spacing:0.07em;text-transform:uppercase;color:var(--grey);font-weight:600;text-align:left;padding:1.2rem 1.6rem;background:#f9fafb;border-bottom:1px solid var(--border);white-space:nowrap}
+    td{padding:1.1rem 1.6rem;border-bottom:1px solid #f3f4f6;color:#1f2937;vertical-align:top}
+    tr:last-child td{border-bottom:0}
+    td code, p code, li code{font-family:'JetBrains Mono',monospace;font-size:0.95em;background:#f3f4f6;border:1px solid var(--border);padding:0.15rem 0.45rem;border-radius:0.5rem;color:#111827}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1.4rem 0}
+    @media(max-width:700px){.grid2{grid-template-columns:1fr}}
+    .mini{background:var(--white);border:1px solid var(--border);border-radius:1.6rem;padding:1.8rem}
+    .mini h4{margin:0 0 0.4rem;font-size:1.35rem}
+    .mini p{font-size:1.3rem;color:var(--muted);margin:0}
+    .callout{border:1px solid #e0e7ff;background:#f5f3ff;border-radius:1.6rem;padding:1.6rem 1.8rem;display:flex;gap:1.2rem;margin:1.4rem 0}
+    .callout i{width:2.6rem;height:2.6rem;border-radius:50%;background:var(--violet);color:var(--white);display:grid;place-items:center;flex:0 0 auto;font-style:normal;font-weight:600}
+    .callout p{margin:0;font-size:1.3rem}
+    .toc{position:fixed;right:2rem;top:50%;transform:translateY(-50%);display:none}
+    @media(min-width:1400px){.toc{display:block}}
+    .anchor{opacity:0;margin-left:0.6rem;font-size:1.2rem;color:var(--grey)}
+    h2:hover .anchor, h3:hover .anchor{opacity:1}
+    footer{border-top:1px solid var(--border);margin-top:4rem;padding:2rem 0 3rem;display:flex;justify-content:space-between;gap:2rem;flex-wrap:wrap;font-size:1.25rem;color:var(--grey)}
+    @media(max-width:1024px){html{font-size:0.9vw}.site-logo{top:2.4rem;left:2.4rem;width:4.2rem;height:4.2rem}.site-nav{top:2.4rem;right:2.4rem}.layout{padding-top:10rem}}
+    @media(max-width:640px){html{font-size:2.7vw}.mono{font-size:1.2rem}}
+  </style>
+</head>
+<body>
+  <div id="bg-scene" aria-hidden="true"><i class="bg-grain"></i><i class="bg-vignette"></i></div>
+  <a class="site-logo" href="index.html" aria-label="GlassMarble — back to overview"><img src="assets/LOGO_PIXEL.png" alt="GlassMarble"></a>
+  <nav class="site-nav" aria-label="Primary">
+    <a href="index.html" class="nav-link">Overview</a>
+    <a href="downloads.html" class="nav-link">Download</a>
+    <a href="docs.html" class="nav-link is-active" aria-current="page">Docs</a>
+    <a href="https://github.com/Syamchand123/GlassMarble" target="_blank" rel="noopener" class="nav-cta">GitHub ↗</a>
+  </nav>
+
+  <div class="layout">
+    <aside class="sidebar" aria-label="Docs navigation">
+      <div class="sidebar-head"><span>GlassMarble v1.0.0</span></div>
+      <input class="search" id="search" placeholder="Search docs…" aria-label="Search docs">
+      <div id="nav">
+        <div class="nav-group"><h4>Overview</h4>
+          <a href="#intro" class="active">Introduction — the drift is the default</a>
+          <a href="#what-you-get">What you get</a>
+          <a href="#how-it-works">How it works — 60 seconds</a>
+          <a href="#when-to-use">When to use</a>
+        </div>
+        <div class="nav-group"><h4>Getting started</h4>
+          <a href="#getting-started-install">Install</a>
+          <a href="#getting-started-matrix">Platform matrix</a>
+          <a href="#getting-started-verify">Verify a release</a>
+          <a href="#getting-started-first-run">First run</a>
+          <a href="#getting-started-workspace">Workspace layout</a>
+          <a href="#getting-started-troubleshoot">Troubleshooting</a>
+        </div>
+        <div class="nav-group"><h4>Architecture</h4>
+          <a href="#arch-exec">Executive summary</a>
+          <a href="#arch-cpg">Code Property Graph</a>
+          <a href="#arch-akg">Architecture Knowledge Graph</a>
+          <a href="#arch-gast">GAST</a>
+          <a href="#arch-pipeline">Pipeline &amp; algorithms</a>
+          <a href="#arch-system">System diagram</a>
+          <a href="#arch-limits">Limitations</a>
+        </div>
+        <div class="nav-group"><h4>CLI</h4>
+          <a href="#cli-overview">Overview — 28 commands</a>
+          <a href="#cli-global">Global flags &amp; exit codes</a>
+          <a href="#cli-tui">TUI vs plain / JSON</a>
+          <a href="#cli-analyze">gmb analyze</a>
+          <a href="#cli-visualize">gmb visualize</a>
+          <a href="#cli-ai">gmb ai</a>
+          <a href="#cli-memory">gmb memory</a>
+          <a href="#cli-govern">Governance — drift / compare</a>
+          <a href="#cli-inspect">Inspect — status / tree / hotspot</a>
+        </div>
+        <div class="nav-group"><h4>Diagrams</h4>
+          <a href="#diagrams-gallery">Gallery</a>
+          <a href="#diagrams-catalog">Catalog — 31 types</a>
+          <a href="#diagrams-formats">Formats</a>
+          <a href="#diagrams-scope">Scope &amp; link level</a>
+        </div>
+        <div class="nav-group"><h4>Graph &amp; storage</h4>
+          <a href="#akg-shape">AKG GraphJSON shape</a>
+          <a href="#akg-nodes">Nodes</a>
+          <a href="#akg-edges">Edges &amp; predicates</a>
+          <a href="#akg-storage">Storage contract</a>
+        </div>
+        <div class="nav-group"><h4>Configuration</h4>
+          <a href="#cfg-precedence">Precedence</a>
+          <a href="#cfg-core">config.yaml</a>
+          <a href="#cfg-drift">drift:</a>
+          <a href="#cfg-intel">intelligence:</a>
+          <a href="#cfg-ai">ai.yaml — BYOK</a>
+        </div>
+        <div class="nav-group"><h4>AI Architect</h4>
+          <a href="#ai-setup">Setup — BYOK</a>
+          <a href="#ai-loop">Agent loop</a>
+          <a href="#ai-stream">Streaming</a>
+          <a href="#ai-sessions">Sessions</a>
+          <a href="#ai-guardrails">Guardrails</a>
+          <a href="#ai-artifacts">Artifacts</a>
+        </div>
+        <div class="nav-group"><h4>Intelligence &amp; memory</h4>
+          <a href="#intel-events">Architecture intelligence</a>
+          <a href="#intel-memory">Developer memory</a>
+          <a href="#intel-snapshot">Snapshots &amp; timeline</a>
+        </div>
+        <div class="nav-group"><h4>Integrations</h4>
+          <a href="#int-neo4j">Neo4j export</a>
+          <a href="#int-relationships">Relationship types</a>
+          <a href="#int-languages">Supported languages</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="content">
+      <div class="prose">
+        <div class="kicker"><i></i> Documentation · v1.0.0 · MIT</div>
+        <h1>GlassMarble <em>documentation.</em></h1>
+        <p class="desc">Your codebase has a living map. 17 languages → one deterministic GraphJSON → 31 living diagrams, governance, and grounded AI. The repo is the source of truth — the graph follows it.</p>
+        <div class="pill-row"><span class="pill">Go 1.25</span><span class="pill">MIT</span><span class="pill">Static binary</span><span class="pill">No backend</span><span class="pill">Cosign + SBOM + SLSA</span></div>
+
+        <hr>
+
+        <!-- OVERVIEW -->
+        <h2 id="intro">Introduction <span>— the drift is the default</span> <a class="anchor" href="#intro">#</a></h2>
+        <blockquote>Diagrams are drawn at design time and rot on the next merge. New joiners grep for weeks. Reviews miss coupling.</blockquote>
+        <div class="table-wrap"><table><thead><tr><th>Pain</th><th>What rots</th><th>GlassMarble</th></tr></thead><tbody>
+          <tr><td>Docs drift — Confluence / Miro after one merge</td><td>C4 / UML / dependency maps</td><td>31 diagrams from the AKG, regenerated on every <code>visualize</code></td></tr>
+          <tr><td>Tribal knowledge — “Ask Alice which service calls payments”</td><td>Ownership</td><td><code>gmb ai</code> + <code>gmb dependency</code> / <code>hotspot</code> from graph data</td></tr>
+          <tr><td>Hidden coupling — <code>data → api</code> slips in unnoticed</td><td>Layering, cycles</td><td><code>gmb drift</code> + <code>cycle_budget</code> + Instability</td></tr>
+          <tr><td>Review guesswork — “Will this break X?”</td><td>Impact</td><td><code>gmb visualize impact</code> + <code>gmb compare</code> + PR diff comment</td></tr>
+          <tr><td>History loss — “Why split this?”</td><td>Rationale</td><td>Snapshots + timeline + <code>FACT</code> / <code>EXPLICIT_REASON</code> / <code>INFERENCE</code></td></tr>
+        </tbody></table></div>
+        <p>GlassMarble is a <strong>compiler + database + visualizer + agent</strong> that stays current via Git-aware incremental analysis (<code>git diff HEAD</code> → delta merge, idempotent). No server, no account — just <code>.glassmarble/akg.json</code>.</p>
+
+        <h3 id="what-you-get">What you get <a class="anchor" href="#what-you-get">#</a></h3>
+        <div class="grid2">
+          <div class="mini"><h4>🎨 31 living diagrams</h4><p>14 UML + 7 C4 + 4 specialized + 6 analysis → <strong>Mermaid / PlantUML / DOT</strong>. <code>global</code> · <code>folder:</code> · <code>file:</code> scopes.</p></div>
+          <div class="mini"><h4>🛡️ Governance</h4><p><code>hotspot</code> · <code>dependency</code> · <code>drift</code> · <code>compare</code> · cycles, coupling, Instability. Snapshots + timeline track every <code>SERVICE_ADDED … CYCLE_RESOLVED</code>.</p></div>
+          <div class="mini"><h4>🧠 Grounded AI</h4><p>BYOK, 10 providers, streaming, 32 tools that read the live AKG. Keys are <code>0600</code> and never logged. No hallucinated architecture.</p></div>
+          <div class="mini"><h4>⚡ Bounded &amp; safe</h4><p>MVCC + <code>db.lock</code> + <code>tmp→fsync→rename→verify</code>. Self-healing <code>.bak</code>. Snapshot caps at 15k nodes / 8 MB.</p></div>
+        </div>
+
+        <h3 id="how-it-works">How it works — 60 seconds <a class="anchor" href="#how-it-works">#</a></h3>
+        <div class="mono light">Multi-language source → Ingest (tree-sitter) → GAST normalization → Aggregate (topology &amp; visibility) → Link (CPG + CFG/DFG + traits) → AKG (akg.json · GraphJSON v3 · MVCC) → Visualization (virtual subgraph → layout → M/P/D) → AI Architect (32 tools · BYOK) → Governance (hotspot · drift · compare)</div>
+        <p>Pipeline in 4 phases: <strong>ingest → normalize → aggregate → link → commit</strong>. File-by-file map and algorithms → <a href="#arch-pipeline" style="color:var(--violet);font-weight:500">Architecture → Pipeline</a>. Storage contract (&lt;100 MB @ 500k LOC) → <a href="#akg-storage" style="color:var(--violet);font-weight:500">AKG Format → Storage</a>.</p>
+
+        <h3 id="when-to-use">When to use — and when not to <a class="anchor" href="#when-to-use">#</a></h3>
+        <p><strong>Great for:</strong> onboarding, PR reviews (<code>compare</code> + diff comment), architecture reviews (<code>hotspot</code>, <code>drift</code>), living docs (commit <code>marbles/</code> in CI), grounded Q&amp;A.</p>
+        <p><strong>Not for:</strong> runtime profiling, dynamic tracing, or style linting — static analysis only (<code>confidence &lt; 1.0</code> for heuristics).</p>
+
+        <!-- GETTING STARTED -->
+        <h2 id="getting-started-install">Getting started — install <a class="anchor" href="#getting-started-install">#</a></h2>
+        <h3>Linux &amp; macOS</h3>
+        <div class="copy"><button class="copy-btn" data-copy="curl -fsSL https://raw.githubusercontent.com/Syamchand123/GlassMarble/main/install.sh | sh">Copy</button><div class="mono dark">curl -fsSL https://raw.githubusercontent.com/Syamchand123/GlassMarble/main/install.sh | sh<br><span class="dim"># installs to /usr/local/bin (sudo) or ~/.local/bin</span><br>gmb version</div></div>
+        <p>Custom dir or pin: <code>INSTALL_DIR=$HOME/bin sh &lt;(curl …)</code> · <code>VERSION=v1.0.0 sh &lt;(curl …)</code></p>
+        <h3>Windows — PowerShell 5.1+</h3>
+        <div class="mono dark">irm https://raw.githubusercontent.com/Syamchand123/GlassMarble/main/install.ps1 | iex<br><span class="dim"># installs to %LOCALAPPDATA%\Programs\gmb — restart shell</span><br>gmb version</div>
+        <h3>Go toolchain · 1.25+</h3>
+        <div class="mono dark">go install github.com/Syamchand123/GlassMarble@latest<br><span class="dim"># pin:</span> go install github.com/Syamchand123/GlassMarble@v1.0.0</div>
+        <h3>Docker</h3>
+        <div class="mono dark">docker pull ghcr.io/syamchand123/glassmarble:v1.0.0<br><span class="dim"># also: latest, sha-xxxx — linux/amd64+arm64</span></div>
+        <h3>Build from source</h3>
+        <div class="mono dark">git clone https://github.com/Syamchand123/GlassMarble.git<br>cd GlassMarble<br>make build &nbsp;<span class="dim"># → ./gmb (CGO static)</span><br>./gmb version</div>
+
+        <h3 id="getting-started-matrix">Platform matrix <a class="anchor" href="#getting-started-matrix">#</a></h3>
+        <div class="table-wrap"><table><thead><tr><th>OS</th><th>Arch</th><th>Archive</th><th>Installer</th></tr></thead><tbody>
+          <tr><td>macOS 12+</td><td>arm64 (M1–M4)</td><td><code>gmb_*_darwin_arm64.tar.gz</code></td><td><code>curl | sh</code></td></tr>
+          <tr><td>macOS 12+</td><td>amd64</td><td><code>gmb_*_darwin_amd64.tar.gz</code></td><td><code>curl | sh</code></td></tr>
+          <tr><td>Linux glibc/musl</td><td>amd64</td><td><code>gmb_*_linux_amd64.tar.gz</code></td><td><code>curl | sh</code></td></tr>
+          <tr><td>Linux</td><td>arm64</td><td><code>gmb_*_linux_arm64.tar.gz</code></td><td><code>curl | sh</code></td></tr>
+          <tr><td>Windows 10/11</td><td>amd64</td><td><code>gmb_*_windows_amd64.zip</code></td><td><code>irm | iex</code></td></tr>
+          <tr><td>Windows 11</td><td>arm64</td><td><code>gmb_*_windows_arm64.zip</code></td><td><code>irm | iex</code></td></tr>
+        </tbody></table></div>
+
+        <h3 id="getting-started-verify">Verify a release <a class="anchor" href="#getting-started-verify">#</a></h3>
+        <p>Installers verify <code>checksums.txt</code> (SHA256) automatically. For hardening, verify Sigstore Cosign + SLSA provenance &amp; SBOM (Syft/SPDX) attached per release.</p>
+        <div class="mono dark"><span class="cmt"># pin</span> VERSION=v1.0.0; ARCH=linux_amd64<br>curl -fsSLO "https://github.com/Syamchand123/GlassMarble/releases/download/${VERSION}/gmb_${VERSION#v}_${ARCH}.tar.gz"<br>curl -fsSLO "https://github.com/Syamchand123/GlassMarble/releases/download/${VERSION}/checksums.txt"{,.pem,.sig}<br>sha256sum -c --ignore-missing checksums.txt<br>cosign verify-blob --certificate-identity-regexp "https://github.com/Syamchand123/GlassMarble/.github/workflows/release.yml@refs/tags/${VERSION}" --certificate-oidc-issuer https://token.actions.githubusercontent.com --signature checksums.txt.sig --certificate checksums.txt.pem checksums.txt</div>
+
+        <h3 id="getting-started-first-run">First run <a class="anchor" href="#getting-started-first-run">#</a></h3>
+        <div class="mono dark">gmb init --dir . &nbsp;<span class="dim"># → .glassmarble/  (idempotent)</span><br>gmb analyze --full &nbsp;<span class="dim"># first = full, then incremental via git diff HEAD</span><br>gmb status &nbsp;<span class="dim"># nodes / edges / health</span><br>gmb visualize class --save class &nbsp;<span class="dim"># → .glassmarble/marbles/class.md (Mermaid)</span><br>gmb ai configure &nbsp;<span class="dim"># BYOK wizard</span><br>gmb ai "which services depend on payments?"</div>
+        <p>Incremental is the default with a non-empty <code>akg.json</code>. Intelligence → snapshots → memory run post-commit (non-fatal, idempotent).</p>
+
+        <h3 id="getting-started-workspace">Workspace layout <a class="anchor" href="#getting-started-workspace">#</a></h3>
+        <div class="mono light">your-repo/<br>└── .glassmarble/<br>    ├── akg.json &nbsp;<span class="dim"># GraphJSON v3 — source of truth (never pruned)</span><br>    ├── config.yaml &nbsp;<span class="dim"># project config</span><br>    ├── ai.yaml &nbsp;<span class="dim"># BYOK (0600)</span><br>    ├── marbles/ &nbsp;<span class="dim"># saved diagrams (*.md)</span><br>    ├── intelligence/latest.json<br>    ├── snapshots/ &nbsp;<span class="dim"># snap_&lt;hash&gt;.json + index.json</span><br>    ├── memory/ &nbsp;<span class="dim"># events.jsonl, memory.json, timeline.json, corrections.jsonl</span><br>    └── ai/sessions/ &nbsp;<span class="dim"># chat sessions (0600)</span></div>
+        <p><code>gmb housekeeping</code> reports sizes and prunes <code>marbles/</code>, <code>ai/</code>, old <code>snapshots/</code> (<code>--prune-snapshots --keep 30</code>). <code>akg.json</code> is never pruned.</p>
+
+        <h3 id="getting-started-troubleshoot">Troubleshooting <a class="anchor" href="#getting-started-troubleshoot">#</a></h3>
+        <div class="table-wrap"><table><thead><tr><th>Symptom</th><th>Fix</th></tr></thead><tbody>
+          <tr><td><code>akg.json</code> too large (<code>--max-json-mb</code>)</td><td><code>gmb --max-json-mb 100 analyze</code> or <code>snapshot_no_graph:true</code></td></tr>
+          <tr><td><code>doctor</code> dangling edges</td><td><code>gmb analyze --full</code>; check <code>arch_excluded_dirs</code></td></tr>
+          <tr><td><code>visualize sequence</code> → entry missing</td><td>Pass <code>--entry "&lt;file&gt;::Type::Method"</code> from <code>gmb inspect --search</code></td></tr>
+          <tr><td><code>gmb ai</code> not configured</td><td><code>gmb ai configure</code> or <code>GLASSMARBLE_OPENAI_API_KEY</code>; <code>gmb ai doctor</code></td></tr>
+          <tr><td>Colors garbled in CI</td><td><code>NO_COLOR=1</code> or <code>--color never</code></td></tr>
+        </tbody></table></div>
+
+        <!-- ARCHITECTURE -->
+        <h2 id="arch-exec">Architecture — executive summary <a class="anchor" href="#arch-exec">#</a></h2>
+        <p><strong>GlassMarble resolves drift by treating the codebase as the single source of truth.</strong> 17 languages (14 with tree-sitter grammars — Go, Python, JS, TS, C, C++, C#, Java, Ruby, PHP, Rust, HTML/CSS/JSON + decl-only Kotlin/Swift/Scala) are compiled into a CPG, then committed as a portable GraphJSON AKG under <code>.glassmarble/akg.json</code>, and projected into 31 notations via Mermaid / PlantUML / DOT.</p>
+        <div class="mono light">Multi-language code → [Ingestion: tree-sitter + GAST] → CPG (AST+CFG+DFG+Call Graph) → [Aggregation &amp; Linking: topology + semantic binding] → AKG (GraphJSON v3) → [Virtual subgraph extraction] → Visualization (31 types) → Mermaid/PlantUML/DOT</div>
+
+        <h3 id="arch-cpg">Code Property Graph <a class="anchor" href="#arch-cpg">#</a></h3>
+        <ul><li><strong>AST</strong> — types, interfaces, params, fields, expressions</li><li><strong>CFG</strong> — branches, loops, exits, chronological execution</li><li><strong>DFG</strong> — assignments, data propagation</li><li><strong>Call Graph</strong> — static linkage, polymorphic bindings, concurrency threads</li></ul>
+        <h3 id="arch-akg">Architecture Knowledge Graph <a class="anchor" href="#arch-akg">#</a></h3>
+        <div class="mono light">{"schema_version":3,"commit_hash":"f438841…","version":5,"entrypoints":["cmd.analyze.init"],"nodes":[{"id":"auth/login.go::Authenticator::Authenticate","kind":"FUNCTION","primitive":"NETWORK_IO","file_spec":{"path":"auth/login.go","line_start":18}}],"edges":[{"source_id":"…","target_id":"…","type":"CALLS","line_number":22,"confidence":1.0}]}</div>
+        <p>Deterministic, sorted, diff-friendly. GraphJSON v3 is the store; GraphJSON <em>is</em> the source of truth. Full schema → <a href="#akg-shape" style="color:var(--violet);font-weight:500">AKG Format</a>.</p>
+        <h3 id="arch-gast">GAST <a class="anchor" href="#arch-gast">#</a></h3>
+        <p>A <code>GASTNode</code> represents declarations, calls, scopes, fields uniformly across all 17 languages — decoupling the compiler from syntax.</p>
+        <h3 id="arch-pipeline">Pipeline &amp; algorithms <a class="anchor" href="#arch-pipeline">#</a></h3>
+        <ol>
+          <li><strong>Ingest</strong> — multi-threaded tree-sitter walk, <code>RichToken</code> with structural flags</li>
+          <li><strong>Normalize</strong> — tokens → GAST, receiver call mapping, import resolution</li>
+          <li><strong>Aggregate</strong> — file → package clustering, visibility / FQN keys</li>
+          <li><strong>Link</strong> — call/interface/CFG/DFG/concurrency/primitive traits → final CPG → atomic commit</li>
+        </ol>
+        <p>Resolution tricks: case-insensitive receivers, selector-path deconstruction, duck-typed interfaces, package-path stripping. Edge taxonomy → <a href="#int-relationships" style="color:var(--violet);font-weight:500">Relationship Types</a>.</p>
+        <h3 id="arch-system">System diagram <a class="anchor" href="#arch-system">#</a></h3>
+        <div class="mono light">gmb CLI (28 commands) → internal/app pipeline → { code_analysis_engine (CPG) | visualization_engine (31 types) } → internal/akg (GraphJSON v3 + db.lock) → { arch_intelligence (patterns/stats) | arch_timeline + memory (snapshots/intelligence) }</div>
+        <h3 id="arch-limits">Limitations <a class="anchor" href="#arch-limits">#</a></h3>
+        <ul><li>14 full grammars; Kotlin/Swift/Scala decl-only (no intra-CFG/DFG). JSON = config.</li><li>Static only — no runtime; dynamic calls ≈ (<code>confidence &lt; 1.0</code>).</li><li>Graph store is GraphJSON v3; Turtle/RDF not shipped.</li><li><code>aging/fusion/learning/evolution</code> are pipeline phases, not standalone CLI commands.</li></ul>
+
+        <!-- CLI -->
+        <h2 id="cli-overview">CLI — overview <a class="anchor" href="#cli-overview">#</a></h2>
+        <p>Single binary <code>gmb</code> (alias <code>glassmarble</code>). Every command has <code>--dir</code>, <code>--json</code> where noted, and <code>--help</code> (Fang-styled). Full flag tables → <code>docs/commands_master_reference.md</code>.</p>
+        <div class="table-wrap"><table><thead><tr><th>Area</th><th>Commands</th></tr></thead><tbody>
+          <tr><td>Build</td><td><code>init</code>, <code>analyze</code>, <code>watch</code>, <code>hooks</code>, <code>import</code>, <code>export</code></td></tr>
+          <tr><td>Query</td><td><code>status</code>, <code>tree</code>, <code>dependency</code>, <code>hotspot</code>, <code>inspect</code>, <code>diff</code>, <code>doctor</code>, <code>patterns</code>, <code>stats</code>, <code>timeline</code></td></tr>
+          <tr><td>Govern</td><td><code>drift</code>, <code>compare</code>, <code>snapshot</code></td></tr>
+          <tr><td>Visualize &amp; Reason</td><td><code>visualize</code>, <code>ai</code>, <code>why</code></td></tr>
+          <tr><td>Utility</td><td><code>housekeeping</code>, <code>completion</code>, <code>version</code>, <code>dev</code></td></tr>
+        </tbody></table></div>
+
+        <h3 id="cli-global">Global flags &amp; exit codes <a class="anchor" href="#cli-global">#</a></h3>
+        <div class="table-wrap"><table><thead><tr><th>Flag</th><th>Default</th><th>What it does</th></tr></thead><tbody>
+          <tr><td><code>--dir</code></td><td><code>.</code></td><td>Repo root containing <code>.glassmarble/</code></td></tr>
+          <tr><td><code>--color</code></td><td><code>auto</code></td><td><code>auto</code> · <code>always</code> · <code>never</code> (honors <code>NO_COLOR</code>)</td></tr>
+          <tr><td><code>--max-json-mb</code></td><td><code>0</code></td><td>Gate <code>akg.json</code> size in MiB (0=unlimited)</td></tr>
+          <tr><td><code>--debug</code> / <code>-v</code></td><td>false</td><td>Verbose / phase-by-phase progress</td></tr>
+        </tbody></table></div>
+        <div class="grid2">
+          <div class="mini"><h4>Exit 0 — success</h4><p><code>gmb status</code>, <code>gmb analyze</code> healthy</p></div>
+          <div class="mini"><h4>Exit 4 — integrity / budget</h4><p><code>gmb doctor</code> dangling, <code>gmb analyze --bench</code> over budget</p></div>
+        </div>
+
+        <h3 id="cli-tui">TUI vs plain / JSON <a class="anchor" href="#cli-tui">#</a></h3>
+        <p>TTY on both stdin &amp; stdout → interactive Bubble Tea where available (<code>analyze</code>, <code>tree</code>, <code>inspect</code>, <code>ai chat</code>). Piped / <code>--json</code> → plain text, never interactive. Design intent: TUI for humans, plain/JSON for CI — byte-stable.</p>
+
+        <h3 id="cli-analyze">gmb analyze <a class="anchor" href="#cli-analyze">#</a></h3>
+        <p>The workhorse: 4-phase pipeline → atomic GraphJSON commit → (with <code>--intelligence</code> default) intelligence → snapshots → memory.</p>
+        <div class="mono light">gmb analyze [--full] [--commit &lt;hash&gt;] [--workers &lt;n&gt;] [--link-level architecture|standard|full] [--include-docs] [--bench] [--json]</div>
+        <ul><li>Incremental delta is the default (<code>git diff HEAD</code>). <code>--full</code> forces full scan at <code>full</code> detail.</li><li><code>--bench</code> verifies budgets: analyze ≤120s, commit ≤80s, state ≤50MB — exit 4 on failure.</li><li>Output: <code>Analyzed 3 files | 120 nodes | 240 edges | … | state=180KB | 0.4s</code></li></ul>
+
+        <h3 id="cli-visualize">gmb visualize <a class="anchor" href="#cli-visualize">#</a></h3>
+        <div class="mono light">gmb visualize &lt;type&gt; [--format mermaid|plantuml|dot] [--scope global|folder:&lt;path&gt;|file:&lt;path&gt;] [--entry &lt;id&gt;] [--depth 7] [--save &lt;name&gt;] [--render .svg]</div>
+        <p>31 types in 4 families — see <a href="#diagrams-catalog" style="color:var(--violet)">Diagrams → Catalog</a>. Scopes: whole graph, a folder, or a single file. <code>gmb visualize list</code> shows all 31; <code>check</code> validates.</p>
+
+        <h3 id="cli-ai">gmb ai <a class="anchor" href="#cli-ai">#</a></h3>
+        <div class="mono light">gmb ai "&lt;question&gt;" [--tools akg,code,diagram] [--max-cost 0.5] [--save &lt;name&gt;]<br>gmb ai chat [--new] &nbsp;<span class="dim"># REPL with session memory</span><br>gmb ai configure &nbsp;<span class="dim"># BYOK wizard</span></div>
+        <p>32 tools: <code>system</code> 3 / <code>akg</code> 21 / <code>code</code> 5 / <code>diagram</code> 3. Provider registry covers 10 providers — see <a href="#ai-setup" style="color:var(--violet)">AI → Setup</a>.</p>
+
+        <h3 id="cli-memory">gmb memory <a class="anchor" href="#cli-memory">#</a></h3>
+        <div class="mono light">gmb memory [--ask "&lt;q&gt;"] [--component &lt;name&gt;] [--correct &lt;target&gt; --kind INTENT|LABEL|STATE|CONFIDENCE|REJECT|ACCEPT --value &lt;v&gt;]</div>
+        <p>Claims are labelled <code>FACT / EXPLICIT_REASON / INFERENCE / SPECULATION</code> — reasons are never invented. Corrections overlay deterministically.</p>
+
+        <h3 id="cli-govern">Governance — drift / compare <a class="anchor" href="#cli-govern">#</a></h3>
+        <div class="mono light">gmb drift &nbsp;<span class="dim"># checks drift.layers + forbidden_deps + cycle_budget (exit 1 on violation — CI gate)</span><br>gmb compare [base.json head.json] &nbsp;<span class="dim"># diff two snapshots (PR comment)</span><br>gmb snapshot --create | --list | --at &lt;ref&gt; | --diff '&lt;base&gt; &lt;head&gt;' | --replay &lt;ref&gt;</div>
+
+        <h3 id="cli-inspect">Inspect — status / tree / hotspot <a class="anchor" href="#cli-inspect">#</a></h3>
+        <div class="mono light">gmb status [--json] &nbsp;<span class="dim"># nodes/edges, snapshots, memory, total</span><br>gmb tree [--depth 4] &nbsp;<span class="dim"># hierarchy: path → Name [Kind] &lt;Primitive&gt;</span><br>gmb dependency [target] &nbsp;<span class="dim"># inbound/outbound with line numbers</span><br>gmb hotspot [--top 10] &nbsp;<span class="dim"># in-degree ranking</span><br>gmb inspect --search Store | --file src/db.go --line 42 | --list</div>
+
+        <!-- DIAGRAMS -->
+        <h2 id="diagrams-gallery">Diagrams — gallery <a class="anchor" href="#diagrams-gallery">#</a></h2>
+        <div class="grid2">
+          <div class="mini"><h4>UML — <code>class</code></h4><div class="mono light" style="font-size:1.15rem">class AuthService {<br>&nbsp;&nbsp;+Authenticate(token) string<br>&nbsp;&nbsp;+Validate(user) bool<br>}<br>class DBStore {<br>&nbsp;&nbsp;+GetUser(id) User<br>}<br>AuthService --> DBStore : CALLS</div></div>
+          <div class="mini"><h4>C4 — <code>c4container</code></h4><div class="mono light" style="font-size:1.15rem">C4Container<br>&nbsp;&nbsp;Person(user, "User")<br>&nbsp;&nbsp;Container(api, "API", "Go")<br>&nbsp;&nbsp;ContainerDb(db, "DB", "Postgres")<br>&nbsp;&nbsp;Rel(user, api, "Uses")<br>&nbsp;&nbsp;Rel(api, db, "CALLS")</div></div>
+          <div class="mini"><h4>Specialized — <code>er</code></h4><div class="mono light">erDiagram<br>&nbsp;&nbsp;USER ||--o{ SESSION : has<br>&nbsp;&nbsp;SESSION ||--|| TOKEN : carries</div></div>
+          <div class="mini"><h4>Analysis — <code>dependency</code></h4><div class="mono light">flowchart LR<br>&nbsp;&nbsp;cmd --> internal/akg<br>&nbsp;&nbsp;cmd --> internal/visualization_engine</div></div>
+        </div>
+
+        <h3 id="diagrams-catalog">Catalog — 31 types <a class="anchor" href="#diagrams-catalog">#</a></h3>
+        <div class="table-wrap"><table><thead><tr><th>Type</th><th>Family</th><th>Needs entry</th></tr></thead><tbody>
+          <tr><td><code>class</code>, <code>object</code>, <code>component</code>, <code>deployment</code>, <code>package</code>, <code>composite</code>, <code>profile</code>, <code>usecase</code>, <code>activity</code>, <code>state</code>, <code>sequence</code>, <code>communication</code>, <code>interaction</code>, <code>timing</code></td><td>UML (14)</td><td><code>sequence</code> requires <code>--entry</code></td></tr>
+          <tr><td><code>c4context</code>, <code>c4container</code>, <code>c4component</code>, <code>c4code</code>, <code>c4landscape</code>, <code>c4dynamic</code>, <code>c4deployment</code></td><td>C4 (7)</td><td><code>c4dynamic</code> requires <code>--entry</code></td></tr>
+          <tr><td><code>er</code>, <code>dataflow</code>, <code>mindmap</code>, <code>flowchart</code></td><td>Specialized (4)</td><td>—</td></tr>
+          <tr><td><code>dependency</code>, <code>hotspot</code>, <code>callgraph</code>, <code>layered</code>, <code>impact</code>, <code>infrastructure</code></td><td>Analysis (6)</td><td><code>impact</code> uses <code>--changed-files</code></td></tr>
+        </tbody></table></div>
+
+        <h3 id="diagrams-formats">Formats <a class="anchor" href="#diagrams-formats">#</a></h3>
+        <div class="table-wrap"><table><thead><tr><th>Format</th><th>Use for</th></tr></thead><tbody>
+          <tr><td><strong>Mermaid</strong> <code>mermaid</code> <span class="pill" style="font-size:1rem">default</span></td><td>GitHub, VS Code, web</td></tr>
+          <tr><td><strong>PlantUML</strong> <code>plantuml</code></td><td>Enterprise, rich UML</td></tr>
+          <tr><td><strong>DOT</strong> <code>dot</code></td><td>Graphviz</td></tr>
+        </tbody></table></div>
+        <div class="mono light">gmb visualize class --format mermaid          <span class="dim"># default</span><br>gmb visualize class --format plantuml -o out.puml<br>gmb visualize dependency --format dot -o out.dot</div>
+
+        <h3 id="diagrams-scope">Scope &amp; link level <a class="anchor" href="#diagrams-scope">#</a></h3>
+        <div class="table-wrap"><table><thead><tr><th>Flag</th><th>Values</th><th>Effect</th></tr></thead><tbody>
+          <tr><td><code>--scope</code></td><td><code>global</code> · <code>folder:&lt;path&gt;</code> · <code>file:&lt;path&gt;</code></td><td>Virtual subgraph boundary; folder shows <code>[+N external]</code> ports</td></tr>
+          <tr><td><code>--link-level</code></td><td><code>architecture</code> · <code>standard</code> · <code>full</code></td><td><code>architecture</code>=deps; <code>standard</code>+CFG; <code>full</code>+CFG/DFG per branch</td></tr>
+          <tr><td><code>--depth</code></td><td><code>7</code></td><td>Reachability walk</td></tr>
+          <tr><td><code>--max-nodes</code></td><td><code>0</code></td><td>Truncate to N highest-degree</td></tr>
+        </tbody></table></div>
+        <div class="callout"><i>◈</i><p><strong>Projection is deterministic:</strong> nodes/edges emitted sorted → byte-equal across runs, streaming via <code>strings.Builder</code>, truncation at projection before render, entry unknown → exit 2.</p></div>
+
+        <!-- AKG -->
+        <h2 id="akg-shape">AKG — GraphJSON shape <a class="anchor" href="#akg-shape">#</a></h2>
+        <div class="mono light">{"schema_version":3,"commit_hash":"f438841…","version":5,"entrypoints":["cmd.analyze.init","main.main"],"nodes":[…],"edges":[…],"summary":{"primary_patterns":["…"]},"errors":[],"verified":true}</div>
+        <p>Single source of truth: <code>.glassmarble/akg.json</code>. Sorted, verified, diff-friendly. No WAL — one atomic file.</p>
+        <h3 id="akg-nodes">Nodes <a class="anchor" href="#akg-nodes">#</a></h3>
+        <div class="mono light">{"id":"auth/login.go::Authenticator::Authenticate","kind":"FUNCTION","name":"Authenticate","primitive":"NETWORK_IO","file_spec":{"path":"auth/login.go","line_start":18,"line_end":45},"properties":{"fully_qualified_name":"auth.Authenticator.Authenticate","module_name":"auth.login","return_type":"string"}}</div>
+        <p><strong>IDs:</strong> <code>&lt;path&gt;::&lt;type&gt;::&lt;member&gt;</code> with <code>::param:</code>/<code>::field:</code> suffixes. <strong>Kinds:</strong> <code>PARAM</code>, <code>FUNCTION</code>, <code>STRUCT</code>, <code>INTERFACE</code>, <code>MODULE</code>, <code>ALIAS</code>, … — schema v3 folds legacy <code>TYPE_DECL</code>→<code>STRUCT</code>.</p>
+        <h3 id="akg-edges">Edges &amp; predicates <a class="anchor" href="#akg-edges">#</a></h3>
+        <div class="mono light">{"source_id":"auth/login.go::Authenticator::Authenticate","target_id":"db/database.go::DBStore::GetUser","type":"CALLS","line_number":22,"confidence":1.0}</div>
+        <div class="table-wrap"><table><thead><tr><th>Predicate</th><th>Meaning</th></tr></thead><tbody>
+          <tr><td><code>CALLS</code></td><td>Call to function/method</td></tr>
+          <tr><td><code>BELONGS_TO</code></td><td>Member → container</td></tr>
+          <tr><td><code>HAS_PARAM</code> / <code>HAS_FIELD</code></td><td>Function → param / Type → field</td></tr>
+          <tr><td><code>IMPLEMENTS</code> / <code>EXTENDS</code></td><td>Interface / inheritance</td></tr>
+          <tr><td><code>DEPENDS_ON</code></td><td>Module / package dependency</td></tr>
+          <tr><td><code>HAS_RECEIVER</code></td><td>Method → receiver type</td></tr>
+        </tbody></table></div>
+        <p>Full 4-family taxonomy → <a href="#int-relationships" style="color:var(--violet)">Relationship Types</a>: STRUCTURAL / BEHAVIORAL / DYNAMIC / SECURITY.</p>
+        <h3 id="akg-storage">Storage contract <a class="anchor" href="#akg-storage">#</a></h3>
+        <p><code>--max-json-mb</code> (global flag, 0=unlimited) gates <code>akg.json</code>. <code>gmb status</code> reports size; <code>gmb stats --bench</code> verifies budgets.</p>
+        <div class="table-wrap"><table><thead><tr><th>Nodes</th><th>akg.json pretty</th><th>compact</th><th>30 snaps (no-graph)</th><th>Total est.</th></tr></thead><tbody>
+          <tr><td>13k (this repo)</td><td>17 MB</td><td>~12 MB</td><td>~0.3 MB</td><td>~30 MB</td></tr>
+          <tr><td>40k</td><td>~52 MB</td><td>~36 MB</td><td>~0.9 MB</td><td>~75 MB</td></tr>
+          <tr><td>67k (500k LOC)</td><td>~88 MB</td><td>~60 MB</td><td>~1.5 MB</td><td>~120 MB → set <code>snapshot_no_graph:true</code></td></tr>
+        </tbody></table></div>
+        <p>Keep &lt;100 MB at 500k LOC: compact (~60 MB) dominates; rest via <code>snapshot_no_graph</code> + <code>snapshot_max_count:30</code> + compact memory. Gate CI with <code>--max-json-mb 100</code>.</p>
+
+        <!-- CONFIG -->
+        <h2 id="cfg-precedence">Configuration — precedence <a class="anchor" href="#cfg-precedence">#</a></h2>
+        <div class="mono light">CLI flag → GLASSMARBLE_* env → Project .glassmarble/config.yaml → Global ~/.glassmarble/config.yaml → Defaults</div>
+        <p>For AI: <code>CLI flag → GLASSMARBLE_AI_* env → project ai.yaml → global ai.yaml → defaults</code>. <code>--config/-c</code> is hidden legacy — use per-command flags / env.</p>
+
+        <h3 id="cfg-core">config.yaml <a class="anchor" href="#cfg-core">#</a></h3>
+        <div class="mono light">root_dir: .<br>worker_count: 4 &nbsp;<span class="dim"># 0 = auto (CPUs)</span><br>max_file_bytes: 10485760 &nbsp;<span class="dim"># 10 MiB — gmb init writes 2097152</span><br>debug: false<br>storage_dir: .glassmarble<br>output_format: mermaid &nbsp;<span class="dim"># mermaid | plantuml | dot</span></div>
+        <p>Env overrides: <code>GLASSMARBLE_ROOT_DIR</code>, <code>GLASSMARBLE_WORKER_COUNT</code>, <code>GLASSMARBLE_MAX_FILE_BYTES</code>, <code>GLASSMARBLE_OUTPUT_FORMAT</code> …</p>
+
+        <h3 id="cfg-drift">drift: <a class="anchor" href="#cfg-drift">#</a></h3>
+        <div class="mono light">drift:<br>&nbsp;&nbsp;layers:<br>&nbsp;&nbsp;&nbsp;&nbsp;- name: api<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;paths: ["cmd/**", "internal/app/**"]<br>&nbsp;&nbsp;&nbsp;&nbsp;- name: internal<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;paths: ["internal/**"]<br>&nbsp;&nbsp;forbidden_deps:<br>&nbsp;&nbsp;&nbsp;&nbsp;- source: internal<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;target: api<br>&nbsp;&nbsp;cycle_budget: 0 &nbsp;<span class="dim"># 0 = any cycle fails</span></div>
+        <p>Each node → first matching layer. Forbidden <code>source → target</code> are violations; <code>gmb drift</code> exits non-zero — ideal CI gate.</p>
+
+        <h3 id="cfg-intel">intelligence: <a class="anchor" href="#cfg-intel">#</a></h3>
+        <p>Thresholds for patterns/smells/components (all optional, zero falls back to defaults): <code>god_object_fan_in_threshold:15</code>, <code>small_cycle_threshold:3</code>, <code>layered_consistency_threshold:0.80</code>, <code>snapshot_max_count:30</code>, <code>snapshot_auto_threshold_nodes:15000</code> … Full table → <code>docs/configuration.md §4</code>.</p>
+
+        <h3 id="cfg-ai">ai.yaml — BYOK <a class="anchor" href="#cfg-ai">#</a></h3>
+        <div class="mono light">provider: openai &nbsp;<span class="dim"># openai | anthropic | gemini | deepseek | mistral | groq | ollama | custom</span><br>model: gpt-4o<br>api_key: "" &nbsp;<span class="dim"># prefer env vars</span><br>base_url: ""<br>temperature: 0.2<br>max_turns: 15<br>max_tool_result_bytes: 8192<br>max_output_tokens: 8192<br>timeout_sec: 180<br>stream: true<br>max_total_tokens: 0 &nbsp;<span class="dim"># 0=unlimited</span><br>max_cost_usd: 0<br>max_session_messages: 40</div>
+        <p>Keys with <code>0600</code> perms, never logged. Resolution: <code>GLASSMARBLE_&lt;PROVIDER&gt;_API_KEY</code> → <code>GLASSMARBLE_AI_API_KEY</code>. Ollama uses <code>GLASSMARBLE_OLLAMA_BASE_URL</code>.</p>
+
+        <!-- AI -->
+        <h2 id="ai-setup">AI Architect — setup <a class="anchor" href="#ai-setup">#</a></h2>
+        <div class="mono dark">gmb ai configure &nbsp;<span class="dim"># interactive wizard (TTY)</span><br>gmb ai configure --provider openai --model gpt-4o --key sk-… --scope project<br>gmb ai models &nbsp;<span class="dim"># registry + key status</span><br>gmb ai doctor &nbsp;<span class="dim"># validate wiring + AKG</span></div>
+        <div class="table-wrap"><table><thead><tr><th>Provider</th><th>Key env var</th><th>Models</th></tr></thead><tbody>
+          <tr><td>openai</td><td><code>GLASSMARBLE_OPENAI_API_KEY</code></td><td>gpt-5, gpt-4o, o3 …</td></tr>
+          <tr><td>anthropic</td><td><code>GLASSMARBLE_ANTHROPIC_API_KEY</code></td><td>claude-sonnet-4-5, opus-4-1 …</td></tr>
+          <tr><td>gemini</td><td><code>GLASSMARBLE_GEMINI_API_KEY</code></td><td>gemini-2.5-pro/flash …</td></tr>
+          <tr><td>ollama</td><td><code>GLASSMARBLE_OLLAMA_BASE_URL</code></td><td>llama3.3, qwen3 (local)</td></tr>
+          <tr><td>custom</td><td><code>GLASSMARBLE_AI_API_KEY</code></td><td>any OpenAI-compatible endpoint</td></tr>
+        </tbody></table></div>
+        <p>Also: deepseek, mistral, glm, nvidia, openrouter, groq — full list via <code>gmb ai models</code>.</p>
+
+        <h3 id="ai-loop">Agent loop <a class="anchor" href="#ai-loop">#</a></h3>
+        <div class="mono light">You: "which services depend on payments?"<br>AI → LLM: system prompt + repo header (commit, nodes/edges, patterns)<br>LLM → AI: tool_call akg_traverse<br>AI → AKG: JSON facts<br>AI → LLM: tool results<br>LLM → AI: grounded answer → You + citations</div>
+        <p>32 tools: <code>system</code> 3, <code>akg</code> 21, <code>code</code> 5, <code>diagram</code> 3. Stderr traces <code>→ akg_status({}) / ← ok (182 bytes)</code>. File contents and AKG are always <strong>data, never instructions</strong>.</p>
+
+        <h3 id="ai-stream">Streaming <a class="anchor" href="#ai-stream">#</a></h3>
+        <p>On by default (<code>stream:true</code>). Tokens print as they arrive; fall back to one-shot JSON if the endpoint ignores it. Disable with <code>--no-stream</code> / <code>GLASSMARBLE_AI_STREAM=0</code>.</p>
+
+        <h3 id="ai-sessions">Sessions <a class="anchor" href="#ai-sessions">#</a></h3>
+        <div class="mono light">gmb ai chat &nbsp;<span class="dim"># resume latest</span><br>gmb ai chat --new<br>gmb ai sessions &nbsp;<span class="dim"># list, newest first</span><br>gmb ai sessions --delete &lt;id&gt;</div>
+        <p>Saved under <code>.glassmarble/ai/sessions/</code> (<code>0600</code>), trimmed to <code>max_session_messages</code> at turn boundaries. <code>exit/quit/bye</code> or Ctrl+D to leave; summary prints tokens &amp; cost.</p>
+
+        <h3 id="ai-guardrails">Guardrails <a class="anchor" href="#ai-guardrails">#</a></h3>
+        <div class="mono light">gmb ai --max-total-tokens 20000 "question"<br>gmb ai --max-cost 0.5 "question"</div>
+        <p>Pre-flight prompt-size check, then provider-reported usage. Stop reasons: <code>turn_limit</code>, <code>token_budget</code>, <code>cost_budget</code> → <code>Note:</code> line. <code>--verbose</code> adds accounting.</p>
+
+        <h3 id="ai-artifacts">Artifacts <a class="anchor" href="#ai-artifacts">#</a></h3>
+        <div class="mono light">gmb ai "generate a C4 container diagram" --save c4.md &nbsp;<span class="dim"># → .glassmarble/marbles/c4.md</span><br>gmb ai "write architecture notes" --save notes.md &nbsp;<span class="dim"># → .glassmarble/ai/notes.md</span></div>
+        <p>Agent writes via <code>save_artifact</code> / <code>diagram_generate(save=true)</code>. Final answer is saved, terminal shows the path — no markup dump.</p>
+
+        <!-- INTEL -->
+        <h2 id="intel-events">Architecture intelligence <a class="anchor" href="#intel-events">#</a></h2>
+        <p>Post-commit layer that turns the raw AKG into <strong>evidence</strong>: metrics, components, patterns, smells, events, snapshots.</p>
+        <div class="table-wrap"><table><thead><tr><th>ID</th><th>Pattern</th></tr></thead><tbody>
+          <tr><td>PR-01</td><td>Layered Architecture</td></tr>
+          <tr><td>PR-02</td><td>Clean Architecture</td></tr>
+          <tr><td>PR-03</td><td>Microservices</td></tr>
+          <tr><td>PR-04</td><td>Bounded Context (DDD)</td></tr>
+          <tr><td>PR-05</td><td>CQRS</td></tr>
+          <tr><td>PR-06</td><td>Event-Driven</td></tr>
+          <tr><td>PR-07</td><td>Repository Pattern</td></tr>
+        </tbody></table></div>
+        <p>Components inferred via Louvain + dir prefixes (<code>Instability = Ce/(Ca+Ce)</code>). Events: <code>SERVICE_ADDED/REMOVED</code>, <code>DEPENDENCY_ADDED</code>, <code>CYCLE_INTRODUCED/RESOLVED</code>, <code>LAYER_VIOLATION</code>, <code>COUPLING_INCREASED</code> … — see <code>docs/architecture_intelligence.md §2</code>.</p>
+
+        <h3 id="intel-memory">Developer memory <a class="anchor" href="#intel-memory">#</a></h3>
+        <div class="table-wrap"><table><thead><tr><th>Label</th><th>Meaning</th></tr></thead><tbody>
+          <tr><td><code>FACT</code></td><td>Observed from graph diff</td></tr>
+          <tr><td><code>EXPLICIT_REASON</code></td><td>Stated by human (commit/PR/docs)</td></tr>
+          <tr><td><code>INFERENCE</code></td><td>Derived heuristically</td></tr>
+          <tr><td><code>SPECULATION</code></td><td>Low confidence</td></tr>
+        </tbody></table></div>
+        <div class="mono light">gmb memory --ask "how did auth evolve?"<br>gmb memory --component payments<br>gmb memory --correct &lt;target&gt; --kind STATE --value "…"</div>
+        <p>Corrections (<code>INTENT/LABEL/STATE/CONFIDENCE/REJECT/ACCEPT</code>) overlay deterministically; original values auto-captured in <code>corrections.jsonl</code>.</p>
+
+        <h3 id="intel-snapshot">Snapshots &amp; timeline <a class="anchor" href="#intel-snapshot">#</a></h3>
+        <div class="mono light">gmb snapshot --create | --list | --at &lt;ref&gt; | --diff '&lt;base&gt; &lt;head&gt;' | --replay &lt;ref&gt; [--diagram class]<br>gmb timeline [--component &lt;name&gt;] [--full] [--format text|json|mermaid]<br>gmb stats [--bench] [--arch]</div>
+        <p>Artifacts: <code>intelligence/latest.json</code>, <code>snapshots/index.json + snap_&lt;hash&gt;.json</code>, <code>memory/events.jsonl</code>, <code>memory/conventions.json</code>.</p>
+
+        <!-- INTEGRATIONS -->
+        <h2 id="int-neo4j">Neo4j export <a class="anchor" href="#int-neo4j">#</a></h2>
+        <div class="mono dark">gmb export -f neo4j -o architecture.cypher<br>cypher-shell -u neo4j -p password -f architecture.cypher</div>
+        <p>Deterministic Cypher: nodes as <code>GMNode:&lt;Kind&gt;</code>, edges as <code>MATCH … CREATE (a)-[:CALLS]->(b)</code>. Header records commit + version + schema. See <code>docs/neo4j.md</code>.</p>
+        <div class="mono light"><span class="dim">// hotspots in Neo4j</span><br>MATCH (n:GMNode)&lt;-[r:CALLS]-()<br>RETURN n.name, count(r) AS in_degree<br>ORDER BY in_degree DESC LIMIT 10</div>
+
+        <h3 id="int-relationships">Relationship types <a class="anchor" href="#int-relationships">#</a></h3>
+        <div class="table-wrap"><table><thead><tr><th>Family</th><th>View</th><th>Predicates</th></tr></thead><tbody>
+          <tr><td>STRUCTURAL</td><td><code>structural</code></td><td><code>Contains</code>, <code>BelongsTo</code>, <code>Implements</code>, <code>Extends</code>, <code>HasField</code> …</td></tr>
+          <tr><td>BEHAVIORAL</td><td><code>structural</code></td><td><code>Calls</code>, <code>SpawnsConcurrent</code>, <code>CallsCloudAPI</code>, <code>ExposesEndpoint</code> …</td></tr>
+          <tr><td>DYNAMIC</td><td><code>dynamic</code></td><td><code>ControlFlow</code>, <code>DataFlow</code>, <code>HeapAlias</code> …</td></tr>
+          <tr><td>SECURITY</td><td><code>security</code></td><td><code>SecuritySink</code>, <code>QueriesDB</code> as secondary</td></tr>
+        </tbody></table></div>
+        <p>Single-producer policy; <code>link.ViewOfEdgeType</code> maps to view tags. Predicates grouped for extraction in <code>internal/visualization_engine/extract/extractor.go</code>.</p>
+
+        <h3 id="int-languages">Supported languages <a class="anchor" href="#int-languages">#</a></h3>
+        <div class="table-wrap"><table><thead><tr><th>Language</th><th>Extensions</th></tr></thead><tbody>
+          <tr><td>Go</td><td><code>.go</code></td></tr>
+          <tr><td>C / C++ / C#</td><td><code>.c</code>, <code>.h</code>, <code>.cpp</code>, <code>.cc</code>, <code>.cs</code></td></tr>
+          <tr><td>Python</td><td><code>.py</code>, <code>.pyi</code></td></tr>
+          <tr><td>Java</td><td><code>.java</code></td></tr>
+          <tr><td>JavaScript</td><td><code>.js</code>, <code>.mjs</code>, <code>.cjs</code>, <code>.jsx</code></td></tr>
+          <tr><td>TypeScript</td><td><code>.ts</code>, <code>.tsx</code>, <code>.cts</code>, <code>.mts</code></td></tr>
+          <tr><td>HTML / CSS / JSON</td><td><code>.html</code>, <code>.css</code>, <code>.scss</code>, <code>.json</code></td></tr>
+          <tr><td>Ruby / PHP / Rust</td><td><code>.rb</code>, <code>.php</code>, <code>.rs</code></td></tr>
+          <tr><td>Kotlin / Swift / Scala</td><td><code>.kt</code>, <code>.swift</code>, <code>.scala</code> — <em>decl-only</em></td></tr>
+        </tbody></table></div>
+        <p>14 full tree-sitter grammars (full CFG/DFG). 3 decl-only: struct/class/function/module tokens only. Check via <code>gmb inspect --languages</code>.</p>
+
+        <div class="callout"><i>✦</i><p><strong>Everything else lives in the repo.</strong> Master CLI tables (1234 lines), full pipeline file map, and per-command JSON fields → <a href="https://github.com/Syamchand123/GlassMarble/blob/main/docs/commands_master_reference.md" style="color:var(--violet);font-weight:600">commands_master_reference.md</a> on GitHub. Config deep-dives → <code>docs/configuration.md</code> &amp; <code>docs/akg_format.md</code>.</p></div>
+
+        <footer>
+          <span>© GlassMarble · MIT · <a href="https://github.com/Syamchand123/GlassMarble" style="text-decoration:underline;text-underline-offset:3px">github.com/Syamchand123/GlassMarble</a></span>
+          <span style="display:flex;gap:1.6rem"><a href="downloads.html">Download</a><a href="index.html">Overview</a><a href="https://github.com/Syamchand123/GlassMarble/releases">Releases</a></span>
+        </footer>
+      </div>
+    </main>
+  </div>
+  <script>
+    const navLinks=[...document.querySelectorAll('.sidebar a')];
+    const heads=[...document.querySelectorAll('h2[id], h3[id]')];
+    const obs=new IntersectionObserver(es=>{
+      es.forEach(e=>{
+        if(e.isIntersecting){
+          navLinks.forEach(a=>a.classList.toggle('active', a.getAttribute('href')==='#'+e.target.id))
+        }
+      })
+    },{rootMargin:'-40% 0px -55% 0px',threshold:0});
+    heads.forEach(h=>obs.observe(h));
+    const s=document.getElementById('search');
+    s.addEventListener('input',()=>{
+      const q=s.value.toLowerCase().trim();
+      document.querySelectorAll('.nav-group').forEach(g=>{
+        let vis=false;
+        g.querySelectorAll('a').forEach(a=>{
+          const m=!q||a.textContent.toLowerCase().includes(q);
+          a.style.display=m?'block':'none';
+          if(m) vis=true;
+        });
+        g.style.display=vis||!q?'block':'none';
+      })
+    });
+    document.querySelectorAll('.copy-btn').forEach(b=>{
+      b.addEventListener('click',()=>{
+        const c=b.getAttribute('data-copy'); if(!c) return;
+        navigator.clipboard.writeText(c).then(()=>{const o=b.textContent;b.textContent='Copied!';setTimeout(()=>b.textContent=o,1400)})
+      })
+    })
+  </script>
+</body>
+</html>

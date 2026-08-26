@@ -194,6 +194,54 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 }
 
 /* ═══════════════════════════════════════
+   SITE NAV — top-right, Overview / Download / Docs
+   Pill language, same radius as the social button.
+   Keeps the "no glass, no stripe" rule.
+═══════════════════════════════════════ */
+.site-nav {
+  position: fixed;
+  top: 3.5rem;
+  right: 3.5rem;
+  z-index: 211;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.nav-link {
+  font-size: 1.35rem;
+  letter-spacing: -0.01em;
+  color: var(--grey);
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  transition: background 0.2s var(--ease-out), color 0.2s var(--ease-out);
+}
+.nav-link:hover { color: var(--black); background: var(--white); }
+.nav-link.is-active { color: var(--black); background: var(--white); box-shadow: 0 0.4rem 1.6rem rgba(0,0,0,0.06); }
+.nav-cta {
+  height: 4rem;
+  padding: 0 1.8rem;
+  border-radius: 999px;
+  background: var(--black);
+  color: var(--white);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  transition: background 0.2s, scale 0.2s var(--ease-spring);
+}
+.nav-cta:hover { background: #2a2a2a; scale: 1.02; }
+.nav-cta:active { scale: 0.97; }
+@media (max-width: 1024px) {
+  .site-nav { top: 2.4rem; right: 2.4rem; }
+}
+@media (max-width: 640px) {
+  .site-nav { gap: 0.35rem; }
+  .nav-link { font-size: 1.25rem; padding: 0.55rem 1rem; }
+  .nav-cta { display: none; }
+}
+
+/* ═══════════════════════════════════════
    SOCIAL BUTTON — pill
 ═══════════════════════════════════════ */
 .social-button {
@@ -225,70 +273,55 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 .social-button:disabled { opacity: 0.55; pointer-events: none; }
 
 /* ═══════════════════════════════════════
-   WAITLIST FORM
+   HOME INTRO — replaces the waitlist form
+   Calm paragraph + dual CTAs, same pill language
+   as the rest of the site
 ═══════════════════════════════════════ */
-.waitlist-form {
+.home-desc {
+  font-size: 1.55rem;
+  line-height: 1.65;
+  color: var(--grey);
+  max-width: 36rem;
+  animation: fadeUp 0.6s 0.26s var(--ease-out) both;
+  clip-path: inset(-6% -100%);
+}
+.home-desc code {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 0.12rem 0.45rem;
+  border-radius: 0.5rem;
+  font-size: 0.9em;
+  color: var(--black);
+}
+.home-actions {
   display: flex;
   gap: 0.8rem;
-  align-items: center;
   flex-wrap: wrap;
+  pointer-events: auto;
+  animation: fadeUp 0.6s 0.32s var(--ease-out) both;
+  clip-path: inset(-6% -100%);
 }
-.waitlist-input {
-  height: 5.4rem;
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: 15.5417px;
-  padding: 0 1.6rem;
-  font-family: inherit;
-  font-size: 1.4rem;
+.home-actions .social-button {
+  height: 4.8rem;
+  padding-inline: 2.1rem;
+  font-size: 1.35rem;
+  border: 1px solid transparent;
+}
+.home-actions .social-button:not(.social-button--dark) {
+  background: var(--white);
+  border-color: var(--border);
   color: var(--black);
-  outline: none;
-  transition: border-color 0.3s, box-shadow 0.3s;
-  width: 12rem;
 }
-.waitlist-input[type="email"] { width: 18rem; }
-.waitlist-input::placeholder { color: var(--grey); }
-.waitlist-input:focus {
-  border-color: var(--black);
-  box-shadow: 0 0 0 1px var(--black);
-}
-.submit-btn { padding: 0 2.4rem; width: auto; }
-.waitlist-status {
-  min-height: 1.6rem;
-  font-size: 1.2rem;
-  line-height: 1.5;
-  color: var(--grey);
-  margin-top: 1rem;
-}
-.waitlist-status.ok  { color: #2f7d43; }
-.waitlist-status.err { color: #b3382c; }
-
-/* Live waitlist counter — minimal micro-line beneath the form.
-   Black number, grey uppercase label. */
-.waitlist-count {
-  display: flex;
-  align-items: baseline;
-  gap: 0.9rem;
-  font-size: 1.05rem;
+.home-actions .social-button:not(.social-button--dark):hover { background: #f9f9f9; }
+.home-meta {
+  font-size: 1.1rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--grey);
-  animation: fadeUp 0.6s 0.34s var(--ease-out) both;
+  animation: fadeUp 0.6s 0.36s var(--ease-out) both;
   clip-path: inset(-6% -100%);
 }
-.waitlist-count[hidden] { display: none; }
-.waitlist-count__num {
-  font-size: 1.5rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  color: var(--black);
-  font-variant-numeric: tabular-nums;
-}
-@keyframes countTick {
-  from { opacity: 0.4; transform: translateY(0.5rem); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.waitlist-count__num.tick { animation: countTick 0.35s var(--ease-out); }
 
 /* ═══════════════════════════════════════
    HOME VIEW — fixed left identity panel
@@ -927,7 +960,8 @@ h1.site-name {
   #project-left { padding: 9rem 4rem 0; }
   .proj-cards { padding: 0 4rem 6rem; gap: 2.4rem; }
 
-  .waitlist-input, .waitlist-input[type="email"] { width: 100%; }
+  .home-actions { flex-direction: column; align-items: stretch; }
+  .home-actions .social-button { width: 100%; justify-content: center; }
 
   .scroll-dots { right: 2rem; gap: 0.2rem; }
   .sdot { width: 1rem; height: 1rem; margin: 0.5rem 0; }
@@ -946,7 +980,7 @@ h1.site-name {
   .stat { padding: 2rem 0; }
   .stat__n { font-size: 3.6rem; }
   /* Anchor the card ring to the bottom edge so it never clips off-screen
-     or collides with the waitlist form, whatever the viewport height. */
+     or collides with the home actions, whatever the viewport height. */
   #home-cards {
     top: auto;
     bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
@@ -963,7 +997,8 @@ h1.site-name {
 }
 
 @media (max-width: 640px) {
-  .waitlist-form { flex-direction: column; align-items: stretch; gap: 1.2rem; }
+  .home-actions { flex-direction: column; align-items: stretch; }
+  .home-desc { max-width: 100%; }
 }
 
 @media (max-width: 380px) {
@@ -1133,9 +1168,15 @@ h1.site-name {
   <i class="bg-vignette"></i>
 </div>
 
-<a class="site-logo" href="#/" aria-label="GlassMarble — back to home">
+<a class="site-logo" href="index.html" aria-label="GlassMarble — back to overview">
   <img src="assets/LOGO_PIXEL.png" alt="GlassMarble">
 </a>
+<nav class="site-nav" aria-label="Primary">
+  <a href="index.html" class="nav-link is-active" aria-current="page">Overview</a>
+  <a href="downloads.html" class="nav-link">Download</a>
+  <a href="docs.html" class="nav-link">Docs</a>
+  <a href="https://github.com/Syamchand123/GlassMarble" target="_blank" rel="noopener" class="nav-cta">GitHub <span aria-hidden="true">↗</span></a>
+</nav>
 
 <div id="edge-fade" aria-hidden="true"></div>
 
@@ -1149,7 +1190,7 @@ h1.site-name {
     <div>
       <h1 style="font-size:2.4rem;font-weight:400;margin-bottom:1.2rem;">GlassMarble</h1>
       <p style="color:#9f9f9f;font-size:1.4rem;line-height:1.6;">AI Architecture Intelligence — this site needs JavaScript for the interactive tour.<br>
-      To join the waitlist, email <a href="mailto:hello@glassmarble.dev" style="text-decoration:underline;">hello@glassmarble.dev</a>.</p>
+      <a href="downloads.html" style="text-decoration:underline;">Download v1.0.0</a> · <a href="docs.html" style="text-decoration:underline;">Read the docs</a> · <a href="mailto:hello@glassmarble.dev" style="text-decoration:underline;">hello@glassmarble.dev</a>.</p>
     </div>
   </div>
 </noscript>
@@ -1170,20 +1211,15 @@ h1.site-name {
       </div>
     </div>
 
-    <p class="oss-badge" aria-label="Free and open source under MIT license">Free &amp; open source </p>
+    <p class="oss-badge" aria-label="Free and open source under MIT license">Free &amp; open source — MIT</p>
 
-    <div class="home-btns">
-      <form class="waitlist-form" id="waitlistForm" novalidate>
-        <input type="text" class="waitlist-input" name="name" placeholder="Name" required autocomplete="name" aria-label="Name">
-        <input type="email" class="waitlist-input" name="email" placeholder="Email" required autocomplete="email" aria-label="Email">
-        <button type="submit" class="social-button social-button--dark submit-btn">Join Waitlist</button>
-      </form>
+    <p class="home-desc">Your codebase has a living map. <strong style="color:var(--black);font-weight:500">17 languages</strong> → one deterministic GraphJSON → <strong style="color:var(--black);font-weight:500">31 living diagrams</strong>, governance, and grounded AI. No backend. Just <code>gmb</code>.</p>
+
+    <div class="home-actions">
+      <a href="downloads.html" class="social-button social-button--dark">Download v1.0.0</a>
+      <a href="docs.html" class="social-button">Read Docs</a>
     </div>
-    <p class="waitlist-status" id="waitlistStatus" role="status" aria-live="polite"></p>
-    <p class="waitlist-count" id="waitlistCount" hidden aria-hidden="true">
-      <span class="waitlist-count__num" id="waitlistCountNum">0</span>
-      <span class="waitlist-count__label">already on the waitlist</span>
-    </p>
+    <p class="home-meta">v1.0.0 · Verified · Deterministic · Static binary</p>
   </div>
 
   <!-- Fixed right cards — one per project, swap on scroll -->
@@ -1248,15 +1284,6 @@ h1.site-name {
 
 <script>
 'use strict';
-
-/* ═══════════════════════════════════════
-   CONFIG
-═══════════════════════════════════════ */
-/* Google Sheets waitlist backend — see waitlist-apps-script.gs in this folder
-   for the one-time setup. Paste the deployed Web App URL below, e.g.
-   'https://script.google.com/macros/s/XXXX/exec'.
-   Until configured, the form shows a local success message. */
-const WAITLIST_ENDPOINT = 'https://script.google.com/macros/s/AKfycby_OiqsppAntWLMX-RI3MsiUsy-ei_JYrRIXCZz1i36mFp0QnVB4V7AHPRiVc0ZwNc3mQ/exec';
 
 /* ═══════════════════════════════════════
    PROJECT DATA — all facts verified against
@@ -1730,38 +1757,38 @@ const PROJECTS = [
     id: 'launch',
     num: '07',
     name: 'Launch',
-    sub: 'Shipping soon — join the waitlist.',
+    sub: 'v1.0.0 — available now.',
     accent: 'amber',
     visual: `
-<svg viewBox="0 0 670 688" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GlassMarble v1.0 launching soon, join the waitlist">
+<svg viewBox="0 0 670 688" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GlassMarble v1.0 available now">
   <rect width="670" height="688" fill="#111111"/>
-  <text x="335" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" letter-spacing="8" fill="#9f9f9f">LAUNCHING SOON</text>
+  <text x="335" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" letter-spacing="8" fill="#9f9f9f">AVAILABLE NOW</text>
   <text x="335" y="400" text-anchor="middle" font-family="Inter,sans-serif" font-size="150" font-weight="500" letter-spacing="-6" fill="#e8e8e8">v1.0</text>
   <rect x="235" y="436" width="200" height="4" rx="2" fill="#262626"/>
   <rect class="m-launchbar" x="235" y="436" width="200" height="4" rx="2" fill="#86efac"/>
   <text x="335" y="496" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#808080">4-stage engine &middot; 31 diagram types &middot; AI Architect &middot; Developer memory</text>
   <rect x="185" y="528" width="300" height="64" rx="32" fill="#1a1a1a" stroke="#3a3a3a"/>
-  <text x="335" y="568" text-anchor="middle" font-family="Inter,sans-serif" font-size="22" fill="#f6f6f6">Join the waitlist</text>
-  <text x="335" y="630" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="16" fill="#9a9a9a"><tspan class="launch-count-num" style="opacity:0" fill="#86efac" font-family="Inter,sans-serif" font-weight="500">0</tspan> <tspan style="opacity:0">already on the waitlist</tspan></text>
+  <text x="335" y="568" text-anchor="middle" font-family="Inter,sans-serif" font-size="22" fill="#f6f6f6">Download v1.0.0</text>
+  <text x="335" y="630" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="16" fill="#86efac">v1.0.0 · verified · static binary</text>
   <text x="335" y="664" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#6b6b6b">free &middot; open source &middot; MIT &middot; no backend</text>
 </svg>`,
     cards: [
       {
         num: '01',
-        title: 'v1.0 is in the final stretch.',
-        body: `<p>The v1.0 release bundles the four-stage engine, 31 diagram types, the grounded AI Architect, developer memory, <strong>Neo4j export</strong>, and PlantUML/DOT output — one static binary, zero setup.</p>`,
+        title: 'v1.0.0 — available now.',
+        body: `<p>v1.0.0 bundles the four-stage engine, 31 diagram types, the grounded AI Architect, developer memory, <strong>Neo4j export</strong>, and PlantUML/DOT output — one static binary, zero setup. Free and MIT-licensed.</p>`,
         tags: ['Four-stage engine', '31 diagram types', 'AI Architect', 'Developer memory', 'Neo4j export', 'PlantUML', 'Graphviz DOT']
       },
       {
         num: '02',
         title: 'Built in public.',
-        body: `<p>GlassMarble ships with a public changelog, a design manifesto, and a community-driven roadmap. What lands in v1.1 is shaped by the people on the list.</p>`
+        body: `<p>GlassMarble ships with a public changelog, a design manifesto, and a community-driven roadmap. What lands in v1.1 is shaped by the community using it today.</p>`
       },
       {
         num: '03',
-        title: 'Get early access.',
-        body: `<p>Leave your name and email on the home screen and you'll be <strong>first in line</strong> when v1.0 drops.</p>`,
-        cta: 'Join the waitlist'
+        title: 'Get it now.',
+        body: `<p>Download the static binary for your platform and run <code>gmb init</code> + <code>gmb analyze</code> — your first living diagram is 30 seconds away.</p>`,
+        cta: 'Download v1.0.0'
       }
     ]
   }
@@ -1811,10 +1838,6 @@ const projSub      = document.getElementById('projSub');
 const projCards    = document.getElementById('projCards');
 const projScroll   = document.getElementById('project-scroll');
 const srNav        = document.getElementById('sr-nav');
-const waitlistForm = document.getElementById('waitlistForm');
-const waitlistStatus = document.getElementById('waitlistStatus');
-const waitlistCount = document.getElementById('waitlistCount');
-const waitlistCountNum = document.getElementById('waitlistCountNum');
 
 /* ═══ BUILD HOME CARDS ═══ */
 function buildHomeCards() {
@@ -1997,7 +2020,7 @@ function renderScroll(now) {
       let opacity = 0;
       if (abs <= 1.5) {
         /* Phones: fade neighbours out fully — a translucent ghost card
-           otherwise floats over the identity panel and waitlist form. */
+           otherwise floats over the identity panel. */
         const falloff = isCompact ? 1.6 : 0.9;
         opacity = Math.max(0, 1 - Math.min(abs, 1) * falloff - Math.max(0, abs - 1) * 0.2);
       }
@@ -2148,7 +2171,6 @@ function buildProjCards(proj) {
   hero.className = 'pcard pcard-hero vis';
   hero.innerHTML = `<div class="pcard-visual">${proj.visual}${isCompact ? '' : `<span class="pcard-hero-title">${proj.name}</span>`}</div>`;
   projCards.appendChild(hero);
-  if (waitlistTotal !== null) syncLaunchCounts(waitlistTotal);
 
   if (!isCompact) {
     /* Center the hero exactly where the zoomed home card lands so the
@@ -2234,120 +2256,11 @@ function observeCards() {
   });
 }
 
-/* ═══ LIVE WAITLIST COUNTER ═══ */
-let waitlistTotal = null;
-
-function syncLaunchCounts(n) {
-  if (typeof n !== 'number') return;
-  document.querySelectorAll('.launch-count-num').forEach(el => {
-    el.textContent = n.toLocaleString('en-US');
-    el.style.opacity = '1';
-  });
-  document.querySelectorAll('.launch-count-num ~ tspan').forEach(el => {
-    el.style.opacity = '1';
-  });
-}
-
-function setWaitlistCount(n) {
-  waitlistTotal = n;
-  if (typeof n !== 'number') return;
-  waitlistCountNum.textContent = n.toLocaleString('en-US');
-  waitlistCount.hidden = false;
-  waitlistCountNum.classList.remove('tick');
-  void waitlistCountNum.offsetWidth; /* restart animation */
-  waitlistCountNum.classList.add('tick');
-  syncLaunchCounts(n);
-}
-
-async function loadWaitlistCount() {
-  if (!WAITLIST_ENDPOINT) return;
-  try {
-    /* unique query param busts Apps Script GET caching */
-    const res = await fetch(`${WAITLIST_ENDPOINT}?action=count&t=${Date.now()}`, {
-      mode: 'cors',
-      redirect: 'follow'
-    });
-    const data = await res.json().catch(() => ({}));
-    if (data && data.ok === true && typeof data.count === 'number') {
-      setWaitlistCount(data.count);
-    }
-  } catch (err) {
-    /* keep the counter hidden — non-critical */
-  }
-}
-
-/* ═══ WAITLIST FORM ═══ */
-waitlistForm.addEventListener('submit', async e => {
-  e.preventDefault();
-
-  const name = waitlistForm.name.value.trim();
-  const email = waitlistForm.email.value.trim();
-
-  if (!name) {
-    waitlistForm.name.reportValidity();
-    return;
-  }
-  if (!waitlistForm.email.checkValidity()) {
-    waitlistForm.email.reportValidity();
-    return;
-  }
-
-  const btn = waitlistForm.querySelector('button[type="submit"]');
-  btn.disabled = true;
-  btn.textContent = 'Joining…';
-  waitlistStatus.textContent = '';
-  waitlistStatus.className = 'waitlist-status';
-
-  try {
-    if (WAITLIST_ENDPOINT) {
-      const res = await fetch(WAITLIST_ENDPOINT, {
-        method: 'POST',
-        mode: 'cors',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({
-          name,
-          email,
-          ts: new Date().toISOString(),
-          source: 'website'
-        }),
-        redirect: 'follow'
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!data || data.ok !== true) throw new Error('endpoint rejected');
-
-      /* Sync the counter with the authoritative count from the sheet.
-         If the backend lacks it (old deployment), fall back to +1. */
-      if (typeof data.count === 'number') {
-        setWaitlistCount(data.count);
-      } else if (data.message !== 'already-registered' && waitlistTotal !== null) {
-        setWaitlistCount(waitlistTotal + 1);
-      }
-    } else {
-      console.warn('[GlassMarble] WAITLIST_ENDPOINT not configured — showing local success. Setup: see waitlist-apps-script.gs');
-    }
-
-    waitlistStatus.textContent = "Thank you! You're on the list.";
-    waitlistStatus.className = 'waitlist-status ok';
-    waitlistForm.reset();
-    launchBalloon();
-  } catch (err) {
-    waitlistStatus.textContent = 'Something went wrong — please try again.';
-    waitlistStatus.className = 'waitlist-status err';
-  } finally {
-    btn.disabled = false;
-    btn.textContent = 'Join Waitlist';
-  }
-});
-
-/* ═══ CTA (join waitlist from detail cards) ═══ */
+/* ═══ CTA — detail card primary action ═══ */
 projCards.addEventListener('click', e => {
   const btn = e.target.closest('[data-action="waitlist"]');
   if (!btn) return;
-  closeProject();
-  setTimeout(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    waitlistForm.email.focus();
-  }, 500);
+  window.location.href = 'downloads.html';
 });
 
 /* ═══ BALLOON ═══ */
@@ -2502,7 +2415,6 @@ window.addEventListener('scroll', onScroll, { passive: true });
 
 /* ═══ INIT ═══ */
 buildHomeCards();
-loadWaitlistCount();
 setSpacerHeight();
 window.addEventListener('resize', setSpacerHeight);
 handleRoute();
