@@ -238,8 +238,97 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 @media (max-width: 640px) {
   .site-nav { gap: 0.35rem; }
   .nav-link { font-size: 1.25rem; padding: 0.55rem 1rem; }
-  .nav-cta { display: none; }
 }
+@media (max-width: 640px) {
+  .site-nav .nav-link, .site-nav .nav-cta { display: none; }
+  .nav-toggle { display: flex !important; }
+}
+.nav-toggle {
+  display: none;
+  width: 4.2rem;
+  height: 4.2rem;
+  border-radius: 999px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.45rem;
+  flex: 0 0 auto;
+  box-shadow: 0 0.4rem 1.2rem rgba(0,0,0,0.06);
+}
+.nav-toggle span {
+  display: block;
+  width: 1.6rem;
+  height: 1.8px;
+  background: var(--black);
+  border-radius: 999px;
+  transition: transform 0.2s var(--ease-spring), opacity 0.2s;
+}
+.nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(0.32rem) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2) { transform: translateY(-0.32rem) rotate(-45deg); }
+.nav-drawer {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: rgba(246,246,246,0.97);
+  backdrop-filter: blur(12px) saturate(1.1);
+  border-bottom: 1px solid var(--border);
+  padding: 8rem 2.4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.38s var(--ease-spring), opacity 0.28s var(--ease-out);
+  z-index: 209;
+}
+.nav-drawer.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+.nav-drawer a {
+  font-size: 1.6rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  padding: 1.3rem 1.4rem;
+  border-radius: 1.2rem;
+  color: var(--grey);
+  transition: background 0.2s, color 0.2s;
+}
+.nav-drawer a:hover { background: var(--white); color: var(--black); }
+.nav-drawer a.is-active { background: var(--white); color: var(--black); box-shadow: 0 0.4rem 1.6rem rgba(0,0,0,0.06); }
+.nav-drawer .nav-drawer-cta {
+  margin-top: 0.8rem;
+  height: 4.6rem;
+  border-radius: 999px;
+  background: var(--black);
+  color: var(--white);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+.site-footer {
+  position: fixed;
+  bottom: 1.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 45;
+  font-size: 1.15rem;
+  color: var(--grey);
+  display: flex;
+  gap: 1.6rem;
+  align-items: center;
+  white-space: nowrap;
+  background: rgba(246,246,246,0.88);
+  backdrop-filter: blur(8px) saturate(1.1);
+  padding: 0.6rem 1.4rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  box-shadow: 0 0.4rem 1.2rem rgba(0,0,0,0.06);
+}
+.site-footer a:hover { color: var(--black); text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 768px) { .site-footer { display: none; } }
 
 /* ═══════════════════════════════════════
    SOCIAL BUTTON — pill
@@ -362,6 +451,21 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   animation: fadeUp 0.6s 0.36s var(--ease-out) both;
   clip-path: inset(-6% -100%);
 }
+.social-proof {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  font-size: 1.2rem;
+  color: var(--grey);
+  margin-top: 0.2rem;
+  animation: fadeUp 0.6s 0.4s var(--ease-out) both;
+  clip-path: inset(-6% -100%);
+}
+.social-proof[hidden] { display: none !important; }
+.social-proof a { color: var(--grey); display: inline-flex; align-items: center; gap: 0.35rem; transition: color 0.2s; }
+.social-proof a:hover { color: var(--black); text-decoration: underline; text-underline-offset: 3px; }
+.social-proof strong { color: var(--black); font-weight: 600; }
 
 /* ═══════════════════════════════════════
    HOME VIEW — fixed left identity panel
@@ -393,7 +497,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 .role-wrap { padding-bottom: 0.8rem; }
 
 h1.site-name {
-  font-size: 4.8rem;
+  font-size: clamp(3.6rem, 3.8vw, 4.8rem);
   font-weight: 650;
   line-height: 1;
   letter-spacing: -0.04em;
@@ -401,11 +505,19 @@ h1.site-name {
   animation: slideUp 0.7s 0.05s var(--ease-out) both;
 }
 .site-role {
-  font-size: var(--h1-size);
+  font-size: clamp(2.2rem, 2.4vw, 3.2rem);
   font-weight: 400;
   line-height: 1;
   color: var(--grey);
   animation: slideUp 0.7s 0.13s var(--ease-out) both;
+}
+@media (max-width: 1200px) {
+  .home-left { left: 18rem; }
+  #home-cards { right: 18rem; }
+}
+@media (max-width: 1150px) {
+  .home-left { left: 14rem; }
+  #home-cards { right: 14rem; }
 }
 
 @keyframes slideUp {
@@ -1130,7 +1242,9 @@ h1.site-name {
   html { scroll-behavior: auto; }
   .scroll-hint__line::after { animation: none; }
   .cursor { animation: none; }
-  h1.site-name, .site-role, .home-btns { animation-duration: 0.01s; }
+  h1.site-name, .site-role, .home-btns, .home-desc, .home-actions, .home-meta, .social-proof { animation: none !important; }
+  .nav-cta, .site-nav .nav-link, .nav-toggle, .nav-drawer { transition: none !important; }
+  .balloon, .balloon *, .balloon__body, .balloon__knot, .balloon__thread { animation: none !important; }
   .hcard-visual svg, .hcard-visual svg *,
   .pcard-hero svg, .pcard-hero svg * { animation: none !important; }
 }
@@ -1211,13 +1325,6 @@ h1.site-name {
 <a class="site-logo" href="index.html" aria-label="GlassMarble — back to overview">
   <img src="assets/LOGO_PIXEL.png" alt="GlassMarble">
 </a>
-<nav class="site-nav" aria-label="Primary">
-  <a href="index.html" class="nav-link is-active" aria-current="page">Overview</a>
-  <a href="downloads.html" class="nav-link">Download</a>
-  <a href="docs.html" class="nav-link">Docs</a>
-  <a href="https://github.com/Syamchand123/GlassMarble" target="_blank" rel="noopener" class="nav-cta">GitHub <span aria-hidden="true">↗</span></a>
-</nav>
-
 <div id="edge-fade" aria-hidden="true"></div>
 
 <!-- SR nav -->
@@ -1263,6 +1370,13 @@ h1.site-name {
       <a href="docs.html" class="social-button">Read Docs</a>
     </div>
     <p class="home-meta">One file &nbsp;·&nbsp; Local &nbsp;·&nbsp; No backend &nbsp;·&nbsp; Your codebase, understood.</p>
+    <div class="social-proof" id="socialProof" hidden aria-live="polite">
+      <a href="https://github.com/Syamchand123/GlassMarble/stargazers" target="_blank" rel="noopener">★ <strong id="starCount">—</strong> stars</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://github.com/Syamchand123/GlassMarble/network/members" target="_blank" rel="noopener"><strong id="forkCount">—</strong> forks</a>
+      <span aria-hidden="true">·</span>
+      <span>Go Report <strong>A+</strong></span>
+    </div>
   </div>
 
   <!-- Fixed right cards — one per project, swap on scroll -->
@@ -1285,6 +1399,13 @@ h1.site-name {
   <div id="scroll-spacer"></div>
 
 </div>
+
+<footer class="site-footer" aria-label="Footer">
+  <span>© GlassMarble · MIT</span>
+  <a href="https://github.com/Syamchand123/GlassMarble">GitHub</a>
+  <a href="docs.html">Docs</a>
+  <a href="downloads.html">Download</a>
+</footer>
 
 <!-- ════════════════════════════════════
      PROJECT DETAIL VIEW
@@ -1882,7 +2003,29 @@ const projCards    = document.getElementById('projCards');
 const projScroll   = document.getElementById('project-scroll');
 const srNav        = document.getElementById('sr-nav');
 
-/* ═══ BUILD HOME CARDS ═══ */
+/* ═══ BUILD HOME CARDS — lazy visuals (±1 neighbour) ═══ */
+function mountCardVisual(cardEl, idx) {
+  const vis = cardEl.querySelector('.hcard-visual');
+  if (!vis || vis.querySelector('svg')) return;
+  const title = vis.querySelector('.hcard-title');
+  const tmp = document.createElement('div');
+  tmp.innerHTML = PROJECTS[idx].visual.trim();
+  const svg = tmp.firstElementChild;
+  if (svg && title) vis.insertBefore(svg, title);
+}
+function unmountCardVisual(cardEl) {
+  const svg = cardEl.querySelector('.hcard-visual svg');
+  if (svg) svg.remove();
+}
+function updateVisibleCards(centerIdx) {
+  const total = PROJECTS.length;
+  homeCardEls.forEach((card, idx) => {
+    let d = Math.abs(idx - centerIdx);
+    d = Math.min(d, total - d);
+    if (d <= 1.5) mountCardVisual(card, idx);
+    else unmountCardVisual(card);
+  });
+}
 function buildHomeCards() {
   homeCardsEl.innerHTML = '';
   scrollDots.innerHTML = '';
@@ -1898,7 +2041,6 @@ function buildHomeCards() {
       <div class="hcard-reflection"></div>
       <div class="hcard-visual" role="button" tabindex="0"
            aria-label="Open ${p.name}" data-proj="${i}">
-        ${p.visual}
         <p class="hcard-title">${p.name}</p>
       </div>`;
 
@@ -1923,6 +2065,7 @@ function buildHomeCards() {
   });
 
   homeCardEls = Array.from(homeCardsEl.querySelectorAll('.home-card'));
+  updateVisibleCards(0);
 }
 
 /* ═══ SCROLL SPACER HEIGHT ═══ */
@@ -2055,6 +2198,10 @@ function renderScroll(now) {
 
       const abs = Math.abs(distance);
 
+      // Lazy: keep ±1.7 neighbours mounted (preloads next), unload far cards
+      if (abs <= 1.7) mountCardVisual(card, index);
+      else if (abs > 2.2) unmountCardVisual(card);
+
       if (abs < 0.5 && currentCardIdx !== index) {
         currentCardIdx = index;
         updateScrollUI(index);
@@ -2103,6 +2250,7 @@ function updateScrollUI(idx) {
   dots.forEach((d, i) => d.classList.toggle('active', i === idx));
 
   homeCardEls.forEach((c, i) => c.classList.toggle('active', i === idx));
+  updateVisibleCards(idx);
 }
 
 function scrollToCard(idx) {
@@ -2455,6 +2603,19 @@ backBtn.addEventListener('click', closeProject);
 
 /* ═══ SCROLL ═══ */
 window.addEventListener('scroll', onScroll, { passive: true });
+
+// Social proof — live GitHub stars/forks (no auth, cached by browser)
+fetch('https://api.github.com/repos/Syamchand123/GlassMarble', {headers:{'Accept':'application/vnd.github.v3+json'}})
+  .then(r=>r.ok?r.json():null)
+  .then(d=>{
+    if(!d) return;
+    const s=document.getElementById('starCount');
+    const f=document.getElementById('forkCount');
+    const wrap=document.getElementById('socialProof');
+    if(s) s.textContent=(d.stargazers_count||0).toLocaleString();
+    if(f) f.textContent=(d.forks_count||0).toLocaleString();
+    if(wrap) wrap.hidden=false;
+  }).catch(()=>{});
 
 /* ═══ INIT ═══ */
 buildHomeCards();

@@ -7,6 +7,18 @@
   <meta name="description" content="GlassMarble documentation — install, architecture, CLI, 31 diagrams, AKG format, configuration, and grounded AI. 17 languages. Deterministic. Local.">
   <meta name="theme-color" content="#f6f6f6">
   <link rel="icon" type="image/png" href="assets/LOGO_PIXEL.png">
+  <link rel="apple-touch-icon" href="assets/LOGO_PIXEL.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="GlassMarble Docs — v1.0.0">
+  <meta property="og:description" content="Install, architecture, CLI, 31 diagrams, AKG format, configuration, and grounded AI.">
+  <meta property="og:url" content="https://syamchand123.github.io/GlassMarbleWebsite/docs.html">
+  <meta property="og:image" content="https://syamchand123.github.io/GlassMarbleWebsite/assets/og-image.png">
+  <link rel="canonical" href="https://syamchand123.github.io/GlassMarbleWebsite/docs.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GlassMarble Docs — v1.0.0">
+  <meta name="twitter:description" content="Install, architecture, CLI, 31 diagrams, AKG format, configuration, and grounded AI.">
+  <meta name="twitter:image" content="https://syamchand123.github.io/GlassMarbleWebsite/assets/og-image.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"GlassMarble Documentation","url":"https://syamchand123.github.io/GlassMarbleWebsite/docs.html","author":{"@type":"Organization","name":"GlassMarble"},"publisher":{"@type":"Organization","name":"GlassMarble"}}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -24,12 +36,25 @@
     .bg-vignette{position:absolute;inset:0;background:radial-gradient(ellipse 115% 105% at 50% 40%, transparent 60%, rgba(26,26,26,0.06) 100%)}
     .site-logo{position:fixed;top:3.5rem;left:3.5rem;z-index:211;width:5rem;height:5rem;border-radius:1.2rem;overflow:hidden;box-shadow:0 0.4rem 1.6rem rgba(0,0,0,0.14)}
     .site-logo img{width:100%;height:100%;object-fit:cover;display:block}
-    .site-nav{position:fixed;top:3.5rem;right:3.5rem;z-index:211;display:flex;align-items:center;gap:0.6rem}
+    .site-nav{position:fixed;top:3.5rem;right:3.5rem;z-index:211;display:flex;align-items:center;gap:0.6rem;transition:transform 0.32s var(--ease-spring),opacity 0.28s var(--ease-out);will-change:transform,opacity}
     .nav-link{font-size:1.35rem;letter-spacing:-0.01em;color:var(--grey);padding:0.7rem 1.4rem;border-radius:999px;transition:background 0.2s,color 0.2s}
     .nav-link:hover{color:var(--black);background:var(--white)}
     .nav-link.is-active{color:var(--black);background:var(--white);box-shadow:0 0.4rem 1.6rem rgba(0,0,0,0.06)}
     .nav-cta{height:4rem;padding:0 1.8rem;border-radius:999px;background:var(--black);color:var(--white);display:inline-flex;align-items:center;gap:0.7rem;font-size:1.25rem;font-weight:500}
     .nav-cta:hover{background:#2a2a2a}
+    .nav-toggle{display:none;width:4.2rem;height:4.2rem;border-radius:999px;background:var(--white);border:1px solid var(--border);align-items:center;justify-content:center;flex-direction:column;gap:0.45rem;flex:0 0 auto;box-shadow:0 0.4rem 1.2rem rgba(0,0,0,0.06)}
+    .nav-toggle span{display:block;width:1.6rem;height:1.8px;background:var(--black);border-radius:999px;transition:transform 0.2s var(--ease-spring),opacity 0.2s}
+    .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(0.32rem) rotate(45deg)}
+    .nav-toggle[aria-expanded="true"] span:nth-child(2){transform:translateY(-0.32rem) rotate(-45deg)}
+    .nav-drawer{position:fixed;top:0;left:0;right:0;background:rgba(246,246,246,0.97);backdrop-filter:blur(12px) saturate(1.1);border-bottom:1px solid var(--border);padding:8rem 2.4rem 2rem;display:flex;flex-direction:column;gap:0.4rem;transform:translateY(-100%);opacity:0;pointer-events:none;transition:transform 0.38s var(--ease-spring),opacity 0.28s var(--ease-out);z-index:209}
+    .nav-drawer.open{transform:translateY(0);opacity:1;pointer-events:auto}
+    .nav-drawer a{font-size:1.6rem;font-weight:500;letter-spacing:-0.01em;padding:1.3rem 1.4rem;border-radius:1.2rem;color:var(--grey);transition:background 0.2s,color 0.2s}
+    .nav-drawer a:hover{background:var(--white);color:var(--black)}
+    .nav-drawer a.is-active{background:var(--white);color:var(--black);box-shadow:0 0.4rem 1.6rem rgba(0,0,0,0.06)}
+    .nav-drawer .nav-drawer-cta{margin-top:0.8rem;height:4.6rem;border-radius:999px;background:var(--black);color:var(--white);display:inline-flex;align-items:center;justify-content:center;gap:0.6rem;font-size:1.4rem;font-weight:500}
+    .site-nav.is-hidden{transform:translateX(42%);opacity:0;pointer-events:none}
+    .nav-drawer.is-hidden{transform:translateY(-100%) !important;opacity:0 !important;pointer-events:none !important}
+    @media(max-width:640px){.site-nav .nav-link,.site-nav .nav-cta{display:none}.nav-toggle{display:flex !important}}
     .layout{max-width:136rem;margin:0 auto;display:grid;grid-template-columns:28rem 1fr;gap:3.5rem;padding:12rem 3.5rem 6rem}
     @media(max-width:1100px){.layout{grid-template-columns:1fr;padding:11rem 2.4rem 4rem}}
     .sidebar{position:sticky;top:9rem;align-self:start;max-height:calc(100vh - 10rem);overflow:auto;scrollbar-width:thin;padding-right:1rem}
@@ -88,6 +113,7 @@
     .anchor{opacity:0;margin-left:0.6rem;font-size:1.2rem;color:var(--grey)}
     h2:hover .anchor, h3:hover .anchor{opacity:1}
     footer{border-top:1px solid var(--border);margin-top:4rem;padding:2rem 0 3rem;display:flex;justify-content:space-between;gap:2rem;flex-wrap:wrap;font-size:1.25rem;color:var(--grey)}
+    @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto} .nav-cta,.nav-toggle,.nav-drawer,.site-nav .nav-link{transition:none !important} *{animation:none !important}}
     @media(max-width:1024px){html{font-size:0.9vw}.site-logo{top:2.4rem;left:2.4rem;width:4.2rem;height:4.2rem}.site-nav{top:2.4rem;right:2.4rem}.layout{padding-top:10rem}}
     @media(max-width:640px){html{font-size:2.7vw}.mono{font-size:1.2rem}}
   </style>
@@ -96,15 +122,22 @@
   <div id="bg-scene" aria-hidden="true"><i class="bg-grain"></i><i class="bg-vignette"></i></div>
   <a class="site-logo" href="index.html" aria-label="GlassMarble — back to overview"><img src="assets/LOGO_PIXEL.png" alt="GlassMarble"></a>
   <nav class="site-nav" aria-label="Primary">
-    <a href="index.html" class="nav-link">Overview</a>
-    <a href="downloads.html" class="nav-link">Download</a>
-    <a href="docs.html" class="nav-link is-active" aria-current="page">Docs</a>
+    <a href="index.html" class="nav-link" data-nav="overview">Overview</a>
+    <a href="downloads.html" class="nav-link" data-nav="download">Download</a>
+    <a href="docs.html" class="nav-link is-active" data-nav="docs" aria-current="page">Docs</a>
     <a href="https://github.com/Syamchand123/GlassMarble" target="_blank" rel="noopener" class="nav-cta">GitHub ↗</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navDrawer"><span></span><span></span></button>
   </nav>
+  <div class="nav-drawer" id="navDrawer" hidden>
+    <a href="index.html" data-nav="overview">Overview</a>
+    <a href="downloads.html" data-nav="download">Download</a>
+    <a href="docs.html" data-nav="docs">Docs</a>
+    <a href="https://github.com/Syamchand123/GlassMarble" target="_blank" rel="noopener" class="nav-drawer-cta">GitHub ↗</a>
+  </div>
 
   <div class="layout">
     <aside class="sidebar" aria-label="Docs navigation">
-      <div class="sidebar-head"><span>GlassMarble v1.0.0</span></div>
+      <div class="sidebar-head"><span id="versionBadge">GlassMarble v1.0.0</span><a href="https://github.com/Syamchand123/GlassMarble/blob/main/docs/README.md" target="_blank" rel="noopener" style="margin-left:auto;font-size:1.1rem;color:var(--violet);font-weight:500;white-space:nowrap">Edit ↗</a></div>
       <input class="search" id="search" placeholder="Search docs…" aria-label="Search docs">
       <div id="nav">
         <div class="nav-group"><h4>Overview</h4>
@@ -581,7 +614,9 @@
     const obs=new IntersectionObserver(es=>{
       es.forEach(e=>{
         if(e.isIntersecting){
-          navLinks.forEach(a=>a.classList.toggle('active', a.getAttribute('href')==='#'+e.target.id))
+          const id=e.target.id;
+          navLinks.forEach(a=>a.classList.toggle('active', a.getAttribute('href')==='#'+id));
+          if(location.hash!==`#${id}`) history.replaceState(null,'',`#${id}`);
         }
       })
     },{rootMargin:'-40% 0px -55% 0px',threshold:0});
@@ -599,6 +634,75 @@
         g.style.display=vis||!q?'block':'none';
       })
     });
+    // copy buttons for every mono block
+    document.querySelectorAll('.mono').forEach(block=>{
+      if(block.querySelector('.copy-btn')) return;
+      block.style.position='relative';
+      const btn=document.createElement('button');
+      btn.className='copy-btn';
+      btn.textContent='Copy';
+      btn.setAttribute('aria-label','Copy code');
+      btn.addEventListener('click',()=>{
+        const text=block.innerText.replace(/^Copy\s*/,'');
+        navigator.clipboard.writeText(text).then(()=>{
+          const o=btn.textContent; btn.textContent='Copied!'; setTimeout(()=>btn.textContent=o,1400);
+        });
+      });
+      block.appendChild(btn);
+    });
+    // live version badge
+    fetch('https://api.github.com/repos/Syamchand123/GlassMarble/releases/latest',{headers:{'Accept':'application/vnd.github.v3+json'}})
+      .then(r=>r.ok?r.json():null).then(d=>{
+        if(d&&d.tag_name){
+          const el=document.getElementById('versionBadge');
+          if(el) el.textContent=`GlassMarble ${d.tag_name}`;
+        }
+      }).catch(()=>{});
+    // top nav active + mobile drawer
+    (function(){
+      const file=(location.pathname.split('/').pop()||'index.html').split('?')[0].split('#')[0]||'index.html';
+      document.querySelectorAll('.site-nav [data-nav], .nav-drawer [data-nav]').forEach(a=>{
+        const href=a.getAttribute('href');
+        const isActive=href===file;
+        a.classList.toggle('is-active',isActive);
+        if(isActive) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');
+      });
+      const toggle=document.getElementById('navToggle');
+      const drawer=document.getElementById('navDrawer');
+      if(toggle&&drawer){
+        toggle.addEventListener('click',()=>{
+          const open=drawer.classList.toggle('open');
+          drawer.hidden=!open;
+          toggle.setAttribute('aria-expanded',String(open));
+        });
+        drawer.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+          drawer.classList.remove('open');drawer.hidden=true;toggle.setAttribute('aria-expanded','false');
+        }));
+      }
+    })();
+    // hide nav on scroll down — slides to right, shows on scroll up
+    (function(){
+      const nav=document.querySelector('.site-nav');
+      const drawer=document.getElementById('navDrawer');
+      if(!nav) return;
+      let lastY=window.scrollY, hidden=false;
+      const thr=70;
+      window.addEventListener('scroll',()=>{
+        const y=window.scrollY, dy=y-lastY;
+        if(y<=thr){
+          if(hidden){ nav.classList.remove('is-hidden'); if(drawer) drawer.classList.remove('is-hidden'); hidden=false; }
+        } else if(dy>4 && !hidden){
+          nav.classList.add('is-hidden');
+          if(drawer){ drawer.classList.add('is-hidden'); drawer.classList.remove('open'); drawer.hidden=true; const t=document.getElementById('navToggle'); if(t) t.setAttribute('aria-expanded','false'); }
+          hidden=true;
+        } else if(dy<-4 && hidden){
+          nav.classList.remove('is-hidden');
+          if(drawer) drawer.classList.remove('is-hidden');
+          hidden=false;
+        }
+        lastY=y;
+      },{passive:true});
+    })();
   </script>
 </body>
 </html>

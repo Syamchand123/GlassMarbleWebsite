@@ -11,7 +11,14 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Download GlassMarble v1.0.0">
   <meta property="og:description" content="One binary. 17 languages → 31 living diagrams. Free, MIT, verified.">
+  <meta property="og:url" content="https://syamchand123.github.io/GlassMarbleWebsite/downloads.html">
   <meta property="og:image" content="https://syamchand123.github.io/GlassMarbleWebsite/assets/og-image.png">
+  <link rel="canonical" href="https://syamchand123.github.io/GlassMarbleWebsite/downloads.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Download GlassMarble v1.0.0">
+  <meta name="twitter:description" content="One binary. 17 languages → 31 living diagrams. Free, MIT, verified.">
+  <meta name="twitter:image" content="https://syamchand123.github.io/GlassMarbleWebsite/assets/og-image.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Download GlassMarble v1.0.0","url":"https://syamchand123.github.io/GlassMarbleWebsite/downloads.html","description":"Download GlassMarble v1.0.0 — free, open-source CLI. Every platform. One binary.","isPartOf":{"@type":"WebSite","name":"GlassMarble","url":"https://syamchand123.github.io/GlassMarbleWebsite/"}}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -35,13 +42,26 @@
     .site-logo{position:fixed;top:3.5rem;left:3.5rem;z-index:210;width:5rem;height:5rem;border-radius:1.2rem;overflow:hidden;box-shadow:0 0.4rem 1.6rem rgba(0,0,0,0.14);transition:transform 0.3s var(--ease-spring),box-shadow 0.3s var(--ease-out)}
     .site-logo:hover{transform:translateY(-0.2rem);box-shadow:0 0.8rem 2.4rem rgba(0,0,0,0.18)}
     .site-logo img{width:100%;height:100%;object-fit:cover;display:block}
-    .site-nav{position:fixed;top:3.5rem;right:3.5rem;z-index:211;display:flex;align-items:center;gap:0.6rem}
+    .site-nav{position:fixed;top:3.5rem;right:3.5rem;z-index:211;display:flex;align-items:center;gap:0.6rem;transition:transform 0.32s var(--ease-spring),opacity 0.28s var(--ease-out);will-change:transform,opacity}
     .nav-link{font-size:1.35rem;letter-spacing:-0.01em;color:var(--grey);padding:0.7rem 1.4rem;border-radius:999px;transition:background 0.2s,color 0.2s}
     .nav-link:hover{color:var(--black);background:var(--white)}
     .nav-link.is-active{color:var(--black);background:var(--white);box-shadow:0 0.4rem 1.6rem rgba(0,0,0,0.06)}
     .nav-cta{height:4rem;padding:0 1.8rem;border-radius:999px;background:var(--black);color:var(--white);display:inline-flex;align-items:center;gap:0.7rem;font-size:1.25rem;font-weight:500;transition:background 0.2s,scale 0.2s var(--ease-spring)}
     .nav-cta:hover{background:#2a2a2a;scale:1.02}
     .nav-cta:active{scale:0.97}
+    .nav-toggle{display:none;width:4.2rem;height:4.2rem;border-radius:999px;background:var(--white);border:1px solid var(--border);align-items:center;justify-content:center;flex-direction:column;gap:0.45rem;flex:0 0 auto;box-shadow:0 0.4rem 1.2rem rgba(0,0,0,0.06)}
+    .nav-toggle span{display:block;width:1.6rem;height:1.8px;background:var(--black);border-radius:999px;transition:transform 0.2s var(--ease-spring),opacity 0.2s}
+    .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(0.32rem) rotate(45deg)}
+    .nav-toggle[aria-expanded="true"] span:nth-child(2){transform:translateY(-0.32rem) rotate(-45deg)}
+    .nav-drawer{position:fixed;top:0;left:0;right:0;background:rgba(246,246,246,0.97);backdrop-filter:blur(12px) saturate(1.1);border-bottom:1px solid var(--border);padding:8rem 2.4rem 2rem;display:flex;flex-direction:column;gap:0.4rem;transform:translateY(-100%);opacity:0;pointer-events:none;transition:transform 0.38s var(--ease-spring),opacity 0.28s var(--ease-out);z-index:209}
+    .nav-drawer.open{transform:translateY(0);opacity:1;pointer-events:auto}
+    .nav-drawer a{font-size:1.6rem;font-weight:500;letter-spacing:-0.01em;padding:1.3rem 1.4rem;border-radius:1.2rem;color:var(--grey);transition:background 0.2s,color 0.2s}
+    .nav-drawer a:hover{background:var(--white);color:var(--black)}
+    .nav-drawer a.is-active{background:var(--white);color:var(--black);box-shadow:0 0.4rem 1.6rem rgba(0,0,0,0.06)}
+    .nav-drawer .nav-drawer-cta{margin-top:0.8rem;height:4.6rem;border-radius:999px;background:var(--black);color:var(--white);display:inline-flex;align-items:center;justify-content:center;gap:0.6rem;font-size:1.4rem;font-weight:500}
+    .site-nav.is-hidden{transform:translateX(42%);opacity:0;pointer-events:none}
+    .nav-drawer.is-hidden{transform:translateY(-100%) !important;opacity:0 !important;pointer-events:none !important}
+    @media(max-width:640px){.site-nav .nav-link,.site-nav .nav-cta{display:none}.nav-toggle{display:flex !important}}
     .wrap{max-width:104rem;margin:0 auto;padding:0 3.5rem}
     .hero{padding:12.5rem 0 4.5rem}
     .eyebrow{display:inline-flex;align-items:center;gap:0.8rem;font-size:1.05rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--grey);margin-bottom:1.4rem}
@@ -110,6 +130,9 @@
     tr:last-child td{border-bottom:0}
     tbody tr{transition:background 0.15s}
     tbody tr:hover{background:#fcfcfe}
+    tr.is-featured{background:#f5f3ff !important}
+    tr.is-featured td{border-bottom-color:#ede9fe}
+    .size-badge{font-variant-numeric:tabular-nums}
     .tag{font-family:'JetBrains Mono',monospace;font-size:1.15rem;background:#f3f4f6;border:1px solid var(--border);padding:0.22rem 0.6rem;border-radius:0.6rem;color:#111;white-space:nowrap}
     .dl-btn{display:inline-flex;align-items:center;gap:0.45rem;height:3.2rem;padding:0 1.3rem;border-radius:999px;background:var(--black);color:var(--white);font-size:1.2rem;font-weight:500;white-space:nowrap;transition:background 0.2s,scale 0.2s var(--ease-spring)}
     .dl-btn:hover{background:#2a2a2a;scale:1.02}
@@ -132,6 +155,7 @@
     .step h4{font-size:1.5rem;font-weight:600;letter-spacing:-0.01em}
     .step p{font-size:1.35rem;line-height:1.6;color:var(--muted);margin-top:0.4rem}
     footer{padding:5rem 0 4rem;border-top:1px solid var(--border);margin-top:4rem;display:flex;justify-content:space-between;gap:2rem;flex-wrap:wrap;font-size:1.25rem;color:var(--grey)}
+    @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto} .nav-cta,.nav-toggle,.nav-drawer,.site-nav .nav-link{transition:none !important} *{animation:none !important}}
     @media(max-width:1024px){html{font-size:0.85vw}.site-logo{top:2.4rem;left:2.4rem;width:4.2rem;height:4.2rem}.site-nav{top:2.4rem;right:2.4rem}.wrap{padding:0 2.4rem}.hero{padding-top:11rem}.hero h1{font-size:4.4rem}}
     @media(max-width:640px){html{font-size:2.7vw}.cards{grid-template-columns:1fr}th,td{padding:1.2rem 1.4rem}.hero h1{font-size:3.6rem}}
   </style>
@@ -141,11 +165,18 @@
   <div id="edge-fade" aria-hidden="true"></div>
   <a class="site-logo" href="index.html" aria-label="GlassMarble — back to overview"><img src="assets/LOGO_PIXEL.png" alt="GlassMarble"></a>
   <nav class="site-nav" aria-label="Primary">
-    <a href="index.html" class="nav-link">Overview</a>
-    <a href="downloads.html" class="nav-link is-active" aria-current="page">Download</a>
-    <a href="docs.html" class="nav-link">Docs</a>
-    <a href="https://github.com/Syamchand123/GlassMarble" target="_blank" rel="noopener" class="nav-cta" aria-label="Open GitHub">GitHub <span aria-hidden="true">↗</span></a>
+    <a href="index.html" class="nav-link" data-nav="overview">Overview</a>
+    <a href="downloads.html" class="nav-link is-active" data-nav="download" aria-current="page">Download</a>
+    <a href="docs.html" class="nav-link" data-nav="docs">Docs</a>
+    <a href="https://github.com/Syamchand123/GlassMarble" target="_blank" rel="noopener" class="nav-cta">GitHub <span aria-hidden="true">↗</span></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navDrawer"><span></span><span></span></button>
   </nav>
+  <div class="nav-drawer" id="navDrawer" hidden>
+    <a href="index.html" data-nav="overview">Overview</a>
+    <a href="downloads.html" data-nav="download">Download</a>
+    <a href="docs.html" data-nav="docs">Docs</a>
+    <a href="https://github.com/Syamchand123/GlassMarble" target="_blank" rel="noopener" class="nav-drawer-cta">GitHub ↗</a>
+  </div>
 
   <main class="wrap">
     <header class="hero">
@@ -315,7 +346,124 @@
           const o=b.textContent; b.textContent='Copied!'; setTimeout(()=>b.textContent=o,1400)
         })
       })
-    })
+    });
+    // nav active + mobile drawer
+    (function(){
+      const file=(location.pathname.split('/').pop()||'index.html').split('?')[0].split('#')[0]||'index.html';
+      document.querySelectorAll('[data-nav]').forEach(a=>{
+        const href=a.getAttribute('href');
+        const isActive=href===file;
+        a.classList.toggle('is-active',isActive);
+        if(isActive) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');
+      });
+      const toggle=document.getElementById('navToggle');
+      const drawer=document.getElementById('navDrawer');
+      if(toggle&&drawer){
+        toggle.addEventListener('click',()=>{
+          const open=drawer.classList.toggle('open');
+          drawer.hidden=!open;
+          toggle.setAttribute('aria-expanded',String(open));
+          toggle.setAttribute('aria-label',open?'Close menu':'Open menu');
+        });
+        drawer.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+          drawer.classList.remove('open');drawer.hidden=true;toggle.setAttribute('aria-expanded','false');
+        }));
+        document.addEventListener('click',e=>{
+          if(!drawer.classList.contains('open')) return;
+          if(drawer.contains(e.target)||toggle.contains(e.target)) return;
+          drawer.classList.remove('open');drawer.hidden=true;toggle.setAttribute('aria-expanded','false');
+        });
+      }
+    })();
+    // OS auto-detect — highlight matching platform row
+    (function(){
+      const ua=navigator.userAgent.toLowerCase();
+      const plat=navigator.platform.toLowerCase();
+      let target=null;
+      if(/mac/.test(plat) || /mac/.test(ua)){
+        target = /arm/.test(ua) || /aarch64/.test(ua) ? 'darwin_arm64' : 'darwin_arm64';
+        // default to arm64 on Apple Silicon, but highlight both mac rows; pick first mac
+        const row=document.querySelector('a[href*="darwin_arm64"]');
+        if(row) row.closest('tr')?.classList.add('is-featured');
+        // also highlight both mac rows subtly
+        document.querySelectorAll('a[href*="darwin_"]').forEach(a=>a.closest('tr')?.style.setProperty('background','#f5f3ff'));
+        return;
+      }
+      if(/win/.test(plat)){
+        const isArm = /arm/.test(ua);
+        const sel=isArm?'windows_arm64':'windows_amd64';
+        const row=document.querySelector(`a[href*="${sel}"]`);
+        if(row) row.closest('tr')?.classList.add('is-featured');
+        document.querySelectorAll(`a[href*="${sel}"]`).forEach(a=>a.closest('tr')?.style.setProperty('background','#f5f3ff'));
+        return;
+      }
+      // linux default
+      const isArm = /arm|aarch64/.test(ua) || /arm/.test(plat);
+      const sel=isArm?'linux_arm64':'linux_amd64';
+      const row=document.querySelector(`a[href*="${sel}"]`);
+      if(row) row.closest('tr')?.classList.add('is-featured');
+    })();
+    // live file sizes + checksums tooltip (GitHub API, no auth)
+    (function(){
+      const api='https://api.github.com/repos/Syamchand123/GlassMarble/releases/tags/v1.0.0';
+      fetch(api,{headers:{'Accept':'application/vnd.github.v3+json'}}).then(r=>r.ok?r.json():null).then(data=>{
+        if(!data||!data.assets) return;
+        const map=new Map(data.assets.map(a=>[a.name,{size:a.size,url:a.browser_download_url}]));
+        document.querySelectorAll('td .tag').forEach(tag=>{
+          const name=tag.textContent.trim();
+          const info=map.get(name);
+          if(!info) return;
+          const mb=(info.size/1024/1024).toFixed(1);
+          tag.title=`${name} · ${mb} MB · ${info.size.toLocaleString()} bytes`;
+          // append size badge after tag if not already
+          if(!tag.nextElementSibling||!tag.nextElementSibling.classList.contains('size-badge')){
+            const badge=document.createElement('span');
+            badge.className='size-badge';
+            badge.textContent=`${mb} MB`;
+            badge.style.cssText='margin-left:0.6rem;font-size:1.05rem;color:var(--grey);font-family:Inter,sans-serif';
+            tag.insertAdjacentElement('afterend',badge);
+          }
+        });
+      }).catch(()=>{});
+      // checksums tooltip — fetch checksums.txt for SHA
+      fetch('https://raw.githubusercontent.com/Syamchand123/GlassMarble/main/docs/checksums.txt').catch(()=>null);
+      fetch('https://github.com/Syamchand123/GlassMarble/releases/download/v1.0.0/checksums.txt').then(r=>r.ok?r.text():null).then(txt=>{
+        if(!txt) return;
+        const lines=txt.split('\n');
+        const shaMap=new Map();
+        lines.forEach(l=>{
+          const m=l.trim().match(/^([a-f0-9]{64})\s+\*?(.+)$/i);
+          if(m) shaMap.set(m[2].trim(), m[1]);
+        });
+        document.querySelectorAll('td .tag').forEach(tag=>{
+          const sha=shaMap.get(tag.textContent.trim());
+          if(sha) tag.title=(tag.title?tag.title+' · ':'')+`SHA256 ${sha.slice(0,12)}…`;
+        });
+      }).catch(()=>{});
+    })();
+    // hide nav on scroll down — slides to right, shows on scroll up
+    (function(){
+      const nav=document.querySelector('.site-nav');
+      const drawer=document.getElementById('navDrawer');
+      if(!nav) return;
+      let lastY=window.scrollY, hidden=false;
+      const thr=70;
+      window.addEventListener('scroll',()=>{
+        const y=window.scrollY, dy=y-lastY;
+        if(y<=thr){
+          if(hidden){ nav.classList.remove('is-hidden'); if(drawer) drawer.classList.remove('is-hidden'); hidden=false; }
+        } else if(dy>4 && !hidden){
+          nav.classList.add('is-hidden');
+          if(drawer){ drawer.classList.add('is-hidden'); drawer.classList.remove('open'); drawer.hidden=true; const t=document.getElementById('navToggle'); if(t) t.setAttribute('aria-expanded','false'); }
+          hidden=true;
+        } else if(dy<-4 && hidden){
+          nav.classList.remove('is-hidden');
+          if(drawer) drawer.classList.remove('is-hidden');
+          hidden=false;
+        }
+        lastY=y;
+      },{passive:true});
+    })();
   </script>
 </body>
 </html>
