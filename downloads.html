@@ -42,26 +42,27 @@
     .nav-cta{height:4rem;padding:0 1.8rem;border-radius:999px;background:var(--black);color:var(--white);display:inline-flex;align-items:center;gap:0.7rem;font-size:1.25rem;font-weight:500;transition:background 0.2s,scale 0.2s var(--ease-spring)}
     .nav-cta:hover{background:#2a2a2a;scale:1.02}
     .nav-cta:active{scale:0.97}
-    .wrap{max-width:110rem;margin:0 auto;padding:0 3.5rem}
-    .hero{padding:14rem 0 6rem}
-    .eyebrow{display:inline-flex;align-items:center;gap:0.8rem;font-size:1.1rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--grey);margin-bottom:1.6rem}
+    .wrap{max-width:104rem;margin:0 auto;padding:0 3.5rem}
+    .hero{padding:12.5rem 0 4.5rem}
+    .eyebrow{display:inline-flex;align-items:center;gap:0.8rem;font-size:1.05rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--grey);margin-bottom:1.4rem}
     .eyebrow i{width:0.6rem;height:0.6rem;border-radius:50%;background:#10b981;box-shadow:0 0 0 0.4rem rgba(16,185,129,0.14)}
-    .hero h1{font-size:5.6rem;font-weight:600;letter-spacing:-0.04em;line-height:0.95;color:var(--black);max-width:68rem}
+    .hero h1{font-size:5.1rem;font-weight:600;letter-spacing:-0.045em;line-height:0.96;color:var(--black);max-width:64rem}
     .hero h1 em{font-weight:300;color:var(--grey);font-style:normal}
-    .hero p{font-size:1.7rem;line-height:1.6;color:var(--muted);max-width:62rem;margin-top:1.8rem}
-    .hero-actions{display:flex;flex-wrap:wrap;gap:1rem;margin-top:3rem}
-    .btn{height:5rem;padding:0 2.2rem;border-radius:999px;display:inline-flex;align-items:center;gap:0.9rem;font-size:1.35rem;font-weight:500;transition:background 0.2s,color 0.2s,scale 0.2s var(--ease-spring);border:1px solid transparent}
+    .hero p{font-size:1.5rem;line-height:1.7;color:var(--muted);max-width:60rem;margin-top:1.6rem;letter-spacing:-0.01em}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:0.9rem;margin-top:2.6rem}
+    .btn{height:4.7rem;padding:0 2rem;border-radius:999px;display:inline-flex;align-items:center;gap:0.8rem;font-size:1.3rem;font-weight:500;transition:background 0.2s,color 0.2s,scale 0.2s var(--ease-spring);border:1px solid transparent;letter-spacing:-0.01em}
     .btn:active{scale:0.97}
     .btn-dark{background:var(--black);color:var(--white)}
     .btn-dark:hover{background:#2a2a2a}
     .btn-light{background:var(--white);color:var(--black);border-color:var(--border)}
     .btn-light:hover{background:#f9f9f9}
-    .meta{font-size:1.2rem;color:var(--grey);margin-top:1.2rem}
+    .meta{font-size:1.15rem;color:var(--grey);margin-top:1.3rem;letter-spacing:-0.01em}
     .meta a{color:var(--black);text-decoration:underline;text-underline-offset:3px}
-    .section{padding:4.6rem 0}
-    .section h2{font-size:2.8rem;letter-spacing:-0.03em;font-weight:600;color:var(--black);margin-bottom:1rem}
+    .section{padding:4.8rem 0;border-top:1px solid #f0f0f0}
+    .section:first-of-type{border-top:none}
+    .section h2{font-size:2.5rem;letter-spacing:-0.03em;font-weight:600;color:var(--black);margin-bottom:0.9rem}
     .section h2 span{font-weight:300;color:var(--grey)}
-    .section .lead{font-size:1.5rem;line-height:1.65;color:var(--muted);max-width:68rem;margin-bottom:2.8rem}
+    .section .lead{font-size:1.4rem;line-height:1.7;color:var(--muted);max-width:64rem;margin-bottom:2.6rem;letter-spacing:-0.01em}
     .install-stack{display:flex;flex-direction:column;gap:1.2rem}
     .install-item{background:var(--white);border:1px solid var(--border);border-radius:2.2rem;padding:2.2rem 2.4rem 2rem;box-shadow:0 0.6rem 2rem rgba(0,0,0,0.04);min-width:0;overflow:hidden;transition:border-color 0.2s,box-shadow 0.2s}
     .install-item:hover{border-color:#d9dbe0;box-shadow:0 0.8rem 2.4rem rgba(0,0,0,0.06)}
@@ -148,7 +149,6 @@
 
   <main class="wrap">
     <header class="hero">
-      <div class="eyebrow"><i></i> v1.0.0 — MIT · Free · Verified</div>
       <h1>Download <em>GlassMarble.</em><br>One binary. Every platform.</h1>
       <p>17 languages → one deterministic GraphJSON → 31 living diagrams, governance, and grounded AI. No backend. No account. Just <code style="font-family:JetBrains Mono,monospace;background:#fff;border:1px solid #e4e4e4;padding:0.15rem 0.5rem;border-radius:0.5rem">gmb</code>.</p>
       <div class="hero-actions">
@@ -172,7 +172,7 @@
               <h3>macOS &amp; Linux</h3>
               <p>One-liner via <code>curl</code> — installs to <code>/usr/local/bin</code> or <code>~/.local/bin</code></p>
             </div>
-            <span class="install-badge">Recommended</span>
+            <span class="install-badge">Terminal</span>
           </div>
           <div class="install-code">
             <code>curl -fsSL https://raw.githubusercontent.com/Syamchand123/GlassMarble/main/install.sh | sh</code>
@@ -301,17 +301,6 @@
         </div>
         <p style="font-size:1.25rem;color:#6b7280;margin-top:1.2rem">Builds are static (CGO, musl). SBOM via Syft/SPDX is attached per release. Full steps → <a href="docs.html#getting-started-verify" style="color:var(--violet);font-weight:500">Docs → Verify a release</a></p>
       </div></div>
-    </section>
-
-    <section class="section" id="first">
-      <h2>First run <span>— 30 seconds</span></h2>
-      <div class="steps">
-        <div class="step"><i>1</i><div><h4>Initialize the workspace</h4><p>Creates <span class="tag">.glassmarble/</span> — config, empty graph, and <span class="tag">.gitignore</span> entry. Idempotent.</p><div class="mono" style="margin-top:1rem">gmb init --dir .</div></div></div>
-        <div class="step"><i>2</i><div><h4>Build the graph</h4><p>Full scan the first time, then incremental via <span class="tag">git diff HEAD</span> — only changed files are re-parsed.</p><div class="mono" style="margin-top:1rem">gmb analyze --full &nbsp;<span class="dim"># then:</span> gmb analyze</div></div></div>
-        <div class="step"><i>3</i><div><h4>Check health &amp; draw</h4><p>Nodes, edges, snapshots, memory — and your first living diagram.</p><div class="mono" style="margin-top:1rem">gmb status<br>gmb visualize class --save class &nbsp;<span class="dim"># → .glassmarble/marbles/class.md</span></div></div></div>
-        <div class="step"><i>4</i><div><h4>Ask the graph</h4><p>Bring your own key, ground every answer in the live AKG.</p><div class="mono" style="margin-top:1rem">gmb ai configure<br>gmb ai "which services depend on payments?"<br>gmb ai chat &nbsp;<span class="dim"># REPL with session memory</span></div></div></div>
-      </div>
-      <div class="callout" style="margin-top:2rem"><i>↗</i><p><strong>Next:</strong> Explore the <a href="docs.html" style="color:var(--violet);font-weight:600">documentation</a> — architecture, 31 diagram types, AKG format, configuration, and AI. Or run <span class="tag">gmb --help</span> and <span class="tag">gmb visualize list</span>.</p></div>
     </section>
 
     <footer>

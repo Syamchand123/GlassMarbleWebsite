@@ -278,12 +278,52 @@ a:focus-visible, button:focus-visible, input:focus-visible {
    as the rest of the site
 ═══════════════════════════════════════ */
 .home-desc {
-  font-size: 1.55rem;
-  line-height: 1.65;
-  color: var(--grey);
-  max-width: 36rem;
+  max-width: 35rem;
   animation: fadeUp 0.6s 0.26s var(--ease-out) both;
   clip-path: inset(-6% -100%);
+}
+.home-lead {
+  display: block;
+  font-size: 1.95rem;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  color: var(--black);
+  line-height: 1.25;
+  margin-bottom: 0.9rem;
+  position: relative;
+  padding-left: 1.6rem;
+}
+.home-lead::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.3rem;
+  bottom: 0.3rem;
+  width: 2px;
+  background: #7c5cfb;
+  border-radius: 999px;
+  opacity: 1;
+}
+.home-sub {
+  display: block;
+  font-size: 1.45rem;
+  line-height: 1.7;
+  color: var(--grey);
+  letter-spacing: -0.01em;
+  padding-left: 1.6rem;
+}
+.home-sub strong {
+  color: var(--black);
+  font-weight: 600;
+}
+.home-sub em {
+  font-style: normal;
+  color: var(--black);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: #e0e7ff;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.2px;
 }
 .home-desc code {
   font-family: 'JetBrains Mono', ui-monospace, monospace;
@@ -335,7 +375,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  gap: 5rem;
+  gap: 3.2rem;
   z-index: 50;
   pointer-events: none;
   transition: opacity 0.45s var(--ease-out), transform 0.45s var(--ease-spring);
@@ -1213,13 +1253,16 @@ h1.site-name {
 
     <p class="oss-badge" aria-label="Free and open source under MIT license">Free &amp; open source — MIT</p>
 
-    <p class="home-desc">Your codebase has a living map. <strong style="color:var(--black);font-weight:500">17 languages</strong> → one deterministic GraphJSON → <strong style="color:var(--black);font-weight:500">31 living diagrams</strong>, governance, and grounded AI. No backend. Just <code>gmb</code>.</p>
+    <p class="home-desc">
+      <span class="home-lead">Your repository holds the truth.</span>
+      <span class="home-sub">GlassMarble keeps it visible — a <strong>living map</strong>, always current, so understanding is <em>instant</em> and every answer stays <strong>grounded</strong> in the code as it is.</span>
+    </p>
 
     <div class="home-actions">
       <a href="downloads.html" class="social-button social-button--dark">Download v1.0.0</a>
       <a href="docs.html" class="social-button">Read Docs</a>
     </div>
-    <p class="home-meta">v1.0.0 · Verified · Deterministic · Static binary</p>
+    <p class="home-meta">One file &nbsp;·&nbsp; Local &nbsp;·&nbsp; No backend &nbsp;·&nbsp; Your codebase, understood.</p>
   </div>
 
   <!-- Fixed right cards — one per project, swap on scroll -->
