@@ -1337,7 +1337,7 @@ h1.site-name {
     <div>
       <h1 style="font-size:2.4rem;font-weight:400;margin-bottom:1.2rem;">GlassMarble</h1>
       <p style="color:#9f9f9f;font-size:1.4rem;line-height:1.6;">AI Architecture Intelligence — this site needs JavaScript for the interactive tour.<br>
-      <a href="downloads.html" style="text-decoration:underline;">Download v1.0.0</a> · <a href="docs.html" style="text-decoration:underline;">Read the docs</a> · <a href="mailto:hello@glassmarble.dev" style="text-decoration:underline;">hello@glassmarble.dev</a>.</p>
+      <a href="downloads.html" style="text-decoration:underline;">Download latest version</a> · <a href="docs.html" style="text-decoration:underline;">Read the docs</a> · <a href="mailto:hello@glassmarble.dev" style="text-decoration:underline;">hello@glassmarble.dev</a>.</p>
     </div>
   </div>
 </noscript>
@@ -1366,7 +1366,7 @@ h1.site-name {
     </p>
 
     <div class="home-actions">
-      <a href="downloads.html" class="social-button social-button--dark">Download v1.0.0</a>
+      <a href="downloads.html" class="social-button social-button--dark">Download latest version</a>
       <a href="docs.html" class="social-button">Read Docs</a>
     </div>
     <p class="home-meta">One file &nbsp;·&nbsp; Local &nbsp;·&nbsp; No backend &nbsp;·&nbsp; Your codebase, understood.</p>
@@ -1921,10 +1921,10 @@ const PROJECTS = [
     id: 'launch',
     num: '07',
     name: 'Launch',
-    sub: 'v1.0.0 — available now.',
+    sub: 'available now.',
     accent: 'amber',
     visual: `
-<svg viewBox="0 0 670 688" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GlassMarble v1.0 available now">
+<svg viewBox="0 0 670 688" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GlassMarble — available now">
   <rect width="670" height="688" fill="#111111"/>
   <text x="335" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" letter-spacing="8" fill="#9f9f9f">AVAILABLE NOW</text>
   <text x="335" y="400" text-anchor="middle" font-family="Inter,sans-serif" font-size="150" font-weight="500" letter-spacing="-6" fill="#e8e8e8">v1.0</text>
@@ -1932,27 +1932,27 @@ const PROJECTS = [
   <rect class="m-launchbar" x="235" y="436" width="200" height="4" rx="2" fill="#86efac"/>
   <text x="335" y="496" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#808080">4-stage engine &middot; 31 diagram types &middot; AI Architect &middot; Developer memory</text>
   <rect x="185" y="528" width="300" height="64" rx="32" fill="#1a1a1a" stroke="#3a3a3a"/>
-  <text x="335" y="568" text-anchor="middle" font-family="Inter,sans-serif" font-size="22" fill="#f6f6f6">Download v1.0.0</text>
-  <text x="335" y="630" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="16" fill="#86efac">v1.0.0 · verified · static binary</text>
+  <text id="idx-svg-dl-text" x="335" y="568" text-anchor="middle" font-family="Inter,sans-serif" font-size="22" fill="#f6f6f6">Download GlassMarble</text>
+  <text id="idx-svg-ver-text" x="335" y="630" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="16" fill="#86efac">latest · verified · static binary</text>
   <text x="335" y="664" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#6b6b6b">free &middot; open source &middot; MIT &middot; no backend</text>
 </svg>`,
     cards: [
       {
         num: '01',
-        title: 'v1.0.0 — available now.',
-        body: `<p>v1.0.0 bundles the four-stage engine, 31 diagram types, the grounded AI Architect, developer memory, <strong>Neo4j export</strong>, and PlantUML/DOT output — one static binary, zero setup. Free and MIT-licensed.</p>`,
+        title: 'GlassMarble — available now.',
+        body: `<p>The latest release bundles the four-stage engine, 31 diagram types, the grounded AI Architect, developer memory, <strong>Neo4j export</strong>, and PlantUML/DOT output — one static binary, zero setup. Free and MIT-licensed.</p>`,
         tags: ['Four-stage engine', '31 diagram types', 'AI Architect', 'Developer memory', 'Neo4j export', 'PlantUML', 'Graphviz DOT']
       },
       {
         num: '02',
         title: 'Built in public.',
-        body: `<p>GlassMarble ships with a public changelog, a design manifesto, and a community-driven roadmap. What lands in v1.1 is shaped by the community using it today.</p>`
+        body: `<p>GlassMarble ships with a public changelog, a design manifesto, and a community-driven roadmap. What lands in the next release is shaped by the community using it today.</p>`
       },
       {
         num: '03',
         title: 'Get it now.',
         body: `<p>Download the static binary for your platform and run <code>gmb init</code> + <code>gmb analyze</code> — your first living diagram is 30 seconds away.</p>`,
-        cta: 'Download v1.0.0'
+        cta: 'Download latest'
       }
     ]
   }
@@ -2623,6 +2623,40 @@ setSpacerHeight();
 window.addEventListener('resize', setSpacerHeight);
 handleRoute();
 updateScrollUI(0);
+/* ═══ LIVE VERSION HYDRATION ═══
+   Fetch the latest release tag and patch any rendered version text
+   so the site stays current when a new version ships.
+   All DOM queries use IDs/classes set in the launch section data.
+*/
+(function patchVersion() {
+  fetch('https://api.github.com/repos/Syamchand123/GlassMarble/releases/latest', {
+    headers: { 'Accept': 'application/vnd.github.v3+json' }
+  })
+  .then(r => r.ok ? r.json() : null)
+  .then(d => {
+    if (!d || !d.tag_name) return;
+    const tag = d.tag_name; // e.g. "v1.2.0"
+
+    // Patch SVG text nodes inside the rendered launch panel
+    // These are injected into the DOM by buildHomeCards() above
+    const dlText = document.getElementById('idx-svg-dl-text');
+    if (dlText) dlText.textContent = `Download ${tag}`;
+    const verText = document.getElementById('idx-svg-ver-text');
+    if (verText) verText.textContent = `${tag} · verified · static binary`;
+
+    // Patch any CTA buttons whose text is "Download latest"
+    document.querySelectorAll('[data-section="launch"] .m-card-cta, .m-cta').forEach(btn => {
+      if (btn.textContent.trim() === 'Download latest') btn.textContent = `Download ${tag}`;
+    });
+
+    // Patch subtitle chip of the launch section if rendered
+    document.querySelectorAll('.m-section-sub, .m-sub').forEach(el => {
+      if (el.textContent.trim() === 'available now.') el.textContent = `${tag} — available now.`;
+    });
+  })
+  .catch(() => { /* silently use neutral defaults */ });
+})();
+
 </script>
 </body>
 </html>

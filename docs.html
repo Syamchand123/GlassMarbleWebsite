@@ -3,324 +3,859 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Docs — GlassMarble v1.0.0</title>
+  <title>Docs — GlassMarble</title>
   <meta name="description" content="GlassMarble documentation — install, architecture, CLI, 31 diagrams, AKG format, configuration, and grounded AI. 17 languages. Deterministic. Local.">
-  <meta name="theme-color" content="#f6f6f6">
+  <meta name="theme-color" content="#09090b">
   <link rel="icon" type="image/png" href="assets/LOGO_PIXEL.png">
   <link rel="apple-touch-icon" href="assets/LOGO_PIXEL.png">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="GlassMarble Docs — v1.0.0">
+  <meta property="og:title" content="GlassMarble Docs — latest release">
   <meta property="og:description" content="Install, architecture, CLI, 31 diagrams, AKG format, configuration, and grounded AI.">
   <meta property="og:url" content="https://syamchand123.github.io/GlassMarbleWebsite/docs.html">
   <meta property="og:image" content="https://syamchand123.github.io/GlassMarbleWebsite/assets/og-image.png">
   <link rel="canonical" href="https://syamchand123.github.io/GlassMarbleWebsite/docs.html">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="GlassMarble Docs — v1.0.0">
+  <meta name="twitter:title" content="GlassMarble Docs — latest release">
   <meta name="twitter:description" content="Install, architecture, CLI, 31 diagrams, AKG format, configuration, and grounded AI.">
   <meta name="twitter:image" content="https://syamchand123.github.io/GlassMarbleWebsite/assets/og-image.png">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"GlassMarble Documentation","url":"https://syamchand123.github.io/GlassMarbleWebsite/docs.html","author":{"@type":"Organization","name":"GlassMarble"},"publisher":{"@type":"Organization","name":"GlassMarble"}}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    *,*::before,*::after{box-sizing:border-box;border:0;margin:0;padding:0}
-    html{font-size:0.694445vw;font-family:'Inter',-apple-system,'Helvetica Neue',sans-serif;-webkit-font-smoothing:antialiased;background:#f6f6f6;color:#1a1a1a;scroll-behavior:smooth}
-    ::-webkit-scrollbar{display:none}
-    :root{--bg:#f6f6f6;--black:#1a1a1a;--grey:#9f9f9f;--muted:#6b7280;--white:#fff;--border:#e4e4e4;--border2:#ececec;--violet:#7c5cfb;--violet2:#6d28d9;--ease-spring:cubic-bezier(0.075,0.82,0.165,1);--ease-out:cubic-bezier(0,0,0.2,1)}
-    body{background:transparent;line-height:1;min-height:100vh}
-    a{color:inherit;text-decoration:none}
-    button{font:inherit;cursor:pointer;background:none}
-    a:focus-visible,button:focus-visible{outline:2px solid var(--black);outline-offset:3px;border-radius:4px}
-    #bg-scene{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
-    .bg-grain{position:absolute;inset:0;opacity:0.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px 180px}
-    .bg-vignette{position:absolute;inset:0;background:radial-gradient(ellipse 115% 105% at 50% 40%, transparent 60%, rgba(26,26,26,0.06) 100%)}
-    .site-logo{position:fixed;top:3.5rem;left:3.5rem;z-index:211;width:5rem;height:5rem;border-radius:1.2rem;overflow:hidden;box-shadow:0 0.4rem 1.6rem rgba(0,0,0,0.14)}
-    .site-logo img{width:100%;height:100%;object-fit:cover;display:block}
-    .site-nav{position:fixed;top:3.5rem;right:3.5rem;z-index:211;display:flex;align-items:center;gap:0.6rem;transition:transform 0.32s var(--ease-spring),opacity 0.28s var(--ease-out);will-change:transform,opacity}
-    .nav-link{font-size:1.35rem;letter-spacing:-0.01em;color:var(--grey);padding:0.7rem 1.4rem;border-radius:999px;transition:background 0.2s,color 0.2s}
-    .nav-link:hover{color:var(--black);background:var(--white)}
-    .nav-link.is-active{color:var(--black);background:var(--white);box-shadow:0 0.4rem 1.6rem rgba(0,0,0,0.06)}
-    .nav-cta{height:4rem;padding:0 1.8rem;border-radius:999px;background:var(--black);color:var(--white);display:inline-flex;align-items:center;gap:0.7rem;font-size:1.25rem;font-weight:500}
-    .nav-cta:hover{background:#2a2a2a}
-    .nav-toggle{display:none;width:4.2rem;height:4.2rem;border-radius:999px;background:var(--white);border:1px solid var(--border);align-items:center;justify-content:center;flex-direction:column;gap:0.45rem;flex:0 0 auto;box-shadow:0 0.4rem 1.2rem rgba(0,0,0,0.06)}
-    .nav-toggle span{display:block;width:1.6rem;height:1.8px;background:var(--black);border-radius:999px;transition:transform 0.2s var(--ease-spring),opacity 0.2s}
-    .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(0.32rem) rotate(45deg)}
-    .nav-toggle[aria-expanded="true"] span:nth-child(2){transform:translateY(-0.32rem) rotate(-45deg)}
-    .nav-drawer{position:fixed;top:0;left:0;right:0;background:rgba(246,246,246,0.97);backdrop-filter:blur(12px) saturate(1.1);border-bottom:1px solid var(--border);padding:8rem 2.4rem 2rem;display:flex;flex-direction:column;gap:0.4rem;transform:translateY(-100%);opacity:0;pointer-events:none;transition:transform 0.38s var(--ease-spring),opacity 0.28s var(--ease-out);z-index:209}
-    .nav-drawer.open{transform:translateY(0);opacity:1;pointer-events:auto}
-    .nav-drawer a{font-size:1.6rem;font-weight:500;letter-spacing:-0.01em;padding:1.3rem 1.4rem;border-radius:1.2rem;color:var(--grey);transition:background 0.2s,color 0.2s}
-    .nav-drawer a:hover{background:var(--white);color:var(--black)}
-    .nav-drawer a.is-active{background:var(--white);color:var(--black);box-shadow:0 0.4rem 1.6rem rgba(0,0,0,0.06)}
-    .nav-drawer .nav-drawer-cta{margin-top:0.8rem;height:4.6rem;border-radius:999px;background:var(--black);color:var(--white);display:inline-flex;align-items:center;justify-content:center;gap:0.6rem;font-size:1.4rem;font-weight:500}
-    .site-nav.is-hidden{transform:translateX(42%);opacity:0;pointer-events:none}
-    .nav-drawer.is-hidden{transform:translateY(-100%) !important;opacity:0 !important;pointer-events:none !important}
-    @media(max-width:640px){.site-nav .nav-link,.site-nav .nav-cta{display:none}.nav-toggle{display:flex !important}}
-    .layout{max-width:136rem;margin:0 auto;display:grid;grid-template-columns:28rem 1fr;gap:3.5rem;padding:12rem 3.5rem 6rem}
-    @media(max-width:1100px){.layout{grid-template-columns:1fr;padding:11rem 2.4rem 4rem}}
-    .sidebar{position:sticky;top:9rem;align-self:start;max-height:calc(100vh - 10rem);overflow:auto;scrollbar-width:thin;padding-right:1rem}
-    @media(max-width:1100px){.sidebar{display:none}}
-    .sidebar-head{display:flex;align-items:center;gap:1rem;margin-bottom:1.6rem}
-    .sidebar-head span{font-size:1.15rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--grey);font-weight:600}
-    .search{width:100%;height:3.8rem;border:1px solid var(--border);border-radius:999px;padding:0 1.4rem 0 3.2rem;font-size:1.25rem;color:var(--black);background:var(--white) url("data:image/svg+xml,%3Csvg width='14' height='14' viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 11A5 5 0 1 1 6 1a5 5 0 0 1 0 10Zm4-1 2.5 2.5' stroke='%239f9f9f' stroke-width='1.3' stroke-linecap='round'/%3E%3C/svg%3E") 1.1rem center no-repeat;outline:none;margin-bottom:1.4rem}
-    .search:focus{border-color:var(--black);box-shadow:0 0 0 1px var(--black)}
-    .nav-group{margin-bottom:1.8rem}
-    .nav-group h4{font-size:1.05rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--grey);font-weight:600;margin:1.6rem 0 0.8rem}
-    .nav-group a{display:block;font-size:1.3rem;line-height:1.4;color:var(--muted);padding:0.45rem 0 0.45rem 1.2rem;border-left:2px solid transparent;margin-left:0.2rem}
-    .nav-group a:hover{color:var(--black)}
-    .nav-group a.active{color:var(--black);border-left-color:var(--black);font-weight:500}
-    .content{min-width:0}
-    .prose{max-width:84rem}
-    h1{font-size:4.6rem;letter-spacing:-0.04em;font-weight:600;line-height:0.95;color:var(--black)}
-    h1 em{font-weight:300;color:var(--grey);font-style:normal}
-    .desc{font-size:1.6rem;line-height:1.6;color:var(--muted);margin-top:1rem;max-width:68rem}
-    .pill-row{display:flex;flex-wrap:wrap;gap:0.8rem;margin-top:1.6rem}
-    .pill{font-family:'JetBrains Mono',monospace;font-size:1.15rem;background:var(--white);border:1px solid var(--border);padding:0.4rem 0.9rem;border-radius:999px;color:#374151}
-    hr{height:1px;background:var(--border);margin:3rem 0}
-    h2{font-size:2.6rem;letter-spacing:-0.03em;font-weight:600;color:var(--black);margin:3.6rem 0 1rem;scroll-margin-top:9rem}
-    h2 span{font-weight:300;color:var(--grey)}
-    h3{font-size:1.75rem;letter-spacing:-0.02em;font-weight:600;color:var(--black);margin:2.6rem 0 0.8rem;scroll-margin-top:9rem}
-    h4{font-size:1.35rem;font-weight:600;color:var(--black);margin:1.8rem 0 0.6rem}
-    p{font-size:1.45rem;line-height:1.75;color:#374151;margin:0.9rem 0}
-    p strong{color:var(--black)}
-    ul,ol{margin:0.8rem 0 1.2rem 1.6rem;font-size:1.4rem;line-height:1.75;color:#374151}
-    li{margin:0.4rem 0}
-    blockquote{border-left:3px solid var(--violet);background:#f5f3ff;border-radius:0 1.2rem 1.2rem 0;padding:1.4rem 1.6rem;margin:1.6rem 0;font-size:1.35rem;line-height:1.65;color:#4b5563}
-    .mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:1.25rem;background:#0f1115;color:#e5e7eb;border-radius:1.4rem;padding:1.6rem 1.8rem;overflow:auto;line-height:1.7;margin:1.3rem 0;position:relative}
-    .mono .dim{color:#9ca3af}
-    .mono .cmt{color:#6b7280}
-    .mono.light{background:#f9fafb;color:#111827;border:1px solid var(--border)}
-    .mono.light .dim{color:#9ca3af}
-    .table-wrap{background:var(--white);border:1px solid var(--border);border-radius:1.6rem;overflow:hidden;margin:1.4rem 0}
-    table{width:100%;border-collapse:collapse;font-size:1.3rem}
-    th{font-size:1.05rem;letter-spacing:0.07em;text-transform:uppercase;color:var(--grey);font-weight:600;text-align:left;padding:1.2rem 1.6rem;background:#f9fafb;border-bottom:1px solid var(--border);white-space:nowrap}
-    td{padding:1.1rem 1.6rem;border-bottom:1px solid #f3f4f6;color:#1f2937;vertical-align:top}
-    tr:last-child td{border-bottom:0}
-    td code, p code, li code{font-family:'JetBrains Mono',monospace;font-size:0.95em;background:#f3f4f6;border:1px solid var(--border);padding:0.15rem 0.45rem;border-radius:0.5rem;color:#111827}
-    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1.4rem 0}
-    @media(max-width:700px){.grid2{grid-template-columns:1fr}}
-    .mini{background:var(--white);border:1px solid var(--border);border-radius:1.6rem;padding:1.8rem}
-    .mini h4{margin:0 0 0.5rem;font-size:1.35rem}
-    .mini p{font-size:1.3rem;color:var(--muted);margin:0;line-height:1.6}
-    .callout{border:1px solid #e0e7ff;background:#f5f3ff;border-radius:1.6rem;padding:1.6rem 1.8rem;display:flex;gap:1.2rem;margin:1.6rem 0}
-    .callout i{width:2.6rem;height:2.6rem;border-radius:50%;background:var(--violet);color:var(--white);display:grid;place-items:center;flex:0 0 auto;font-style:normal;font-weight:600}
-    .callout p{margin:0;font-size:1.32rem;line-height:1.6}
-    .step-list{counter-reset:step;margin:1.2rem 0}
-    .step{display:grid;grid-template-columns:3.2rem 1fr;gap:1.4rem;padding:1.6rem 0;border-bottom:1px solid #f3f4f6}
-    .step:last-child{border-bottom:0}
-    .step i{width:3.2rem;height:3.2rem;border-radius:50%;background:var(--black);color:var(--white);display:grid;place-items:center;font-style:normal;font-size:1.25rem;font-weight:600;flex:0 0 auto}
-    .step h4{margin:0;font-size:1.45rem}
-    .step p{margin:0.35rem 0 0;font-size:1.32rem;color:var(--muted)}
-    .anchor{opacity:0;margin-left:0.6rem;font-size:1.2rem;color:var(--grey)}
-    h2:hover .anchor, h3:hover .anchor{opacity:1}
-    footer{border-top:1px solid var(--border);margin-top:4rem;padding:2rem 0 3rem;display:flex;justify-content:space-between;gap:2rem;flex-wrap:wrap;font-size:1.25rem;color:var(--grey)}
-    @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto} .nav-cta,.nav-toggle,.nav-drawer,.site-nav .nav-link{transition:none !important} *{animation:none !important}}
-    @media(max-width:1024px){html{font-size:0.9vw}.site-logo{top:2.4rem;left:2.4rem;width:4.2rem;height:4.2rem}.site-nav{top:2.4rem;right:2.4rem}.layout{padding-top:10rem}}
-    @media(max-width:640px){html{font-size:2.7vw}.mono{font-size:1.2rem}}
+    /* ── Reset ───────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; border: 0; }
+    html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+    a { color: inherit; text-decoration: none; }
+    ul, ol { list-style: none; }
+    button { font: inherit; cursor: pointer; background: none; color: inherit; }
+    a:focus-visible, button:focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 2px; border-radius: 6px; }
+
+    /* ── Design tokens ───────────────────────────────────────── */
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 240 10% 3.9%;
+      --card: 0 0% 100%;
+      --muted: 240 4.8% 95.9%;
+      --muted-foreground: 240 3.8% 46.1%;
+      --border: 240 5.9% 90%;
+      --primary: 240 5.9% 10%;
+      --primary-foreground: 0 0% 98%;
+      --ring: 240 5.9% 10%;
+      --radius: 0.5rem;
+      /* sidebar */
+      --sidebar-bg: 240 10% 4%;
+      --sidebar-fg: 240 5% 84%;
+      --sidebar-border: 240 6% 14%;
+      --sidebar-muted: 240 5% 55%;
+      --sidebar-active: 240 5% 96%;
+      --sidebar-active-bg: 240 5% 14%;
+      --sidebar-group: 240 5% 40%;
+      /* violet */
+      --violet: 256 89% 66%;
+      --violet-fg: 0 0% 100%;
+      --violet-muted: 256 89% 96%;
+      --violet-border: 256 89% 88%;
+      /* code */
+      --code-bg: 240 10% 7%;
+      --code-fg: 213 31% 91%;
+      --code-muted: 220 9% 46%;
+      --code-dim: 240 6% 35%;
+      /* prose */
+      --prose-body: 240 6% 22%;
+    }
+
+    /* ── Base ───────────────────────────────────────────────── */
+    body {
+      font-family: 'Geist', -apple-system, 'Helvetica Neue', sans-serif;
+      font-size: 14px; line-height: 1.5;
+      color: hsl(var(--foreground));
+      background: hsl(var(--background));
+      min-height: 100vh; overflow-x: hidden;
+    }
+
+    /* ── Top header ─────────────────────────────────────────── */
+    .site-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      height: 56px;
+      border-bottom: 1px solid hsl(var(--sidebar-border));
+      background: hsl(var(--sidebar-bg));
+      display: flex; align-items: center; padding: 0 20px; gap: 0;
+    }
+    .header-logo {
+      display: flex; align-items: center; gap: 9px;
+      font-weight: 600; font-size: 14.5px; letter-spacing: -0.02em;
+      color: hsl(var(--sidebar-active)); width: 256px; flex-shrink: 0;
+    }
+    .header-logo img { width: 26px; height: 26px; border-radius: 6px; object-fit: cover; }
+    .header-logo .version-tag {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
+      color: hsl(var(--sidebar-muted));
+      background: hsl(var(--sidebar-active-bg));
+      border: 1px solid hsl(var(--sidebar-border));
+      padding: 1px 7px; border-radius: 999px;
+    }
+    .header-divider { width: 1px; height: 24px; background: hsl(var(--sidebar-border)); margin: 0 16px; }
+    .header-nav { display: flex; align-items: center; gap: 2px; }
+    .header-nav-item {
+      font-size: 13px; font-weight: 450; color: hsl(var(--sidebar-muted));
+      padding: 5px 11px; border-radius: calc(var(--radius) - 2px);
+      transition: color 0.15s, background 0.15s;
+    }
+    .header-nav-item:hover { color: hsl(var(--sidebar-active)); background: hsl(var(--sidebar-active-bg)); }
+    .header-nav-item.active { color: hsl(var(--sidebar-active)); background: hsl(var(--sidebar-active-bg)); font-weight: 500; }
+    .header-right { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+    .header-github {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12.5px; font-weight: 500; color: hsl(var(--sidebar-fg));
+      background: hsl(var(--sidebar-active-bg));
+      border: 1px solid hsl(var(--sidebar-border));
+      padding: 5px 12px; border-radius: var(--radius);
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .header-github:hover { color: hsl(var(--sidebar-active)); border-color: hsl(240 5% 22%); }
+    /* Mobile toggle */
+    .sidebar-toggle {
+      display: none; width: 32px; height: 32px;
+      border: 1px solid hsl(var(--sidebar-border)); border-radius: var(--radius);
+      align-items: center; justify-content: center;
+      background: hsl(var(--sidebar-active-bg));
+      color: hsl(var(--sidebar-fg));
+      flex-shrink: 0; margin-right: 12px;
+    }
+    .sidebar-toggle svg { width: 15px; height: 15px; }
+    @media (max-width: 1024px) {
+      .header-divider { display: none; }
+      .header-logo { width: auto; }
+      .sidebar-toggle { display: flex; }
+    }
+    @media (max-width: 640px) {
+      .header-nav { display: none; }
+      .header-github span { display: none; }
+    }
+
+    /* ── Layout ─────────────────────────────────────────────── */
+    .docs-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      grid-template-rows: 1fr;
+      min-height: 100vh;
+      padding-top: 56px;
+    }
+    @media (max-width: 1024px) {
+      .docs-layout { grid-template-columns: 1fr; }
+    }
+
+    /* ── Sidebar ─────────────────────────────────────────────── */
+    .docs-sidebar {
+      position: fixed;
+      top: 56px; bottom: 0; left: 0;
+      width: 260px;
+      background: hsl(var(--sidebar-bg));
+      border-right: 1px solid hsl(var(--sidebar-border));
+      overflow-y: auto; overflow-x: hidden;
+      scrollbar-width: thin;
+      scrollbar-color: hsl(var(--sidebar-border)) transparent;
+      display: flex; flex-direction: column;
+      z-index: 40;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .docs-sidebar::-webkit-scrollbar { width: 4px; }
+    .docs-sidebar::-webkit-scrollbar-thumb { background: hsl(var(--sidebar-border)); border-radius: 2px; }
+    @media (max-width: 1024px) {
+      .docs-sidebar {
+        transform: translateX(-100%);
+        z-index: 45;
+        width: 280px;
+        box-shadow: 8px 0 30px hsl(0 0% 0% / 0.4);
+      }
+      .docs-sidebar.open { transform: translateX(0); }
+    }
+    /* Sidebar overlay */
+    .sidebar-overlay {
+      display: none; position: fixed; inset: 0; z-index: 44;
+      background: hsl(0 0% 0% / 0.5); backdrop-filter: blur(2px);
+    }
+    .sidebar-overlay.open { display: block; }
+
+    .sidebar-inner { padding: 16px 0 32px; }
+    /* Search */
+    .sidebar-search {
+      padding: 0 12px; margin-bottom: 8px;
+    }
+    .search-input-wrap {
+      position: relative; display: flex; align-items: center;
+    }
+    .search-icon {
+      position: absolute; left: 10px; color: hsl(var(--sidebar-muted));
+      pointer-events: none; flex-shrink: 0;
+    }
+    .search-icon svg { width: 13px; height: 13px; }
+    .sidebar-search input {
+      width: 100%; height: 34px;
+      background: hsl(var(--sidebar-active-bg));
+      border: 1px solid hsl(var(--sidebar-border));
+      border-radius: var(--radius);
+      padding: 0 10px 0 30px;
+      font-family: inherit; font-size: 12.5px;
+      color: hsl(var(--sidebar-fg));
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .sidebar-search input::placeholder { color: hsl(var(--sidebar-muted)); }
+    .sidebar-search input:focus {
+      border-color: hsl(var(--violet));
+      box-shadow: 0 0 0 1px hsl(var(--violet) / 0.3);
+    }
+    /* Nav groups */
+    .nav-group { margin-bottom: 4px; }
+    .nav-group-label {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: hsl(var(--sidebar-group));
+      padding: 10px 16px 4px;
+    }
+    .nav-group-label svg { width: 10px; height: 10px; }
+    .nav-link {
+      display: block; font-size: 13px; line-height: 1.4;
+      color: hsl(var(--sidebar-muted));
+      padding: 5px 16px 5px 22px;
+      border-left: 2px solid transparent;
+      border-radius: 0;
+      transition: color 0.12s, background 0.12s, border-color 0.12s;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .nav-link:hover { color: hsl(var(--sidebar-fg)); background: hsl(var(--sidebar-active-bg) / 0.5); }
+    .nav-link.active {
+      color: hsl(var(--sidebar-active));
+      border-left-color: hsl(var(--violet));
+      background: hsl(var(--sidebar-active-bg));
+      font-weight: 500;
+    }
+    /* Sidebar footer */
+    .sidebar-footer {
+      padding: 12px 12px 0;
+      margin-top: auto;
+      border-top: 1px solid hsl(var(--sidebar-border));
+    }
+    .sidebar-footer a {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 12.5px; font-weight: 500; color: hsl(var(--sidebar-muted));
+      padding: 7px 10px; border-radius: var(--radius);
+      transition: color 0.15s, background 0.15s;
+    }
+    .sidebar-footer a:hover { color: hsl(var(--sidebar-fg)); background: hsl(var(--sidebar-active-bg)); }
+
+    /* ── Content area ────────────────────────────────────────── */
+    .docs-content {
+      grid-column: 2;
+      min-width: 0;
+      padding: 48px 48px 80px;
+      margin-left: 260px;
+    }
+    @media (max-width: 1024px) { .docs-content { margin-left: 0; padding: 40px 24px 64px; } }
+    @media (max-width: 640px) { .docs-content { padding: 32px 16px 56px; } }
+
+    .prose { max-width: 780px; }
+
+    /* ── Prose typography ────────────────────────────────────── */
+    .prose h1 {
+      font-size: clamp(26px, 4vw, 38px); font-weight: 700;
+      letter-spacing: -0.035em; line-height: 1.1;
+      color: hsl(var(--foreground)); margin-bottom: 10px;
+    }
+    .prose h1 em { font-weight: 300; color: hsl(var(--muted-foreground)); font-style: normal; }
+    .prose .page-desc {
+      font-size: 15px; line-height: 1.7; color: hsl(var(--muted-foreground));
+      max-width: 600px; margin-bottom: 16px;
+    }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; }
+    .pill {
+      font-family: 'Geist Mono', monospace; font-size: 12px; font-weight: 500;
+      background: hsl(var(--muted)); border: 1px solid hsl(var(--border));
+      padding: 3px 10px; border-radius: 999px; color: hsl(var(--foreground));
+    }
+    .prose-divider {
+      height: 1px; background: hsl(var(--border)); margin: 32px 0;
+    }
+    .prose h2 {
+      font-size: 22px; font-weight: 700; letter-spacing: -0.025em;
+      color: hsl(var(--foreground)); margin: 40px 0 12px;
+      scroll-margin-top: 80px; padding-top: 4px;
+      border-top: 1px solid hsl(var(--border)); padding-top: 32px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .prose h2:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+    .prose h2 .section-sub { font-weight: 400; color: hsl(var(--muted-foreground)); }
+    .prose h3 {
+      font-size: 16px; font-weight: 600; letter-spacing: -0.018em;
+      color: hsl(var(--foreground)); margin: 28px 0 8px;
+      scroll-margin-top: 80px;
+    }
+    .prose h4 {
+      font-size: 14px; font-weight: 600; color: hsl(var(--foreground));
+      margin: 20px 0 6px;
+    }
+    .prose p {
+      font-size: 14.5px; line-height: 1.78; color: hsl(var(--prose-body));
+      margin: 10px 0;
+    }
+    .prose p strong { color: hsl(var(--foreground)); font-weight: 600; }
+    .prose ul, .prose ol {
+      margin: 8px 0 14px 20px; font-size: 14px; line-height: 1.78;
+      color: hsl(var(--prose-body));
+    }
+    .prose ul { list-style: disc; }
+    .prose ol { list-style: decimal; }
+    .prose li { margin: 4px 0; }
+    /* Inline code */
+    .prose code, td code, p code, li code {
+      font-family: 'Geist Mono', monospace; font-size: 0.875em;
+      background: hsl(var(--muted)); border: 1px solid hsl(var(--border));
+      padding: 1px 5px; border-radius: 4px; color: hsl(var(--foreground));
+    }
+    /* blockquote */
+    .prose blockquote {
+      border-left: 3px solid hsl(var(--violet));
+      background: hsl(var(--violet-muted) / 0.5);
+      border-radius: 0 calc(var(--radius) + 2px) calc(var(--radius) + 2px) 0;
+      padding: 12px 16px; margin: 16px 0;
+      font-size: 13.5px; line-height: 1.65; color: hsl(var(--prose-body));
+    }
+    /* anchor links */
+    .anchor { opacity: 0; margin-left: 6px; font-size: 14px; color: hsl(var(--muted-foreground)); }
+    h2:hover .anchor, h3:hover .anchor { opacity: 1; }
+
+    /* ── Code block ──────────────────────────────────────────── */
+    .code-block {
+      position: relative; background: hsl(var(--code-bg));
+      border-radius: calc(var(--radius) + 2px);
+      overflow: hidden; margin: 14px 0;
+    }
+    .code-block-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 14px 8px 16px;
+      border-bottom: 1px solid hsl(240 10% 12%);
+      background: hsl(240 10% 9%);
+    }
+    .code-lang {
+      font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: hsl(var(--code-muted));
+    }
+    .code-copy {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+      color: hsl(var(--code-muted));
+      background: hsl(240 10% 14%); border: 1px solid hsl(240 10% 20%);
+      padding: 3px 9px; border-radius: 5px;
+      transition: color 0.15s, background 0.15s;
+    }
+    .code-copy:hover { color: hsl(var(--code-fg)); background: hsl(240 10% 18%); }
+    .code-block pre {
+      padding: 16px 18px; overflow-x: auto;
+      scrollbar-width: thin; scrollbar-color: hsl(240 10% 22%) transparent;
+    }
+    .code-block pre::-webkit-scrollbar { height: 4px; }
+    .code-block pre::-webkit-scrollbar-thumb { background: hsl(240 10% 22%); border-radius: 2px; }
+    .code-block code {
+      font-family: 'Geist Mono', monospace; font-size: 13px; line-height: 1.7;
+      color: hsl(var(--code-fg)); background: none; border: none;
+      padding: 0; border-radius: 0; white-space: pre;
+    }
+    .code-block .dim { color: hsl(var(--code-dim)); }
+    .code-block .cmt { color: hsl(var(--code-muted)); }
+    /* Light variant */
+    .code-block.light { background: hsl(var(--muted) / 0.5); }
+    .code-block.light .code-block-header { background: hsl(var(--muted)); border-bottom-color: hsl(var(--border)); }
+    .code-block.light code { color: hsl(var(--foreground)); }
+    .code-block.light .dim { color: hsl(var(--muted-foreground)); }
+    .code-block.light .cmt { color: hsl(var(--muted-foreground)); }
+    .code-block.light .code-lang { color: hsl(var(--muted-foreground)); }
+    .code-block.light .code-copy {
+      background: hsl(var(--background)); border-color: hsl(var(--border));
+      color: hsl(var(--muted-foreground));
+    }
+    .code-block.light .code-copy:hover { color: hsl(var(--foreground)); }
+
+    /* ── Tables ─────────────────────────────────────────────── */
+    .table-wrap {
+      border: 1px solid hsl(var(--border));
+      border-radius: calc(var(--radius) + 2px);
+      overflow: hidden; margin: 14px 0;
+      overflow-x: auto;
+    }
+    .table-wrap table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    .table-wrap thead tr { background: hsl(var(--muted) / 0.6); }
+    .table-wrap th {
+      font-size: 11.5px; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: hsl(var(--muted-foreground));
+      text-align: left; padding: 11px 16px;
+      border-bottom: 1px solid hsl(var(--border)); white-space: nowrap;
+    }
+    .table-wrap td {
+      padding: 11px 16px; border-bottom: 1px solid hsl(var(--border) / 0.6);
+      color: hsl(var(--prose-body)); vertical-align: top;
+    }
+    .table-wrap tr:last-child td { border-bottom: none; }
+    .table-wrap tbody tr { transition: background 0.12s; }
+    .table-wrap tbody tr:hover { background: hsl(var(--muted) / 0.35); }
+
+    /* ── Grid cards ─────────────────────────────────────────── */
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+    @media (max-width: 640px) { .grid2 { grid-template-columns: 1fr; } }
+    .mini-card {
+      background: hsl(var(--card)); border: 1px solid hsl(var(--border));
+      border-radius: calc(var(--radius) + 2px); padding: 16px 18px;
+      transition: box-shadow 0.15s;
+    }
+    .mini-card:hover { box-shadow: 0 2px 12px hsl(0 0% 0% / 0.07); }
+    .mini-card h4 { font-size: 13.5px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 4px; }
+    .mini-card p { font-size: 13px; color: hsl(var(--muted-foreground)); line-height: 1.6; margin: 0; }
+    .mini-card p code {
+      font-family: 'Geist Mono', monospace; font-size: 12px;
+      background: hsl(var(--muted)); border: 1px solid hsl(var(--border));
+      padding: 1px 5px; border-radius: 3px; color: hsl(var(--foreground));
+    }
+
+    /* ── Callout ─────────────────────────────────────────────── */
+    .callout {
+      display: flex; gap: 12px; align-items: flex-start;
+      padding: 14px 16px; border-radius: var(--radius);
+      border: 1px solid hsl(var(--violet-border));
+      background: hsl(var(--violet-muted) / 0.5);
+      font-size: 13.5px; line-height: 1.65; color: hsl(var(--prose-body));
+      margin: 16px 0;
+    }
+    .callout-icon {
+      width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+      background: hsl(var(--violet)); color: hsl(var(--violet-fg));
+      display: grid; place-items: center; font-size: 11px; font-weight: 700; margin-top: 1px;
+    }
+    .callout a { color: hsl(var(--violet)); font-weight: 600; }
+    .callout a:hover { text-decoration: underline; }
+    .callout code {
+      font-family: 'Geist Mono', monospace; font-size: 12px;
+      background: hsl(var(--violet-border) / 0.3); border: 1px solid hsl(var(--violet-border));
+      padding: 1px 5px; border-radius: 3px; color: hsl(var(--foreground));
+    }
+
+    /* ── Step list ───────────────────────────────────────────── */
+    .step-list { margin: 14px 0; }
+    .step-item {
+      display: grid; grid-template-columns: 36px 1fr;
+      gap: 14px; padding: 16px 0;
+      border-bottom: 1px solid hsl(var(--border) / 0.6);
+    }
+    .step-item:last-child { border-bottom: none; }
+    .step-num {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: hsl(var(--primary)); color: hsl(var(--primary-foreground));
+      display: grid; place-items: center; font-size: 13px; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .step-item h4 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 4px; }
+    .step-item p { font-size: 13px; color: hsl(var(--muted-foreground)); line-height: 1.6; margin: 0 0 8px; }
+
+    /* ── Footer ─────────────────────────────────────────────── */
+    .docs-footer {
+      margin-top: 40px; padding: 24px 0 20px;
+      border-top: 1px solid hsl(var(--border));
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 16px; flex-wrap: wrap;
+      font-size: 12.5px; color: hsl(var(--muted-foreground));
+    }
+    .docs-footer a { transition: color 0.15s; }
+    .docs-footer a:hover { color: hsl(var(--foreground)); }
+    .footer-links { display: flex; gap: 20px; }
+
+    /* ── Scrollbar ───────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 3px; }
+
+    /* ── Section badges ──────────────────────────────────────── */
+    .section-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 10.5px; font-weight: 600; letter-spacing: 0.07em;
+      text-transform: uppercase; color: hsl(var(--violet));
+      background: hsl(var(--violet-muted)); border: 1px solid hsl(var(--violet-border));
+      padding: 2px 8px; border-radius: 999px; flex-shrink: 0;
+    }
   </style>
 </head>
 <body>
-  <div id="bg-scene" aria-hidden="true"><i class="bg-grain"></i><i class="bg-vignette"></i></div>
-  <a class="site-logo" href="index.html" aria-label="GlassMarble — back to overview"><img src="assets/LOGO_PIXEL.png" alt="GlassMarble"></a>
-  <nav class="site-nav" aria-label="Primary">
-    <a href="index.html" class="nav-link" data-nav="overview">Overview</a>
-    <a href="downloads.html" class="nav-link" data-nav="download">Download</a>
-    <a href="docs.html" class="nav-link is-active" data-nav="docs" aria-current="page">Docs</a>
-    <a href="https://github.com/Syamchand123/GlassMarble" target="_blank" rel="noopener" class="nav-cta">GitHub ↗</a>
-    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navDrawer"><span></span><span></span></button>
-  </nav>
-  <div class="nav-drawer" id="navDrawer" hidden>
-    <a href="index.html" data-nav="overview">Overview</a>
-    <a href="downloads.html" data-nav="download">Download</a>
-    <a href="docs.html" data-nav="docs">Docs</a>
-    <a href="https://github.com/Syamchand123/GlassMarble" target="_blank" rel="noopener" class="nav-drawer-cta">GitHub ↗</a>
-  </div>
 
-  <div class="layout">
-    <aside class="sidebar" aria-label="Docs navigation">
-      <div class="sidebar-head"><span id="versionBadge">GlassMarble v1.0.0</span><a href="https://github.com/Syamchand123/GlassMarble/blob/main/docs/README.md" target="_blank" rel="noopener" style="margin-left:auto;font-size:1.1rem;color:var(--violet);font-weight:500;white-space:nowrap">Edit ↗</a></div>
-      <input class="search" id="search" placeholder="Search docs…" aria-label="Search docs">
-      <div id="nav">
-        <div class="nav-group"><h4>Overview</h4>
-          <a href="#intro" class="active">Introduction</a>
-          <a href="#what-you-get">What you get</a>
-          <a href="#how-it-works">How it works</a>
-          <a href="#when-to-use">When to use</a>
+  <!-- ── Top header ─────────────────────────────────────────── -->
+  <header class="site-header">
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+    <a class="header-logo" href="index.html">
+      <img src="assets/LOGO_PIXEL.png" alt="GlassMarble">
+      GlassMarble
+      <span class="version-tag" id="versionTag">…</span>
+    </a>
+    <div class="header-divider"></div>
+    <nav class="header-nav" aria-label="Primary">
+      <a href="index.html" class="header-nav-item" data-nav="overview">Overview</a>
+      <a href="downloads.html" class="header-nav-item" data-nav="download">Download</a>
+      <a href="docs.html" class="header-nav-item active" data-nav="docs" aria-current="page">Docs</a>
+    </nav>
+    <div class="header-right">
+      <a href="https://github.com/Syamchand123/GlassMarble" target="_blank" rel="noopener" class="header-github">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+        <span>GitHub</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Sidebar overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="docs-layout">
+    <!-- ── Sidebar ─────────────────────────────────────────── -->
+    <aside class="docs-sidebar" id="docsSidebar" aria-label="Documentation navigation">
+      <div class="sidebar-inner">
+        <!-- Search -->
+        <div class="sidebar-search">
+          <div class="search-input-wrap">
+            <span class="search-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            </span>
+            <input id="sidebarSearch" type="search" placeholder="Search docs…" aria-label="Search docs">
+          </div>
         </div>
-        <div class="nav-group"><h4>Getting started</h4>
-          <a href="#getting-started-install">Install</a>
-          <a href="#getting-started-matrix">Platform matrix</a>
-          <a href="#getting-started-verify">Verify</a>
-          <a href="#getting-started-first-run">First run</a>
-          <a href="#getting-started-workspace">Workspace</a>
-          <a href="#getting-started-troubleshoot">Troubleshooting</a>
+
+        <div id="sidebarNav">
+          <!-- Overview -->
+          <div class="nav-group" data-group="overview">
+            <div class="nav-group-label">Overview</div>
+            <a href="#intro" class="nav-link active">Introduction</a>
+            <a href="#what-you-get" class="nav-link">What you get</a>
+            <a href="#how-it-works" class="nav-link">How it works</a>
+            <a href="#when-to-use" class="nav-link">When to use</a>
+          </div>
+          <!-- Getting started -->
+          <div class="nav-group" data-group="getting-started">
+            <div class="nav-group-label">Getting started</div>
+            <a href="#getting-started-install" class="nav-link">Install</a>
+            <a href="#getting-started-matrix" class="nav-link">Platform matrix</a>
+            <a href="#getting-started-verify" class="nav-link">Verify</a>
+            <a href="#getting-started-first-run" class="nav-link">First run</a>
+            <a href="#getting-started-workspace" class="nav-link">Workspace</a>
+            <a href="#getting-started-troubleshoot" class="nav-link">Troubleshooting</a>
+          </div>
+          <!-- Architecture -->
+          <div class="nav-group" data-group="arch">
+            <div class="nav-group-label">Architecture</div>
+            <a href="#arch-exec" class="nav-link">Concepts</a>
+            <a href="#arch-cpg" class="nav-link">Code Property Graph</a>
+            <a href="#arch-akg" class="nav-link">AKG</a>
+            <a href="#arch-gast" class="nav-link">GAST</a>
+            <a href="#arch-pipeline" class="nav-link">Pipeline</a>
+            <a href="#arch-system" class="nav-link">System view</a>
+            <a href="#arch-limits" class="nav-link">Limitations</a>
+          </div>
+          <!-- CLI -->
+          <div class="nav-group" data-group="cli">
+            <div class="nav-group-label">CLI</div>
+            <a href="#cli-overview" class="nav-link">Overview</a>
+            <a href="#cli-global" class="nav-link">Flags &amp; exit codes</a>
+            <a href="#cli-tui" class="nav-link">TUI vs JSON</a>
+            <a href="#cli-analyze" class="nav-link">analyze</a>
+            <a href="#cli-visualize" class="nav-link">visualize</a>
+            <a href="#cli-ai" class="nav-link">ai</a>
+            <a href="#cli-memory" class="nav-link">memory</a>
+            <a href="#cli-govern" class="nav-link">Governance</a>
+            <a href="#cli-inspect" class="nav-link">Inspect</a>
+          </div>
+          <!-- Diagrams -->
+          <div class="nav-group" data-group="diagrams">
+            <div class="nav-group-label">Diagrams</div>
+            <a href="#diagrams-gallery" class="nav-link">Gallery</a>
+            <a href="#diagrams-catalog" class="nav-link">Catalog</a>
+            <a href="#diagrams-formats" class="nav-link">Formats</a>
+            <a href="#diagrams-scope" class="nav-link">Scope &amp; level</a>
+          </div>
+          <!-- Graph & storage -->
+          <div class="nav-group" data-group="graph">
+            <div class="nav-group-label">Graph &amp; storage</div>
+            <a href="#akg-shape" class="nav-link">AKG shape</a>
+            <a href="#akg-nodes" class="nav-link">Nodes</a>
+            <a href="#akg-edges" class="nav-link">Edges</a>
+            <a href="#akg-storage" class="nav-link">Storage</a>
+          </div>
+          <!-- Configuration -->
+          <div class="nav-group" data-group="config">
+            <div class="nav-group-label">Configuration</div>
+            <a href="#cfg-precedence" class="nav-link">Precedence</a>
+            <a href="#cfg-core" class="nav-link">config.yaml</a>
+            <a href="#cfg-drift" class="nav-link">drift</a>
+            <a href="#cfg-intel" class="nav-link">intelligence</a>
+            <a href="#cfg-ai" class="nav-link">ai.yaml</a>
+          </div>
+          <!-- AI Architect -->
+          <div class="nav-group" data-group="ai">
+            <div class="nav-group-label">AI Architect</div>
+            <a href="#ai-setup" class="nav-link">Setup</a>
+            <a href="#ai-loop" class="nav-link">Agent loop</a>
+            <a href="#ai-stream" class="nav-link">Streaming</a>
+            <a href="#ai-sessions" class="nav-link">Sessions</a>
+            <a href="#ai-guardrails" class="nav-link">Guardrails</a>
+            <a href="#ai-artifacts" class="nav-link">Artifacts</a>
+          </div>
+          <!-- Intelligence -->
+          <div class="nav-group" data-group="intel">
+            <div class="nav-group-label">Intelligence</div>
+            <a href="#intel-events" class="nav-link">Events</a>
+            <a href="#intel-memory" class="nav-link">Memory</a>
+            <a href="#intel-snapshot" class="nav-link">Snapshots &amp; timeline</a>
+          </div>
+          <!-- Integrations -->
+          <div class="nav-group" data-group="int">
+            <div class="nav-group-label">Integrations</div>
+            <a href="#int-neo4j" class="nav-link">Neo4j</a>
+            <a href="#int-relationships" class="nav-link">Relationships</a>
+            <a href="#int-languages" class="nav-link">Languages</a>
+          </div>
         </div>
-        <div class="nav-group"><h4>Architecture</h4>
-          <a href="#arch-exec">Concepts</a>
-          <a href="#arch-cpg">Code Property Graph</a>
-          <a href="#arch-akg">AKG</a>
-          <a href="#arch-gast">GAST</a>
-          <a href="#arch-pipeline">Pipeline</a>
-          <a href="#arch-system">System view</a>
-          <a href="#arch-limits">Limitations</a>
-        </div>
-        <div class="nav-group"><h4>CLI</h4>
-          <a href="#cli-overview">Overview</a>
-          <a href="#cli-global">Flags &amp; exit codes</a>
-          <a href="#cli-tui">TUI vs JSON</a>
-          <a href="#cli-analyze">analyze</a>
-          <a href="#cli-visualize">visualize</a>
-          <a href="#cli-ai">ai</a>
-          <a href="#cli-memory">memory</a>
-          <a href="#cli-govern">Governance</a>
-          <a href="#cli-inspect">Inspect</a>
-        </div>
-        <div class="nav-group"><h4>Diagrams</h4>
-          <a href="#diagrams-gallery">Gallery</a>
-          <a href="#diagrams-catalog">Catalog</a>
-          <a href="#diagrams-formats">Formats</a>
-          <a href="#diagrams-scope">Scope &amp; level</a>
-        </div>
-        <div class="nav-group"><h4>Graph &amp; storage</h4>
-          <a href="#akg-shape">AKG shape</a>
-          <a href="#akg-nodes">Nodes</a>
-          <a href="#akg-edges">Edges</a>
-          <a href="#akg-storage">Storage</a>
-        </div>
-        <div class="nav-group"><h4>Configuration</h4>
-          <a href="#cfg-precedence">Precedence</a>
-          <a href="#cfg-core">config.yaml</a>
-          <a href="#cfg-drift">drift</a>
-          <a href="#cfg-intel">intelligence</a>
-          <a href="#cfg-ai">ai.yaml</a>
-        </div>
-        <div class="nav-group"><h4>AI Architect</h4>
-          <a href="#ai-setup">Setup</a>
-          <a href="#ai-loop">Agent loop</a>
-          <a href="#ai-stream">Streaming</a>
-          <a href="#ai-sessions">Sessions</a>
-          <a href="#ai-guardrails">Guardrails</a>
-          <a href="#ai-artifacts">Artifacts</a>
-        </div>
-        <div class="nav-group"><h4>Intelligence</h4>
-          <a href="#intel-events">Events</a>
-          <a href="#intel-memory">Memory</a>
-          <a href="#intel-snapshot">Snapshots &amp; timeline</a>
-        </div>
-        <div class="nav-group"><h4>Integrations</h4>
-          <a href="#int-neo4j">Neo4j</a>
-          <a href="#int-relationships">Relationships</a>
-          <a href="#int-languages">Languages</a>
+
+        <!-- Sidebar footer links -->
+        <div class="sidebar-footer">
+          <a href="https://github.com/Syamchand123/GlassMarble/blob/main/docs/README.md" target="_blank" rel="noopener">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            Edit on GitHub
+          </a>
+          <a href="https://github.com/Syamchand123/GlassMarble/releases" target="_blank" rel="noopener">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><path d="M21 12V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2h7"/></svg>
+            Releases
+          </a>
         </div>
       </div>
     </aside>
 
-    <main class="content">
+    <!-- ── Main content ──────────────────────────────────────── -->
+    <main class="docs-content">
       <div class="prose">
-        <h1>GlassMarble <em>documentation.</em></h1>
-        <p class="desc">The living architecture map for your codebase. GlassMarble reads your repository as it is — every language, every dependency — and keeps diagrams, governance, and AI answers in sync with the code. No server. No drift.</p>
-        <div class="pill-row"><span class="pill">Go 1.25</span><span class="pill">MIT</span><span class="pill">Static binary</span><span class="pill">No backend</span><span class="pill">Cosign · SBOM · SLSA</span></div>
 
-        <hr>
+        <!-- Page header -->
+        <h1>GlassMarble <em>documentation.</em></h1>
+        <p class="page-desc">The living architecture map for your codebase. GlassMarble reads your repository as it is — every language, every dependency — and keeps diagrams, governance, and AI answers in sync with the code. No server. No drift.</p>
+        <div class="pill-row">
+          <span class="pill">Go 1.25</span>
+          <span class="pill">MIT</span>
+          <span class="pill">Static binary</span>
+          <span class="pill">No backend</span>
+          <span class="pill">Cosign · SBOM · SLSA</span>
+        </div>
+        <div class="prose-divider"></div>
 
         <!-- OVERVIEW -->
-        <h2 id="intro">Introduction <a class="anchor" href="#intro">#</a></h2>
+        <h2 id="intro">Introduction <a class="anchor" href="#intro" aria-label="Link to Introduction">#</a></h2>
         <p>Most architecture docs are born in Figma and die on the next merge. GlassMarble inverts that: <strong>your repository is the source of truth</strong>. Every commit is parsed, merged into a deterministic graph, and projected into the artifacts you actually use — diagrams, reviews, and answers.</p>
         <p>Use it as a <strong>compiler</strong> (source → graph), a <strong>database</strong> (portable GraphJSON), a <strong>visualizer</strong> (31 notations), and an <strong>agent</strong> (grounded AI that reads the graph, not guesses). One binary, <code>gmb</code>, covers all four. Install once; run in CI and locally with the same commands.</p>
-        <div class="table-wrap"><table><thead><tr><th>Problem</th><th>Where it hurts</th><th>How GlassMarble helps</th></tr></thead><tbody>
-          <tr><td>Docs drift after every merge</td><td>C4 / UML / dependency maps</td><td>31 diagrams regenerated from the AKG — always current</td></tr>
-          <tr><td>Tribal knowledge — “ask Alice”</td><td>Ownership &amp; onboarding</td><td><code>gmb ai</code> + <code>dependency</code> / <code>hotspot</code> answer from the graph</td></tr>
-          <tr><td>Hidden coupling — <code>data → api</code></td><td>Layering &amp; cycles</td><td><code>drift</code> with <code>forbidden_deps</code> + <code>cycle_budget</code></td></tr>
-          <tr><td>“Will this break X?”</td><td>Impact review</td><td><code>visualize impact</code> + <code>compare</code> + PR comment</td></tr>
-          <tr><td>“Why was this split?”</td><td>Rationale</td><td>Snapshots, timeline, and labelled claims (<code>FACT</code> / <code>INFERENCE</code>)</td></tr>
-        </tbody></table></div>
-        <div class="callout"><i>◈</i><p><strong>Incremental by design.</strong> With an existing <code>akg.json</code>, GlassMarble diffs <code>git diff HEAD</code> and re-parses only changed files. The first run is a full scan; daily runs are seconds.</p></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Problem</th><th>Where it hurts</th><th>How GlassMarble helps</th></tr></thead>
+            <tbody>
+              <tr><td>Docs drift after every merge</td><td>C4 / UML / dependency maps</td><td>31 diagrams regenerated from the AKG — always current</td></tr>
+              <tr><td>Tribal knowledge — "ask Alice"</td><td>Ownership &amp; onboarding</td><td><code>gmb ai</code> + <code>dependency</code> / <code>hotspot</code> answer from the graph</td></tr>
+              <tr><td>Hidden coupling — <code>data → api</code></td><td>Layering &amp; cycles</td><td><code>drift</code> with <code>forbidden_deps</code> + <code>cycle_budget</code></td></tr>
+              <tr><td>"Will this break X?"</td><td>Impact review</td><td><code>visualize impact</code> + <code>compare</code> + PR comment</td></tr>
+              <tr><td>"Why was this split?"</td><td>Rationale</td><td>Snapshots, timeline, and labelled claims (<code>FACT</code> / <code>INFERENCE</code>)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout">
+          <div class="callout-icon">◈</div>
+          <div><strong>Incremental by design.</strong> With an existing <code>akg.json</code>, GlassMarble diffs <code>git diff HEAD</code> and re-parses only changed files. The first run is a full scan; daily runs are seconds.</div>
+        </div>
 
         <h3 id="what-you-get">What you get <a class="anchor" href="#what-you-get">#</a></h3>
         <p>Pick the view you need today; the same AKG powers all four without extra setup.</p>
         <div class="grid2">
-          <div class="mini"><h4>🎨 31 living diagrams</h4><p>UML (14), C4 (7), specialized (4), analysis (6) — rendered as <strong>Mermaid, PlantUML, or DOT</strong>. Scope to <code>global</code>, one <code>folder:</code>, or one <code>file:</code>.</p></div>
-          <div class="mini"><h4>🛡️ Governance you can gate</h4><p><code>drift</code> enforces layer rules, <code>compare</code> diffs two graphs, <code>hotspot</code> surfaces coupling. <code>exit 1</code> on violation — perfect for CI.</p></div>
-          <div class="mini"><h4>🧠 Grounded AI, not chat</h4><p>Bring your own key — 10 providers, streaming, 32 tools that query the live graph and read real files. Keys are <code>0600</code>, never logged.</p></div>
-          <div class="mini"><h4>⚡ Bounded &amp; local</h4><p>One file (<code>akg.json</code>), MVCC + <code>db.lock</code>, atomic <code>tmp→fsync→rename→verify</code>. Snapshots auto-cap at 15k nodes / 8 MB.</p></div>
+          <div class="mini-card"><h4>🎨 31 living diagrams</h4><p>UML (14), C4 (7), specialized (4), analysis (6) — rendered as <strong>Mermaid, PlantUML, or DOT</strong>. Scope to <code>global</code>, one <code>folder:</code>, or one <code>file:</code>.</p></div>
+          <div class="mini-card"><h4>🛡️ Governance you can gate</h4><p><code>drift</code> enforces layer rules, <code>compare</code> diffs two graphs, <code>hotspot</code> surfaces coupling. <code>exit 1</code> on violation — perfect for CI.</p></div>
+          <div class="mini-card"><h4>🧠 Grounded AI, not chat</h4><p>Bring your own key — 10 providers, streaming, 32 tools that query the live graph and read real files. Keys are <code>0600</code>, never logged.</p></div>
+          <div class="mini-card"><h4>⚡ Bounded &amp; local</h4><p>One file (<code>akg.json</code>), MVCC + <code>db.lock</code>, atomic <code>tmp→fsync→rename→verify</code>. Snapshots auto-cap at 15k nodes / 8 MB.</p></div>
         </div>
 
         <h3 id="how-it-works">How it works <a class="anchor" href="#how-it-works">#</a></h3>
         <p>Four phases turn source into truth, then three consumers keep that truth useful.</p>
-        <div class="mono light">source (17 langs) → ingest · tree-sitter → GAST · unified model → aggregate · packages & visibility → link · CPG + CFG/DFG + traits → AKG · akg.json (GraphJSON v3) → { visualize · 31 types | AI · 32 tools | govern · drift/compare/hotspot }</div>
+        <div class="code-block light">
+          <div class="code-block-header"><span class="code-lang">pipeline</span></div>
+          <pre><code>source (17 langs) → ingest · tree-sitter → GAST · unified model
+→ aggregate · packages &amp; visibility → link · CPG + CFG/DFG + traits
+→ AKG · akg.json (GraphJSON v3) → { visualize · 31 types | AI · 32 tools | govern · drift/compare/hotspot }</code></pre>
+        </div>
         <ul>
           <li><strong>Ingest</strong> — file walk + tree-sitter walk in parallel workers; git-aware diff skips unchanged files.</li>
           <li><strong>Normalize</strong> — language tokens → GAST (same nodes for Go, TS, Python, …).</li>
           <li><strong>Aggregate</strong> — clustering into packages, FQNs, export visibility.</li>
           <li><strong>Link</strong> — call, interface, CFG/DFG, concurrency, and primitive traits → committed CPG.</li>
         </ul>
-        <p>After commit, <code>--intelligence</code> (default on) runs patterns → smells → events → snapshots → memory. See <a href="#arch-pipeline" style="color:var(--violet);font-weight:500">Architecture → Pipeline</a> and <a href="#akg-storage" style="color:var(--violet);font-weight:500">Storage</a> for limits and <code>&lt;100 MB @ 500k LOC</code> guidance.</p>
+        <p>After commit, <code>--intelligence</code> (default on) runs patterns → smells → events → snapshots → memory. See <a href="#arch-pipeline" style="color:hsl(var(--violet));font-weight:500">Architecture → Pipeline</a> and <a href="#akg-storage" style="color:hsl(var(--violet));font-weight:500">Storage</a> for limits.</p>
 
         <h3 id="when-to-use">When to use <a class="anchor" href="#when-to-use">#</a></h3>
         <div class="grid2">
-          <div class="mini"><h4>Great for</h4><p>Onboarding new teammates, PR / architecture reviews, living docs in CI (commit <code>marbles/</code>), and answering “where is X used?” without grepping for days.</p></div>
-          <div class="mini"><h4>Not for</h4><p>Runtime profiling, dynamic tracing, or style linting. Static analysis only — heuristic edges carry <code>confidence &lt; 1.0</code>.</p></div>
+          <div class="mini-card"><h4>✅ Great for</h4><p>Onboarding new teammates, PR / architecture reviews, living docs in CI (commit <code>marbles/</code>), and answering "where is X used?" without grepping for days.</p></div>
+          <div class="mini-card"><h4>🚫 Not for</h4><p>Runtime profiling, dynamic tracing, or style linting. Static analysis only — heuristic edges carry <code>confidence &lt; 1.0</code>.</p></div>
         </div>
 
         <!-- GETTING STARTED -->
         <h2 id="getting-started-install">Install <a class="anchor" href="#getting-started-install">#</a></h2>
         <p>Choose one line. All paths install the same static binary (<code>gmb</code> and <code>glassmarble</code> are aliases).</p>
+
         <h3>macOS &amp; Linux — terminal</h3>
-        <div class="mono dark">curl -fsSL https://raw.githubusercontent.com/Syamchand123/GlassMarble/main/install.sh | sh<br><span class="dim"># installs to /usr/local/bin (sudo) or ~/.local/bin — both added to PATH</span><br>gmb version</div>
-        <p><strong>Pin or relocate:</strong> <code>INSTALL_DIR=$HOME/bin sh &lt;(curl -fsSL …)</code> · <code>VERSION=v1.0.0 sh &lt;(curl -fsSL …)</code></p>
+        <div class="code-block">
+          <div class="code-block-header"><span class="code-lang">bash</span><button class="code-copy" data-copy="curl -fsSL https://raw.githubusercontent.com/Syamchand123/GlassMarble/main/install.sh | sh">Copy</button></div>
+          <pre><code>curl -fsSL https://raw.githubusercontent.com/Syamchand123/GlassMarble/main/install.sh | sh
+<span class="dim"># installs to /usr/local/bin (sudo) or ~/.local/bin — both added to PATH</span>
+gmb version</code></pre>
+        </div>
+        <p><strong>Pin or relocate:</strong> <code>INSTALL_DIR=$HOME/bin sh &lt;(curl -fsSL …)</code> · <code>VERSION=<span class="gm-ver-inline">latest</span> sh &lt;(curl -fsSL …)</code></p>
+
         <h3>Windows — PowerShell 5.1+</h3>
-        <div class="mono dark">irm https://raw.githubusercontent.com/Syamchand123/GlassMarble/main/install.ps1 | iex<br><span class="dim"># → %LOCALAPPDATA%\Programs\gmb — restart your shell</span><br>gmb version</div>
+        <div class="code-block">
+          <div class="code-block-header"><span class="code-lang">powershell</span><button class="code-copy" data-copy="irm https://raw.githubusercontent.com/Syamchand123/GlassMarble/main/install.ps1 | iex">Copy</button></div>
+          <pre><code>irm https://raw.githubusercontent.com/Syamchand123/GlassMarble/main/install.ps1 | iex
+<span class="dim"># → %LOCALAPPDATA%\Programs\gmb — restart your shell</span>
+gmb version</code></pre>
+        </div>
+
         <h3>Go toolchain — 1.25+</h3>
-        <div class="mono dark">go install github.com/Syamchand123/GlassMarble@latest<br><span class="cmt"># pin for reproducibility</span><br>go install github.com/Syamchand123/GlassMarble@v1.0.0</div>
+        <div class="code-block">
+          <div class="code-block-header"><span class="code-lang">bash</span><button class="code-copy" data-copy="go install github.com/Syamchand123/GlassMarble@latest">Copy</button></div>
+          <pre><code>go install github.com/Syamchand123/GlassMarble@latest
+<span class="cmt"># pin for reproducibility</span>
+go install github.com/Syamchand123/GlassMarble@<span class="gm-ver-inline">latest</span></code></pre>
+        </div>
+
         <h3>From source</h3>
-        <div class="mono dark">git clone https://github.com/Syamchand123/GlassMarble.git<br>cd GlassMarble<br>make build <span class="dim"># → ./gmb (CGO static)</span><br>./gmb version</div>
-        <div class="callout"><i>✓</i><p><strong>Tip:</strong> Put <code>gmb</code> on <code>PATH</code> so <code>gmb hooks install</code> works from any directory. The hook itself embeds the absolute binary path, so it still works off-PATH.</p></div>
+        <div class="code-block">
+          <div class="code-block-header"><span class="code-lang">bash</span></div>
+          <pre><code>git clone https://github.com/Syamchand123/GlassMarble.git
+cd GlassMarble
+make build  <span class="dim"># → ./gmb (CGO static)</span>
+./gmb version</code></pre>
+        </div>
+        <div class="callout">
+          <div class="callout-icon">✓</div>
+          <div><strong>Tip:</strong> Put <code>gmb</code> on <code>PATH</code> so <code>gmb hooks install</code> works from any directory. The hook itself embeds the absolute binary path, so it still works off-PATH.</div>
+        </div>
 
         <h3 id="getting-started-matrix">Platform matrix <a class="anchor" href="#getting-started-matrix">#</a></h3>
         <p>Every release ships six archives + <code>checksums.txt</code>. Both binaries are inside each archive.</p>
-        <div class="table-wrap"><table><thead><tr><th>OS</th><th>Arch</th><th>Archive</th><th>Install</th></tr></thead><tbody>
-          <tr><td>macOS 12+</td><td>arm64 — M1–M4</td><td><code>gmb_*_darwin_arm64.tar.gz</code></td><td><code>curl | sh</code></td></tr>
-          <tr><td>macOS 12+</td><td>amd64 — Intel</td><td><code>gmb_*_darwin_amd64.tar.gz</code></td><td><code>curl | sh</code></td></tr>
-          <tr><td>Linux glibc / musl</td><td>amd64 — x86_64</td><td><code>gmb_*_linux_amd64.tar.gz</code></td><td><code>curl | sh</code></td></tr>
-          <tr><td>Linux</td><td>arm64 — aarch64</td><td><code>gmb_*_linux_arm64.tar.gz</code></td><td><code>curl | sh</code></td></tr>
-          <tr><td>Windows 10/11</td><td>amd64 — x64</td><td><code>gmb_*_windows_amd64.zip</code></td><td><code>irm | iex</code></td></tr>
-          <tr><td>Windows 11</td><td>arm64</td><td><code>gmb_*_windows_arm64.zip</code></td><td><code>irm | iex</code></td></tr>
-        </tbody></table></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>OS</th><th>Arch</th><th>Archive</th><th>Install</th></tr></thead>
+            <tbody>
+              <tr><td>macOS 12+</td><td>arm64 — M1–M4</td><td><code>gmb_*_darwin_arm64.tar.gz</code></td><td><code>curl | sh</code></td></tr>
+              <tr><td>macOS 12+</td><td>amd64 — Intel</td><td><code>gmb_*_darwin_amd64.tar.gz</code></td><td><code>curl | sh</code></td></tr>
+              <tr><td>Linux glibc / musl</td><td>amd64 — x86_64</td><td><code>gmb_*_linux_amd64.tar.gz</code></td><td><code>curl | sh</code></td></tr>
+              <tr><td>Linux</td><td>arm64 — aarch64</td><td><code>gmb_*_linux_arm64.tar.gz</code></td><td><code>curl | sh</code></td></tr>
+              <tr><td>Windows 10/11</td><td>amd64 — x64</td><td><code>gmb_*_windows_amd64.zip</code></td><td><code>irm | iex</code></td></tr>
+              <tr><td>Windows 11</td><td>arm64</td><td><code>gmb_*_windows_arm64.zip</code></td><td><code>irm | iex</code></td></tr>
+            </tbody>
+          </table>
+        </div>
 
         <h3 id="getting-started-verify">Verify a release <a class="anchor" href="#getting-started-verify">#</a></h3>
         <p>Installers verify <code>SHA256</code> via <code>checksums.txt</code> automatically. For supply-chain hardening, verify Sigstore + SLSA + SBOM (attached per release).</p>
-        <div class="mono dark"><span class="cmt"># choose your platform</span><br>VERSION=v1.0.0; ARCH=linux_amd64<br>curl -fsSLO "https://github.com/Syamchand123/GlassMarble/releases/download/${VERSION}/gmb_${VERSION#v}_${ARCH}.tar.gz"<br>curl -fsSLO "https://github.com/Syamchand123/GlassMarble/releases/download/${VERSION}/checksums.txt"{,.pem,.sig}<br>sha256sum -c --ignore-missing checksums.txt<br>cosign verify-blob --certificate-identity-regexp "https://github.com/Syamchand123/GlassMarble/.github/workflows/release.yml@refs/tags/${VERSION}" --certificate-oidc-issuer https://token.actions.githubusercontent.com --signature checksums.txt.sig --certificate checksums.txt.pem checksums.txt</div>
-        <p>SBOM via Syft / SPDX is attached to the release alongside SLSA provenance (intoto). Docker images are <code>ghcr.io/syamchand123/glassmarble:{v1.0.0,latest,sha-xxxx}</code> — distroless, linux/amd64+arm64.</p>
+        <div class="code-block">
+          <div class="code-block-header"><span class="code-lang">bash</span><button class="code-copy" id="verifyCopyBtn">Copy</button></div>
+          <pre><code id="verifyCode"><span class="cmt"># choose your platform</span>
+VERSION=<span class="gm-ver-inline">latest</span>; ARCH=linux_amd64
+curl -fsSLO "https://github.com/Syamchand123/GlassMarble/releases/download/${VERSION}/gmb_${VERSION#v}_${ARCH}.tar.gz"
+curl -fsSLO "https://github.com/Syamchand123/GlassMarble/releases/download/${VERSION}/checksums.txt"{,.pem,.sig}
+sha256sum -c --ignore-missing checksums.txt
+cosign verify-blob \
+  --certificate-identity-regexp "https://github.com/Syamchand123/GlassMarble/.github/workflows/release.yml@refs/tags/${VERSION}" \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+  --signature checksums.txt.sig --certificate checksums.txt.pem checksums.txt</code></pre>
+        </div>
+        <p>SBOM via Syft / SPDX is attached to the release alongside SLSA provenance (intoto). Docker images are <code>ghcr.io/syamchand123/glassmarble:{<span class="gm-ver-inline">latest</span>,latest,sha-xxxx}</code> — distroless, linux/amd64+arm64.</p>
 
         <h3 id="getting-started-first-run">First run — 30 seconds <a class="anchor" href="#getting-started-first-run">#</a></h3>
         <p>Run these four commands in any repository. The second run is incremental.</p>
         <div class="step-list">
-          <div class="step"><i>1</i><div><h4>Initialize</h4><p>Creates <code>.glassmarble/</code>, a starter <code>config.yaml</code>, an empty <code>akg.json</code>, and a <code>.gitignore</code> entry. Idempotent — safe to re-run.</p><div class="mono light" style="margin-top:0.8rem">gmb init --dir .</div></div></div>
-          <div class="step"><i>2</i><div><h4>Build the graph</h4><p>First invocation is a full scan; afterward only <code>git diff HEAD</code> files are re-parsed and merged.</p><div class="mono light" style="margin-top:0.8rem">gmb analyze --full <span class="dim"># first time</span><br>gmb analyze <span class="dim"># incremental — seconds</span></div></div></div>
-          <div class="step"><i>3</i><div><h4>Check health and draw</h4><p>Confirm node/edge counts and render your first living diagram to <code>.glassmarble/marbles/</code>.</p><div class="mono light" style="margin-top:0.8rem">gmb status<br>gmb visualize class --save class <span class="dim"># → .glassmarble/marbles/class.md</span></div></div></div>
-          <div class="step"><i>4</i><div><h4>Ask the graph</h4><p>Configure your key once, then ask anything — grounded answers with file paths and line numbers.</p><div class="mono light" style="margin-top:0.8rem">gmb ai configure<br>gmb ai "which services depend on payments?"<br>gmb ai chat <span class="dim"># REPL + session memory</span></div></div></div>
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div>
+              <h4>Initialize</h4>
+              <p>Creates <code>.glassmarble/</code>, a starter <code>config.yaml</code>, an empty <code>akg.json</code>, and a <code>.gitignore</code> entry. Idempotent — safe to re-run.</p>
+              <div class="code-block light"><div class="code-block-header"><span class="code-lang">bash</span><button class="code-copy" data-copy="gmb init --dir .">Copy</button></div><pre><code>gmb init --dir .</code></pre></div>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div>
+              <h4>Build the graph</h4>
+              <p>First invocation is a full scan; afterward only <code>git diff HEAD</code> files are re-parsed and merged.</p>
+              <div class="code-block light"><div class="code-block-header"><span class="code-lang">bash</span></div><pre><code>gmb analyze --full  <span class="dim"># first time</span>
+gmb analyze         <span class="dim"># incremental — seconds</span></code></pre></div>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div>
+              <h4>Check health and draw</h4>
+              <p>Confirm node/edge counts and render your first living diagram to <code>.glassmarble/marbles/</code>.</p>
+              <div class="code-block light"><div class="code-block-header"><span class="code-lang">bash</span></div><pre><code>gmb status
+gmb visualize class --save class  <span class="dim"># → .glassmarble/marbles/class.md</span></code></pre></div>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">4</div>
+            <div>
+              <h4>Ask the graph</h4>
+              <p>Configure your key once, then ask anything — grounded answers with file paths and line numbers.</p>
+              <div class="code-block light"><div class="code-block-header"><span class="code-lang">bash</span></div><pre><code>gmb ai configure
+gmb ai "which services depend on payments?"
+gmb ai chat  <span class="dim"># REPL + session memory</span></code></pre></div>
+            </div>
+          </div>
         </div>
 
         <h3 id="getting-started-workspace">Workspace <a class="anchor" href="#getting-started-workspace">#</a></h3>
-        <div class="mono light">your-repo/<br>└── .glassmarble/<br>    ├── akg.json <span class="dim"># GraphJSON v3 — source of truth, never pruned</span><br>    ├── config.yaml <span class="dim"># project config</span><br>    ├── ai.yaml <span class="dim"># BYOK (0600)</span><br>    ├── marbles/ <span class="dim"># saved diagrams (*.md)</span><br>    ├── intelligence/latest.json <span class="dim"># last intelligence run</span><br>    ├── snapshots/ <span class="dim"># snap_&lt;hash&gt;.json + index.json</span><br>    ├── memory/ <span class="dim"># events.jsonl · memory.json · timeline.json · corrections.jsonl</span><br>    └── ai/sessions/ <span class="dim"># chat sessions (0600)</span></div>
+        <div class="code-block light">
+          <div class="code-block-header"><span class="code-lang">tree</span></div>
+          <pre><code>your-repo/
+└── .glassmarble/
+    ├── akg.json          <span class="dim"># GraphJSON v3 — source of truth, never pruned</span>
+    ├── config.yaml       <span class="dim"># project config</span>
+    ├── ai.yaml           <span class="dim"># BYOK (0600)</span>
+    ├── marbles/          <span class="dim"># saved diagrams (*.md)</span>
+    ├── intelligence/latest.json
+    ├── snapshots/        <span class="dim"># snap_&lt;hash&gt;.json + index.json</span>
+    ├── memory/           <span class="dim"># events.jsonl · memory.json · timeline.json · corrections.jsonl</span>
+    └── ai/sessions/      <span class="dim"># chat sessions (0600)</span></code></pre>
+        </div>
         <p><code>gmb housekeeping</code> reports sizes; <code>gmb housekeeping --prune</code> and <code>--prune-snapshots --keep 30</code> reclaim disk. <code>akg.json</code> is never pruned.</p>
 
         <h3 id="getting-started-troubleshoot">Troubleshooting <a class="anchor" href="#getting-started-troubleshoot">#</a></h3>
-        <div class="table-wrap"><table><thead><tr><th>Symptom</th><th>Fix</th></tr></thead><tbody>
-          <tr><td><code>akg.json</code> too large (<code>--max-json-mb</code>)</td><td>Use <code>--link-level architecture</code> (default) or raise with <code>gmb --max-json-mb 100 analyze</code> or set <code>snapshot_no_graph:true</code></td></tr>
-          <tr><td><code>doctor</code> reports dangling edges</td><td><code>gmb analyze --full</code> to rebuild; exclude vendored dirs via <code>arch_excluded_dirs</code></td></tr>
-          <tr><td><code>visualize sequence</code> fails <code>entry missing</code></td><td>Pick an entry from <code>gmb inspect --list</code> and pass <code>--entry "&lt;file&gt;::Type::Method"</code></td></tr>
-          <tr><td><code>gmb ai</code> not configured</td><td><code>gmb ai configure</code> or set <code>GLASSMARBLE_OPENAI_API_KEY</code>; run <code>gmb ai doctor</code></td></tr>
-          <tr><td>Colors garbled in CI</td><td><code>NO_COLOR=1</code> or <code>gmb --color never status</code></td></tr>
-        </tbody></table></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Symptom</th><th>Fix</th></tr></thead>
+            <tbody>
+              <tr><td><code>akg.json</code> too large (<code>--max-json-mb</code>)</td><td>Use <code>--link-level architecture</code> (default) or raise with <code>gmb --max-json-mb 100 analyze</code> or set <code>snapshot_no_graph:true</code></td></tr>
+              <tr><td><code>doctor</code> reports dangling edges</td><td><code>gmb analyze --full</code> to rebuild; exclude vendored dirs via <code>arch_excluded_dirs</code></td></tr>
+              <tr><td><code>visualize sequence</code> fails <code>entry missing</code></td><td>Pick an entry from <code>gmb inspect --list</code> and pass <code>--entry "&lt;file&gt;::Type::Method"</code></td></tr>
+              <tr><td><code>gmb ai</code> not configured</td><td><code>gmb ai configure</code> or set <code>GLASSMARBLE_OPENAI_API_KEY</code>; run <code>gmb ai doctor</code></td></tr>
+              <tr><td>Colors garbled in CI</td><td><code>NO_COLOR=1</code> or <code>gmb --color never status</code></td></tr>
+            </tbody>
+          </table>
+        </div>
 
         <!-- ARCHITECTURE -->
-        <h2 id="arch-exec">Architecture — concepts <a class="anchor" href="#arch-exec">#</a></h2>
+        <h2 id="arch-exec">Architecture <span class="section-sub">— concepts</span> <a class="anchor" href="#arch-exec">#</a></h2>
         <p>GlassMarble is a four-layer compiler. Each layer has one job, one input, one output — easy to reason about, easy to test.</p>
         <div class="grid2">
-          <div class="mini"><h4>1 — Ingest</h4><p>Walk the repo, parse with tree-sitter, emit <code>RichToken</code>s. Parallel workers; git diff skips unchanged files.</p></div>
-          <div class="mini"><h4>2 — Normalize</h4><p>Tokens → GAST: one vocabulary for all 17 languages. Imports resolved, receivers mapped.</p></div>
-          <div class="mini"><h4>3 — Aggregate</h4><p>Files → packages, FQNs, visibility. Builds the global definition index.</p></div>
-          <div class="mini"><h4>4 — Link</h4><p>Call, interface, CFG/DFG, concurrency, primitives → committed CPG → atomic GraphJSON.</p></div>
+          <div class="mini-card"><h4>1 — Ingest</h4><p>Walk the repo, parse with tree-sitter, emit <code>RichToken</code>s. Parallel workers; git diff skips unchanged files.</p></div>
+          <div class="mini-card"><h4>2 — Normalize</h4><p>Tokens → GAST: one vocabulary for all 17 languages. Imports resolved, receivers mapped.</p></div>
+          <div class="mini-card"><h4>3 — Aggregate</h4><p>Files → packages, FQNs, visibility. Builds the global definition index.</p></div>
+          <div class="mini-card"><h4>4 — Link</h4><p>Call, interface, CFG/DFG, concurrency, primitives → committed CPG → atomic GraphJSON.</p></div>
         </div>
 
         <h3 id="arch-cpg">Code Property Graph <a class="anchor" href="#arch-cpg">#</a></h3>
@@ -331,19 +866,37 @@
           <li><strong>DFG</strong> — assignments and data propagation.</li>
           <li><strong>Call Graph</strong> — static calls, polymorphic bindings, and concurrency edges.</li>
         </ul>
+
         <h3 id="arch-akg">Architecture Knowledge Graph <a class="anchor" href="#arch-akg">#</a></h3>
         <p>The CPG is persisted as a deterministic, sorted GraphJSON (<code>schema_version: 3</code>) at <code>.glassmarble/akg.json</code>. One file, one truth — diffable in git, readable in any editor, queryable offline. No WAL, no separate RDF store.</p>
-        <div class="mono light">{"schema_version":3,"commit_hash":"f438841…","version":5,"entrypoints":["cmd.analyze.init"],"nodes":[{"id":"auth/login.go::Authenticator::Authenticate","kind":"FUNCTION","primitive":"NETWORK_IO","file_spec":{"path":"auth/login.go","line_start":18}}],"edges":[{"source_id":"…","target_id":"…","type":"CALLS","line_number":22,"confidence":1.0}]}</div>
+        <div class="code-block light">
+          <div class="code-block-header"><span class="code-lang">json</span></div>
+          <pre><code>{"schema_version":3,"commit_hash":"f438841…","version":5,"entrypoints":["cmd.analyze.init"],
+"nodes":[{"id":"auth/login.go::Authenticator::Authenticate","kind":"FUNCTION","primitive":"NETWORK_IO",
+"file_spec":{"path":"auth/login.go","line_start":18}}],
+"edges":[{"source_id":"…","target_id":"…","type":"CALLS","line_number":22,"confidence":1.0}]}</code></pre>
+        </div>
+
         <h3 id="arch-gast">GAST — one model, 17 languages <a class="anchor" href="#arch-gast">#</a></h3>
-        <p>Every language’s tree-sitter CST is coerced into a <code>GASTNode</code> with the same fields — declarations, calls, scopes, and types. That lets the linker reason once, not 17 times, and keeps results comparable across a polyglot repo.</p>
+        <p>Every language's tree-sitter CST is coerced into a <code>GASTNode</code> with the same fields — declarations, calls, scopes, and types. That lets the linker reason once, not 17 times, and keeps results comparable across a polyglot repo.</p>
+
         <h3 id="arch-pipeline">Pipeline in detail <a class="anchor" href="#arch-pipeline">#</a></h3>
         <ul>
           <li><strong>Name binding</strong> — case-insensitive receivers, selector-path deconstruction, duck-typed interfaces, and package-path stripping keep FQNs stable across renames.</li>
-          <li><strong>Linker taxonomy</strong> — edges are typed (<code>CALLS</code>, <code>IMPLEMENTS</code>, <code>EXTENDS</code>, <code>DEPENDS_ON</code>, …) and grouped into structural / behavioral / dynamic / security families. See <a href="#int-relationships" style="color:var(--violet);font-weight:500">Relationship types</a>.</li>
-          <li><strong>Virtual subgraph</strong> — <code>ViewSpec</code> derives scope + link-level, collapses namespaces into virtual nodes, and optionally walks an entry-point. See <a href="#diagrams-scope" style="color:var(--violet)">Scope &amp; link level</a>.</li>
+          <li><strong>Linker taxonomy</strong> — edges are typed (<code>CALLS</code>, <code>IMPLEMENTS</code>, <code>EXTENDS</code>, <code>DEPENDS_ON</code>, …) and grouped into structural / behavioral / dynamic / security families. See <a href="#int-relationships" style="color:hsl(var(--violet));font-weight:500">Relationship types</a>.</li>
+          <li><strong>Virtual subgraph</strong> — <code>ViewSpec</code> derives scope + link-level, collapses namespaces into virtual nodes, and optionally walks an entry-point. See <a href="#diagrams-scope" style="color:hsl(var(--violet))">Scope &amp; link level</a>.</li>
         </ul>
+
         <h3 id="arch-system">System view <a class="anchor" href="#arch-system">#</a></h3>
-        <div class="mono light">gmb CLI (28 commands) → internal/app pipeline → { code_analysis_engine (CPG) | visualization_engine (31 types) } → internal/akg (GraphJSON v3 + db.lock) → { arch_intelligence (patterns/stats) | arch_timeline + memory (snapshots / intelligence) }</div>
+        <div class="code-block light">
+          <div class="code-block-header"><span class="code-lang">diagram</span></div>
+          <pre><code>gmb CLI (28 commands)
+→ internal/app pipeline
+→ { code_analysis_engine (CPG) | visualization_engine (31 types) }
+→ internal/akg (GraphJSON v3 + db.lock)
+→ { arch_intelligence (patterns/stats) | arch_timeline + memory (snapshots / intelligence) }</code></pre>
+        </div>
+
         <h3 id="arch-limits">Limitations <a class="anchor" href="#arch-limits">#</a></h3>
         <ul>
           <li>14 full grammars with tree-sitter; Kotlin / Swift / Scala are declaration-only (no intra-method CFG/DFG). JSON is treated as config.</li>
@@ -353,26 +906,36 @@
         </ul>
 
         <!-- CLI -->
-        <h2 id="cli-overview">CLI — overview <a class="anchor" href="#cli-overview">#</a></h2>
+        <h2 id="cli-overview">CLI <span class="section-sub">— overview</span> <a class="anchor" href="#cli-overview">#</a></h2>
         <p>One binary, predictable flags, and JSON wherever you need it. <code>gmb</code> and <code>glassmarble</code> are aliases; <code>--help</code> is styled with Fang. For the exhaustive flag tables, keep <code>docs/commands_master_reference.md</code> open — this page shows the workflows.</p>
-        <div class="table-wrap"><table><thead><tr><th>Area</th><th>Commands</th><th>When to use</th></tr></thead><tbody>
-          <tr><td><strong>Build</strong></td><td><code>init</code> · <code>analyze</code> · <code>watch</code> · <code>hooks</code> · <code>import</code> · <code>export</code></td><td>Create and maintain the graph</td></tr>
-          <tr><td><strong>Query</strong></td><td><code>status</code> · <code>tree</code> · <code>dependency</code> · <code>hotspot</code> · <code>inspect</code> · <code>diff</code> · <code>doctor</code> · <code>patterns</code> · <code>stats</code> · <code>timeline</code></td><td>Read and explore the graph</td></tr>
-          <tr><td><strong>Govern</strong></td><td><code>drift</code> · <code>compare</code> · <code>snapshot</code></td><td>Enforce and diff architecture</td></tr>
-          <tr><td><strong>Visualize &amp; Reason</strong></td><td><code>visualize</code> · <code>ai</code> · <code>why</code></td><td>Draw and ask</td></tr>
-          <tr><td><strong>Utility</strong></td><td><code>housekeeping</code> · <code>completion</code> · <code>version</code> · <code>dev</code></td><td>Maintain the workspace</td></tr>
-        </tbody></table></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Area</th><th>Commands</th><th>When to use</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Build</strong></td><td><code>init</code> · <code>analyze</code> · <code>watch</code> · <code>hooks</code> · <code>import</code> · <code>export</code></td><td>Create and maintain the graph</td></tr>
+              <tr><td><strong>Query</strong></td><td><code>status</code> · <code>tree</code> · <code>dependency</code> · <code>hotspot</code> · <code>inspect</code> · <code>diff</code> · <code>doctor</code> · <code>patterns</code> · <code>stats</code> · <code>timeline</code></td><td>Read and explore the graph</td></tr>
+              <tr><td><strong>Govern</strong></td><td><code>drift</code> · <code>compare</code> · <code>snapshot</code></td><td>Enforce and diff architecture</td></tr>
+              <tr><td><strong>Visualize &amp; Reason</strong></td><td><code>visualize</code> · <code>ai</code> · <code>why</code></td><td>Draw and ask</td></tr>
+              <tr><td><strong>Utility</strong></td><td><code>housekeeping</code> · <code>completion</code> · <code>version</code> · <code>dev</code></td><td>Maintain the workspace</td></tr>
+            </tbody>
+          </table>
+        </div>
 
         <h3 id="cli-global">Global flags &amp; exit codes <a class="anchor" href="#cli-global">#</a></h3>
-        <div class="table-wrap"><table><thead><tr><th>Flag</th><th>Default</th><th>Meaning</th></tr></thead><tbody>
-          <tr><td><code>--dir</code></td><td><code>.</code></td><td>Repo root that contains <code>.glassmarble/</code></td></tr>
-          <tr><td><code>--color</code></td><td><code>auto</code></td><td><code>auto</code> · <code>always</code> · <code>never</code> (respects <code>NO_COLOR</code>)</td></tr>
-          <tr><td><code>--max-json-mb</code></td><td><code>0</code></td><td>Refuse to load a state larger than this (MiB). CI bloat gate.</td></tr>
-          <tr><td><code>--debug</code> / <code>-v</code></td><td>false</td><td>Verbose and phase-by-phase progress</td></tr>
-        </tbody></table></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Flag</th><th>Default</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td><code>--dir</code></td><td><code>.</code></td><td>Repo root that contains <code>.glassmarble/</code></td></tr>
+              <tr><td><code>--color</code></td><td><code>auto</code></td><td><code>auto</code> · <code>always</code> · <code>never</code> (respects <code>NO_COLOR</code>)</td></tr>
+              <tr><td><code>--max-json-mb</code></td><td><code>0</code></td><td>Refuse to load a state larger than this (MiB). CI bloat gate.</td></tr>
+              <tr><td><code>--debug</code> / <code>-v</code></td><td>false</td><td>Verbose and phase-by-phase progress</td></tr>
+            </tbody>
+          </table>
+        </div>
         <div class="grid2">
-          <div class="mini"><h4>Exit 0 — success</h4><p>Healthy run. Even <code>status</code> with no DB is 0 — “not initialized” is a state, not an error.</p></div>
-          <div class="mini"><h4>Exit 4 — integrity / budget</h4><p><code>doctor</code> found dangling edges, or <code>analyze --bench</code> exceeded the budgets.</p></div>
+          <div class="mini-card"><h4>Exit 0 — success</h4><p>Healthy run. Even <code>status</code> with no DB is 0 — "not initialized" is a state, not an error.</p></div>
+          <div class="mini-card"><h4>Exit 4 — integrity / budget</h4><p><code>doctor</code> found dangling edges, or <code>analyze --bench</code> exceeded the budgets.</p></div>
         </div>
 
         <h3 id="cli-tui">TUI vs plain / JSON <a class="anchor" href="#cli-tui">#</a></h3>
@@ -380,121 +943,255 @@
 
         <h3 id="cli-analyze">gmb analyze — the workhorse <a class="anchor" href="#cli-analyze">#</a></h3>
         <p>Runs the four phases and atomically commits the graph. With <code>--intelligence</code> (on by default) it also writes intelligence, snapshots, and memory — all non-fatal and idempotent.</p>
-        <div class="mono light">gmb analyze [--full] [--commit &lt;hash&gt;] [--workers &lt;n&gt;] [--link-level architecture|standard|full] [--include-docs] [--bench] [--json]</div>
+        <div class="code-block light">
+          <div class="code-block-header"><span class="code-lang">usage</span></div>
+          <pre><code>gmb analyze [--full] [--commit &lt;hash&gt;] [--workers &lt;n&gt;] [--link-level architecture|standard|full] [--include-docs] [--bench] [--json]</code></pre>
+        </div>
         <ul>
           <li>Default is incremental: <code>git diff HEAD</code> → only changed files are re-parsed.</li>
           <li><code>--full</code> forces a full scan at <code>full</code> detail (slower, includes per-branch CFG/DFG).</li>
-          <li><code>--bench</code> asserts budgets — analyze ≤120s, commit ≤80s, state ≤50MB — and fails the run if they’re exceeded.</li>
+          <li><code>--bench</code> asserts budgets — analyze ≤120s, commit ≤80s, state ≤50MB — and fails the run if they're exceeded.</li>
           <li>Output is stable: <code>Analyzed 3 files | 120 nodes | 240 edges | … | state=180KB | 0.4s</code></li>
         </ul>
 
         <h3 id="cli-visualize">gmb visualize — draw <a class="anchor" href="#cli-visualize">#</a></h3>
-        <div class="mono light">gmb visualize &lt;type&gt; [--format mermaid|plantuml|dot] [--scope global|folder:&lt;path&gt;|file:&lt;path&gt;] [--entry &lt;id&gt;] [--depth 7] [--save &lt;name&gt;] [--render .svg]</div>
-        <p>Pick from 31 types across UML / C4 / specialized / analysis — <a href="#diagrams-catalog" style="color:var(--violet)">see the catalog</a>. <code>gmb visualize list</code> enumerates all; <code>check</code> validates without rendering.</p>
+        <div class="code-block light">
+          <div class="code-block-header"><span class="code-lang">usage</span></div>
+          <pre><code>gmb visualize &lt;type&gt; [--format mermaid|plantuml|dot] [--scope global|folder:&lt;path&gt;|file:&lt;path&gt;] [--entry &lt;id&gt;] [--depth 7] [--save &lt;name&gt;] [--render .svg]</code></pre>
+        </div>
+        <p>Pick from 31 types across UML / C4 / specialized / analysis — <a href="#diagrams-catalog" style="color:hsl(var(--violet))">see the catalog</a>. <code>gmb visualize list</code> enumerates all; <code>check</code> validates without rendering.</p>
 
         <h3 id="cli-ai">gmb ai — ask <a class="anchor" href="#cli-ai">#</a></h3>
-        <div class="mono light">gmb ai "&lt;question&gt;" [--tools akg,code,diagram] [--max-cost 0.5] [--save &lt;name&gt;]<br>gmb ai chat [--new] <span class="dim"># REPL with session memory</span><br>gmb ai configure <span class="dim"># BYOK wizard</span></div>
+        <div class="code-block light">
+          <div class="code-block-header"><span class="code-lang">usage</span></div>
+          <pre><code>gmb ai "&lt;question&gt;" [--tools akg,code,diagram] [--max-cost 0.5] [--save &lt;name&gt;]
+gmb ai chat [--new]   <span class="dim"># REPL with session memory</span>
+gmb ai configure      <span class="dim"># BYOK wizard</span></code></pre>
+        </div>
         <p>32 tools across <code>system</code> (3), <code>akg</code> (21), <code>code</code> (5), <code>diagram</code> (3). Every answer is traced to stderr (<code>→ akg_status({}) / ← ok</code>) so you can see what was read.</p>
 
         <h3 id="cli-memory">gmb memory — remember <a class="anchor" href="#cli-memory">#</a></h3>
-        <div class="mono light">gmb memory [--ask "&lt;q&gt;"] [--component &lt;name&gt;] [--correct &lt;target&gt; --kind INTENT|LABEL|STATE --value "&lt;v&gt;"]</div>
+        <div class="code-block light">
+          <div class="code-block-header"><span class="code-lang">usage</span></div>
+          <pre><code>gmb memory [--ask "&lt;q&gt;"] [--component &lt;name&gt;] [--correct &lt;target&gt; --kind INTENT|LABEL|STATE --value "&lt;v&gt;"]</code></pre>
+        </div>
         <p>Every claim is labelled <code>FACT / EXPLICIT_REASON / INFERENCE / SPECULATION</code> — reasons are never invented. Corrections overlay deterministically and are flagged in the report.</p>
 
         <h3 id="cli-govern">Governance <a class="anchor" href="#cli-govern">#</a></h3>
-        <div class="mono light">gmb drift <span class="dim"># layer rules + cycles — exit 1 on violation (CI gate)</span><br>gmb compare [base.json head.json] <span class="dim"># diff two snapshots for PR comments</span><br>gmb snapshot --create | --list | --at &lt;ref&gt; | --diff | --replay &lt;ref&gt;</div>
+        <div class="code-block light">
+          <div class="code-block-header"><span class="code-lang">bash</span></div>
+          <pre><code>gmb drift                              <span class="dim"># layer rules + cycles — exit 1 on violation (CI gate)</span>
+gmb compare [base.json head.json]      <span class="dim"># diff two snapshots for PR comments</span>
+gmb snapshot --create | --list | --at &lt;ref&gt; | --diff | --replay &lt;ref&gt;</code></pre>
+        </div>
 
         <h3 id="cli-inspect">Inspect <a class="anchor" href="#cli-inspect">#</a></h3>
-        <div class="mono light">gmb status [--json] <span class="dim"># health + counts</span><br>gmb tree [--depth 4] <span class="dim"># hierarchy: path → Name [Kind] &lt;Primitive&gt;</span><br>gmb dependency [target] <span class="dim"># callers &amp; callees with line numbers</span><br>gmb hotspot [--top 10] <span class="dim"># in-degree ranking</span><br>gmb inspect --search Store | --file src/db.go --line 42 | --list</div>
+        <div class="code-block light">
+          <div class="code-block-header"><span class="code-lang">bash</span></div>
+          <pre><code>gmb status [--json]                    <span class="dim"># health + counts</span>
+gmb tree [--depth 4]                   <span class="dim"># hierarchy: path → Name [Kind] &lt;Primitive&gt;</span>
+gmb dependency [target]                <span class="dim"># callers &amp; callees with line numbers</span>
+gmb hotspot [--top 10]                 <span class="dim"># in-degree ranking</span>
+gmb inspect --search Store | --file src/db.go --line 42 | --list</code></pre>
+        </div>
 
         <!-- DIAGRAMS -->
-        <h2 id="diagrams-gallery">Diagrams — gallery <a class="anchor" href="#diagrams-gallery">#</a></h2>
-        <p>Four examples that show the same AKG through different lenses. Copy the block on the right into any Mermaid renderer.</p>
+        <h2 id="diagrams-gallery">Diagrams <span class="section-sub">— gallery</span> <a class="anchor" href="#diagrams-gallery">#</a></h2>
+        <p>Four examples that show the same AKG through different lenses. Copy the block into any Mermaid renderer.</p>
         <div class="grid2">
-          <div class="mini"><h4>UML — <code>class</code></h4><p>Types, fields, methods, and inheritance.</p><div class="mono light" style="font-size:1.15rem">class AuthService {<br>&nbsp;&nbsp;+Authenticate(token) string<br>&nbsp;&nbsp;+Validate(user) bool<br>}<br>class DBStore {<br>&nbsp;&nbsp;+GetUser(id) User<br>}<br>AuthService --> DBStore : CALLS</div></div>
-          <div class="mini"><h4>C4 — <code>c4container</code></h4><p>Services, DBs, and queues at container scope.</p><div class="mono light" style="font-size:1.15rem">C4Container<br>&nbsp;&nbsp;Person(user, "User")<br>&nbsp;&nbsp;Container(api, "API", "Go")<br>&nbsp;&nbsp;ContainerDb(db, "DB", "Postgres")<br>&nbsp;&nbsp;Rel(user, api, "Uses")<br>&nbsp;&nbsp;Rel(api, db, "CALLS")</div></div>
-          <div class="mini"><h4>Specialized — <code>er</code></h4><p>Entity relationships.</p><div class="mono light">erDiagram<br>&nbsp;&nbsp;USER ||--o{ SESSION : has<br>&nbsp;&nbsp;SESSION ||--|| TOKEN : carries</div></div>
-          <div class="mini"><h4>Analysis — <code>dependency</code></h4><p>Package and import graph.</p><div class="mono light">flowchart LR<br>&nbsp;&nbsp;cmd --> internal/akg<br>&nbsp;&nbsp;cmd --> internal/visualization_engine</div></div>
+          <div class="mini-card">
+            <h4>UML — <code>class</code></h4>
+            <p>Types, fields, methods, and inheritance.</p>
+            <div class="code-block light" style="margin-top:10px"><div class="code-block-header"><span class="code-lang">mermaid</span></div><pre><code>class AuthService {
+  +Authenticate(token) string
+  +Validate(user) bool
+}
+class DBStore {
+  +GetUser(id) User
+}
+AuthService --> DBStore : CALLS</code></pre></div>
+          </div>
+          <div class="mini-card">
+            <h4>C4 — <code>c4container</code></h4>
+            <p>Services, DBs, and queues at container scope.</p>
+            <div class="code-block light" style="margin-top:10px"><div class="code-block-header"><span class="code-lang">mermaid</span></div><pre><code>C4Container
+  Person(user, "User")
+  Container(api, "API", "Go")
+  ContainerDb(db, "DB", "Postgres")
+  Rel(user, api, "Uses")
+  Rel(api, db, "CALLS")</code></pre></div>
+          </div>
+          <div class="mini-card">
+            <h4>Specialized — <code>er</code></h4>
+            <p>Entity relationships.</p>
+            <div class="code-block light" style="margin-top:10px"><div class="code-block-header"><span class="code-lang">mermaid</span></div><pre><code>erDiagram
+  USER ||--o{ SESSION : has
+  SESSION ||--|| TOKEN : carries</code></pre></div>
+          </div>
+          <div class="mini-card">
+            <h4>Analysis — <code>dependency</code></h4>
+            <p>Package and import graph.</p>
+            <div class="code-block light" style="margin-top:10px"><div class="code-block-header"><span class="code-lang">mermaid</span></div><pre><code>flowchart LR
+  cmd --> internal/akg
+  cmd --> internal/visualization_engine</code></pre></div>
+          </div>
         </div>
 
         <h3 id="diagrams-catalog">Catalog — 31 types <a class="anchor" href="#diagrams-catalog">#</a></h3>
         <p>All 31 render in all three formats. <code>gmb visualize list</code> is the source of truth.</p>
-        <div class="table-wrap"><table><thead><tr><th>Family</th><th>Types</th><th>Needs entry</th></tr></thead><tbody>
-          <tr><td><strong>UML</strong> — 14</td><td><code>class</code> · <code>object</code> · <code>component</code> · <code>deployment</code> · <code>package</code> · <code>composite</code> · <code>profile</code> · <code>usecase</code> · <code>activity</code> · <code>state</code> · <code>sequence</code> · <code>communication</code> · <code>interaction</code> · <code>timing</code></td><td><code>sequence</code></td></tr>
-          <tr><td><strong>C4</strong> — 7</td><td><code>c4context</code> · <code>c4container</code> · <code>c4component</code> · <code>c4code</code> · <code>c4landscape</code> · <code>c4dynamic</code> · <code>c4deployment</code></td><td><code>c4dynamic</code></td></tr>
-          <tr><td><strong>Specialized</strong> — 4</td><td><code>er</code> · <code>dataflow</code> · <code>mindmap</code> · <code>flowchart</code></td><td>—</td></tr>
-          <tr><td><strong>Analysis</strong> — 6</td><td><code>dependency</code> · <code>hotspot</code> · <code>callgraph</code> · <code>layered</code> · <code>impact</code> · <code>infrastructure</code></td><td><code>impact</code> via <code>--changed-files</code></td></tr>
-        </tbody></table></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Family</th><th>Types</th><th>Needs entry</th></tr></thead>
+            <tbody>
+              <tr><td><strong>UML</strong> — 14</td><td><code>class</code> · <code>object</code> · <code>component</code> · <code>deployment</code> · <code>package</code> · <code>composite</code> · <code>profile</code> · <code>usecase</code> · <code>activity</code> · <code>state</code> · <code>sequence</code> · <code>communication</code> · <code>interaction</code> · <code>timing</code></td><td><code>sequence</code></td></tr>
+              <tr><td><strong>C4</strong> — 7</td><td><code>c4context</code> · <code>c4container</code> · <code>c4component</code> · <code>c4code</code> · <code>c4landscape</code> · <code>c4dynamic</code> · <code>c4deployment</code></td><td><code>c4dynamic</code></td></tr>
+              <tr><td><strong>Specialized</strong> — 4</td><td><code>er</code> · <code>dataflow</code> · <code>mindmap</code> · <code>flowchart</code></td><td>—</td></tr>
+              <tr><td><strong>Analysis</strong> — 6</td><td><code>dependency</code> · <code>hotspot</code> · <code>callgraph</code> · <code>layered</code> · <code>impact</code> · <code>infrastructure</code></td><td><code>impact</code> via <code>--changed-files</code></td></tr>
+            </tbody>
+          </table>
+        </div>
 
         <h3 id="diagrams-formats">Formats <a class="anchor" href="#diagrams-formats">#</a></h3>
         <p>Pick the output that fits where you publish.</p>
-        <div class="table-wrap"><table><thead><tr><th>Format</th><th>Flag</th><th>Use for</th></tr></thead><tbody>
-          <tr><td><strong>Mermaid</strong></td><td><code>mermaid</code> <span class="pill" style="font-size:1rem">default</span></td><td>GitHub, VS Code, web — renders inline</td></tr>
-          <tr><td><strong>PlantUML</strong></td><td><code>plantuml</code></td><td>Enterprise UML tooling, rich styling</td></tr>
-          <tr><td><strong>DOT</strong></td><td><code>dot</code></td><td>Graphviz and custom layout</td></tr>
-        </tbody></table></div>
-        <div class="mono light">gmb visualize class --format mermaid <span class="dim"># default</span><br>gmb visualize class --format plantuml -o out.puml<br>gmb visualize dependency --format dot -o out.dot</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Format</th><th>Flag</th><th>Use for</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Mermaid</strong></td><td><code>mermaid</code> <span class="section-badge">default</span></td><td>GitHub, VS Code, web — renders inline</td></tr>
+              <tr><td><strong>PlantUML</strong></td><td><code>plantuml</code></td><td>Enterprise UML tooling, rich styling</td></tr>
+              <tr><td><strong>DOT</strong></td><td><code>dot</code></td><td>Graphviz and custom layout</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="code-block light">
+          <div class="code-block-header"><span class="code-lang">bash</span></div>
+          <pre><code>gmb visualize class --format mermaid   <span class="dim"># default</span>
+gmb visualize class --format plantuml -o out.puml
+gmb visualize dependency --format dot -o out.dot</code></pre>
+        </div>
 
         <h3 id="diagrams-scope">Scope &amp; link level <a class="anchor" href="#diagrams-scope">#</a></h3>
-        <p>Same graph, different window. Folder scopes show <code>[+N external]</code> ports so you don’t lose context.</p>
-        <div class="table-wrap"><table><thead><tr><th>Flag</th><th>Values</th><th>Effect</th></tr></thead><tbody>
-          <tr><td><code>--scope</code></td><td><code>global</code> · <code>folder:&lt;path&gt;</code> · <code>file:&lt;path&gt;</code></td><td>Boundary of the virtual subgraph</td></tr>
-          <tr><td><code>--link-level</code></td><td><code>architecture</code> · <code>standard</code> · <code>full</code></td><td><code>architecture</code> = deps only; <code>standard</code> + CFG; <code>full</code> + CFG/DFG per branch</td></tr>
-          <tr><td><code>--depth</code></td><td><code>7</code></td><td>Reachability walk from <code>--entry</code></td></tr>
-          <tr><td><code>--max-nodes</code></td><td><code>0</code></td><td>Truncate to N highest-degree nodes</td></tr>
-        </tbody></table></div>
-        <div class="callout"><i>◈</i><p><strong>Deterministic:</strong> nodes and edges are emitted sorted → byte-equal across runs. Truncation happens at projection time, before rendering; unknown entry → <code>exit 2</code>.</p></div>
+        <p>Same graph, different window. Folder scopes show <code>[+N external]</code> ports so you don't lose context.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Flag</th><th>Values</th><th>Effect</th></tr></thead>
+            <tbody>
+              <tr><td><code>--scope</code></td><td><code>global</code> · <code>folder:&lt;path&gt;</code> · <code>file:&lt;path&gt;</code></td><td>Boundary of the virtual subgraph</td></tr>
+              <tr><td><code>--link-level</code></td><td><code>architecture</code> · <code>standard</code> · <code>full</code></td><td><code>architecture</code> = deps only; <code>standard</code> + CFG; <code>full</code> + CFG/DFG per branch</td></tr>
+              <tr><td><code>--depth</code></td><td><code>7</code></td><td>Reachability walk from <code>--entry</code></td></tr>
+              <tr><td><code>--max-nodes</code></td><td><code>0</code></td><td>Truncate to N highest-degree nodes</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout">
+          <div class="callout-icon">◈</div>
+          <div><strong>Deterministic:</strong> nodes and edges are emitted sorted → byte-equal across runs. Truncation happens at projection time, before rendering; unknown entry → <code>exit 2</code>.</div>
+        </div>
 
         <!-- AKG -->
-        <h2 id="akg-shape">AKG — GraphJSON shape <a class="anchor" href="#akg-shape">#</a></h2>
+        <h2 id="akg-shape">AKG <span class="section-sub">— GraphJSON shape</span> <a class="anchor" href="#akg-shape">#</a></h2>
         <p>The entire architecture lives in one file — <code>.glassmarble/akg.json</code> — pretty-printed, sorted, and verified. Edit it by hand and <code>gmb doctor</code> will tell you if you broke it.</p>
-        <div class="mono light">{"schema_version":3,"commit_hash":"f438841…","version":5,"entrypoints":["cmd.analyze.init","main.main"],"nodes":[…],"edges":[…],"summary":{"primary_patterns":["…"]},"errors":[],"verified":true}</div>
+        <div class="code-block light">
+          <div class="code-block-header"><span class="code-lang">json</span></div>
+          <pre><code>{"schema_version":3,"commit_hash":"f438841…","version":5,
+"entrypoints":["cmd.analyze.init","main.main"],
+"nodes":[…],"edges":[…],
+"summary":{"primary_patterns":["…"]},
+"errors":[],"verified":true}</code></pre>
+        </div>
         <ul>
           <li><code>schema_version</code> — always <code>3</code> for v1.0.</li>
           <li><code>commit_hash</code> / <code>version</code> — which commit was analysed and the monotonic graph revision.</li>
           <li><code>nodes</code> / <code>edges</code> — sorted arrays; diff them in git to see structural change.</li>
           <li><code>verified</code> — <code>true</code> after post-write verification; <code>errors</code> holds any dropped edges.</li>
         </ul>
+
         <h3 id="akg-nodes">Nodes <a class="anchor" href="#akg-nodes">#</a></h3>
-        <div class="mono light">{"id":"auth/login.go::Authenticator::Authenticate","kind":"FUNCTION","name":"Authenticate","primitive":"NETWORK_IO","file_spec":{"path":"auth/login.go","line_start":18,"line_end":45},"properties":{"fully_qualified_name":"auth.Authenticator.Authenticate","module_name":"auth.login","return_type":"string"}}</div>
+        <div class="code-block light">
+          <div class="code-block-header"><span class="code-lang">json</span></div>
+          <pre><code>{"id":"auth/login.go::Authenticator::Authenticate","kind":"FUNCTION","name":"Authenticate",
+"primitive":"NETWORK_IO","file_spec":{"path":"auth/login.go","line_start":18,"line_end":45},
+"properties":{"fully_qualified_name":"auth.Authenticator.Authenticate","return_type":"string"}}</code></pre>
+        </div>
         <p><strong>IDs</strong> are <code>&lt;path&gt;::&lt;type&gt;::&lt;member&gt;</code> with <code>::param:</code> / <code>::field:</code> suffixes. <strong>Kinds</strong> include <code>FUNCTION</code>, <code>STRUCT</code>, <code>INTERFACE</code>, <code>MODULE</code>, <code>PARAM</code>, <code>FIELD</code>, <code>ALIAS</code> — v3 folds <code>TYPE_DECL</code> → <code>STRUCT</code>.</p>
+
         <h3 id="akg-edges">Edges &amp; predicates <a class="anchor" href="#akg-edges">#</a></h3>
-        <div class="mono light">{"source_id":"auth/login.go::Authenticator::Authenticate","target_id":"db/database.go::DBStore::GetUser","type":"CALLS","line_number":22,"confidence":1.0}</div>
-        <p>Use line numbers for precise jumps; use <code>confidence</code> to separate observed from heuristic edges.</p>
-        <div class="table-wrap"><table><thead><tr><th>Predicate</th><th>Meaning</th><th>Example</th></tr></thead><tbody>
-          <tr><td><code>CALLS</code></td><td>Call to a function / method</td><td><code>Authenticate → GetUser:22</code></td></tr>
-          <tr><td><code>BELONGS_TO</code></td><td>Member → container</td><td>Method → its struct</td></tr>
-          <tr><td><code>HAS_PARAM</code> / <code>HAS_FIELD</code></td><td>Function → param / Type → field</td><td>Signature and shape</td></tr>
-          <tr><td><code>IMPLEMENTS</code> / <code>EXTENDS</code></td><td>Interface / inheritance</td><td>Go / Java / TS</td></tr>
-          <tr><td><code>DEPENDS_ON</code></td><td>Module / package dependency</td><td>Import graph</td></tr>
-          <tr><td><code>HAS_RECEIVER</code></td><td>Method → receiver type</td><td><code>func (r *Repo) Save</code></td></tr>
-        </tbody></table></div>
-        <p>Full taxonomy (structural / behavioral / dynamic / security) → <a href="#int-relationships" style="color:var(--violet);font-weight:500">Relationship types</a>.</p>
+        <div class="code-block light">
+          <div class="code-block-header"><span class="code-lang">json</span></div>
+          <pre><code>{"source_id":"auth/login.go::Authenticator::Authenticate",
+"target_id":"db/database.go::DBStore::GetUser",
+"type":"CALLS","line_number":22,"confidence":1.0}</code></pre>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Predicate</th><th>Meaning</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td><code>CALLS</code></td><td>Call to a function / method</td><td><code>Authenticate → GetUser:22</code></td></tr>
+              <tr><td><code>BELONGS_TO</code></td><td>Member → container</td><td>Method → its struct</td></tr>
+              <tr><td><code>HAS_PARAM</code> / <code>HAS_FIELD</code></td><td>Function → param / Type → field</td><td>Signature and shape</td></tr>
+              <tr><td><code>IMPLEMENTS</code> / <code>EXTENDS</code></td><td>Interface / inheritance</td><td>Go / Java / TS</td></tr>
+              <tr><td><code>DEPENDS_ON</code></td><td>Module / package dependency</td><td>Import graph</td></tr>
+              <tr><td><code>HAS_RECEIVER</code></td><td>Method → receiver type</td><td><code>func (r *Repo) Save</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+
         <h3 id="akg-storage">Storage contract <a class="anchor" href="#akg-storage">#</a></h3>
-        <p><code>--max-json-mb</code> (0 = unlimited) is your bloat gate in CI. <code>gmb status</code> shows current size; <code>gmb stats --bench</code> checks budgets.</p>
-        <div class="table-wrap"><table><thead><tr><th>Nodes</th><th>Pretty</th><th>Compact</th><th>30 snaps (no-graph)</th><th>Total</th></tr></thead><tbody>
-          <tr><td>13k — this repo</td><td>17 MB</td><td>~12 MB</td><td>~0.3 MB</td><td>~30 MB</td></tr>
-          <tr><td>40k</td><td>~52 MB</td><td>~36 MB</td><td>~0.9 MB</td><td>~75 MB</td></tr>
-          <tr><td>67k — 500k LOC</td><td>~88 MB</td><td>~60 MB</td><td>~1.5 MB</td><td>~120 MB → enable <code>snapshot_no_graph</code></td></tr>
-        </tbody></table></div>
-        <p>Keep &lt;100 MB at 500k LOC: compact JSON (~60 MB) + <code>snapshot_no_graph</code> + <code>snapshot_max_count:30</code> + compact memory. Gate PRs with <code>--max-json-mb 100</code>.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Nodes</th><th>Pretty</th><th>Compact</th><th>30 snaps (no-graph)</th><th>Total</th></tr></thead>
+            <tbody>
+              <tr><td>13k — this repo</td><td>17 MB</td><td>~12 MB</td><td>~0.3 MB</td><td>~30 MB</td></tr>
+              <tr><td>40k</td><td>~52 MB</td><td>~36 MB</td><td>~0.9 MB</td><td>~75 MB</td></tr>
+              <tr><td>67k — 500k LOC</td><td>~88 MB</td><td>~60 MB</td><td>~1.5 MB</td><td>~120 MB → enable <code>snapshot_no_graph</code></td></tr>
+            </tbody>
+          </table>
+        </div>
 
         <!-- CONFIG -->
         <h2 id="cfg-precedence">Configuration <a class="anchor" href="#cfg-precedence">#</a></h2>
         <p>All behaviour is layered. Flags win; then env; then project config; then global config; then defaults.</p>
-        <div class="mono light">CLI flag → GLASSMARBLE_* env → Project .glassmarble/config.yaml → Global ~/.glassmarble/config.yaml → Defaults</div>
+        <div class="code-block light">
+          <div class="code-block-header"><span class="code-lang">precedence</span></div>
+          <pre><code>CLI flag → GLASSMARBLE_* env → Project .glassmarble/config.yaml → Global ~/.glassmarble/config.yaml → Defaults</code></pre>
+        </div>
 
         <h3 id="cfg-core">config.yaml — core <a class="anchor" href="#cfg-core">#</a></h3>
-        <div class="mono light">root_dir: .<br>worker_count: 4 <span class="dim"># 0 = auto (CPUs)</span><br>max_file_bytes: 10485760 <span class="dim"># 10 MiB — init writes 2097152</span><br>debug: false<br>storage_dir: .glassmarble<br>output_format: mermaid <span class="dim"># mermaid | plantuml | dot</span></div>
-        <div class="table-wrap"><table><thead><tr><th>Key</th><th>Env override</th><th>Notes</th></tr></thead><tbody>
-          <tr><td><code>max_file_bytes</code></td><td><code>GLASSMARBLE_MAX_FILE_BYTES</code></td><td>Files larger than this are skipped</td></tr>
-          <tr><td><code>output_format</code></td><td><code>GLASSMARBLE_OUTPUT_FORMAT</code></td><td>Default for <code>visualize</code></td></tr>
-          <tr><td><code>worker_count</code></td><td><code>GLASSMARBLE_WORKER_COUNT</code></td><td><code>0</code> on CLI means “auto”</td></tr>
-        </tbody></table></div>
+        <div class="code-block light">
+          <div class="code-block-header"><span class="code-lang">yaml</span></div>
+          <pre><code>root_dir: .
+worker_count: 4         <span class="dim"># 0 = auto (CPUs)</span>
+max_file_bytes: 10485760  <span class="dim"># 10 MiB — init writes 2097152</span>
+debug: false
+storage_dir: .glassmarble
+output_format: mermaid  <span class="dim"># mermaid | plantuml | dot</span></code></pre>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Key</th><th>Env override</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td><code>max_file_bytes</code></td><td><code>GLASSMARBLE_MAX_FILE_BYTES</code></td><td>Files larger than this are skipped</td></tr>
+              <tr><td><code>output_format</code></td><td><code>GLASSMARBLE_OUTPUT_FORMAT</code></td><td>Default for <code>visualize</code></td></tr>
+              <tr><td><code>worker_count</code></td><td><code>GLASSMARBLE_WORKER_COUNT</code></td><td><code>0</code> on CLI means "auto"</td></tr>
+            </tbody>
+          </table>
+        </div>
 
         <h3 id="cfg-drift">drift — architecture invariants <a class="anchor" href="#cfg-drift">#</a></h3>
-        <p>Declare the layers you intend, then let <code>gmb drift</code> fail the PR when reality diverges. No <code>drift:</code> block means “check cycles only”.</p>
-        <div class="mono light">drift:<br>&nbsp;&nbsp;layers:<br>&nbsp;&nbsp;&nbsp;&nbsp;- name: api<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;paths: ["cmd/**", "internal/app/**"]<br>&nbsp;&nbsp;&nbsp;&nbsp;- name: internal<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;paths: ["internal/**"]<br>&nbsp;&nbsp;forbidden_deps:<br>&nbsp;&nbsp;&nbsp;&nbsp;- source: internal<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;target: api<br>&nbsp;&nbsp;cycle_budget: 0 <span class="dim"># 0 = any cycle fails</span></div>
-        <p>Each node → first matching layer glob. <code>forbidden_deps</code> are directed; <code>cycle_budget</code> caps allowed inter-layer cycles.</p>
+        <p>Declare the layers you intend, then let <code>gmb drift</code> fail the PR when reality diverges. No <code>drift:</code> block means "check cycles only".</p>
+        <div class="code-block light">
+          <div class="code-block-header"><span class="code-lang">yaml</span></div>
+          <pre><code>drift:
+  layers:
+    - name: api
+      paths: ["cmd/**", "internal/app/**"]
+    - name: internal
+      paths: ["internal/**"]
+  forbidden_deps:
+    - source: internal
+      target: api
+  cycle_budget: 0  <span class="dim"># 0 = any cycle fails</span></code></pre>
+        </div>
 
         <h3 id="cfg-intel">intelligence — thresholds <a class="anchor" href="#cfg-intel">#</a></h3>
         <p>All optional, zero falls back to defaults. Tune only when you have a reason — defaults catch real smells without noise.</p>
@@ -502,207 +1199,312 @@
           <li><code>god_object_fan_in_threshold:15</code> · <code>small_cycle_threshold:3</code> · <code>layered_consistency_threshold:0.80</code></li>
           <li><code>snapshot_max_count:30</code> · <code>snapshot_auto_threshold_nodes:15000</code> / <code>mb:8</code></li>
         </ul>
-        <p>Full table → <code>docs/configuration.md §4</code>.</p>
 
         <h3 id="cfg-ai">ai.yaml — bring your own key <a class="anchor" href="#cfg-ai">#</a></h3>
-        <div class="mono light">provider: openai <span class="dim"># openai | anthropic | gemini | deepseek | mistral | groq | ollama | custom</span><br>model: gpt-4o<br>api_key: "" <span class="dim"># prefer env vars</span><br>base_url: ""<br>temperature: 0.2<br>max_turns: 15<br>max_tool_result_bytes: 8192<br>max_output_tokens: 8192<br>timeout_sec: 180<br>stream: true<br>max_total_tokens: 0 <span class="dim"># 0 = unlimited</span><br>max_cost_usd: 0<br>max_session_messages: 40</div>
+        <div class="code-block light">
+          <div class="code-block-header"><span class="code-lang">yaml</span></div>
+          <pre><code>provider: openai  <span class="dim"># openai | anthropic | gemini | deepseek | mistral | groq | ollama | custom</span>
+model: gpt-4o
+api_key: ""       <span class="dim"># prefer env vars</span>
+base_url: ""
+temperature: 0.2
+max_turns: 15
+max_tool_result_bytes: 8192
+max_output_tokens: 8192
+timeout_sec: 180
+stream: true
+max_total_tokens: 0  <span class="dim"># 0 = unlimited</span>
+max_cost_usd: 0
+max_session_messages: 40</code></pre>
+        </div>
         <p>Written with <code>0600</code> perms. Resolution: <code>GLASSMARBLE_&lt;PROVIDER&gt;_API_KEY</code> → <code>GLASSMARBLE_AI_API_KEY</code>. Ollama endpoint is <code>GLASSMARBLE_OLLAMA_BASE_URL</code>.</p>
 
         <!-- AI -->
-        <h2 id="ai-setup">AI Architect — setup <a class="anchor" href="#ai-setup">#</a></h2>
+        <h2 id="ai-setup">AI Architect <span class="section-sub">— setup</span> <a class="anchor" href="#ai-setup">#</a></h2>
         <p>One wizard, any provider, your key. No shared proxy.</p>
-        <div class="mono dark">gmb ai configure <span class="dim"># interactive — picks provider, model, scope</span><br>gmb ai configure --provider openai --model gpt-4o --key sk-… --scope project<br>gmb ai models <span class="dim"># registry + key status</span><br>gmb ai doctor <span class="dim"># validate wiring + AKG</span></div>
-        <div class="table-wrap"><table><thead><tr><th>Provider</th><th>Key</th><th>Models</th></tr></thead><tbody>
-          <tr><td>openai</td><td><code>GLASSMARBLE_OPENAI_API_KEY</code></td><td>gpt-5, gpt-4o, o3 …</td></tr>
-          <tr><td>anthropic</td><td><code>GLASSMARBLE_ANTHROPIC_API_KEY</code></td><td>claude-sonnet-4-5, opus-4-1 …</td></tr>
-          <tr><td>gemini</td><td><code>GLASSMARBLE_GEMINI_API_KEY</code></td><td>gemini-2.5-pro / flash …</td></tr>
-          <tr><td>ollama</td><td><code>GLASSMARBLE_OLLAMA_BASE_URL</code></td><td>llama3.3, qwen3 — local</td></tr>
-          <tr><td>custom</td><td><code>GLASSMARBLE_AI_API_KEY</code></td><td>any OpenAI-compatible endpoint</td></tr>
-        </tbody></table></div>
+        <div class="code-block">
+          <div class="code-block-header"><span class="code-lang">bash</span></div>
+          <pre><code>gmb ai configure                          <span class="dim"># interactive — picks provider, model, scope</span>
+gmb ai configure --provider openai --model gpt-4o --key sk-… --scope project
+gmb ai models                             <span class="dim"># registry + key status</span>
+gmb ai doctor                             <span class="dim"># validate wiring + AKG</span></code></pre>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Provider</th><th>Key</th><th>Models</th></tr></thead>
+            <tbody>
+              <tr><td>openai</td><td><code>GLASSMARBLE_OPENAI_API_KEY</code></td><td>gpt-5, gpt-4o, o3 …</td></tr>
+              <tr><td>anthropic</td><td><code>GLASSMARBLE_ANTHROPIC_API_KEY</code></td><td>claude-sonnet-4-5, opus-4-1 …</td></tr>
+              <tr><td>gemini</td><td><code>GLASSMARBLE_GEMINI_API_KEY</code></td><td>gemini-2.5-pro / flash …</td></tr>
+              <tr><td>ollama</td><td><code>GLASSMARBLE_OLLAMA_BASE_URL</code></td><td>llama3.3, qwen3 — local</td></tr>
+              <tr><td>custom</td><td><code>GLASSMARBLE_AI_API_KEY</code></td><td>any OpenAI-compatible endpoint</td></tr>
+            </tbody>
+          </table>
+        </div>
         <p>Also deepseek, mistral, glm, nvidia, openrouter, groq — run <code>gmb ai models</code> for the full list.</p>
 
         <h3 id="ai-loop">Agent loop <a class="anchor" href="#ai-loop">#</a></h3>
         <p>The model never writes diagrams directly — it calls tools that read the AKG and then answers from the results.</p>
-        <div class="mono light">You: "which services depend on payments?"<br>AI → LLM: system prompt + repo header (nodes, edges, patterns)<br>LLM → AI: tool_call akg_traverse<br>AI → AKG: JSON facts<br>AI → LLM: tool results<br>LLM → AI: grounded answer + citations → You</div>
-        <p>32 tools — <code>system</code> 3, <code>akg</code> 21, <code>code</code> 5, <code>diagram</code> 3. Every tool call is traced to stderr (<code>→ akg_status({}) / ← ok</code>) so you can audit what was read. File contents are always <strong>data, never instructions</strong>.</p>
+        <div class="code-block light">
+          <div class="code-block-header"><span class="code-lang">flow</span></div>
+          <pre><code>You: "which services depend on payments?"
+AI → LLM: system prompt + repo header (nodes, edges, patterns)
+LLM → AI: tool_call akg_traverse
+AI → AKG: JSON facts
+AI → LLM: tool results
+LLM → AI: grounded answer + citations → You</code></pre>
+        </div>
+        <p>32 tools — <code>system</code> 3, <code>akg</code> 21, <code>code</code> 5, <code>diagram</code> 3. Every tool call is traced to stderr (<code>→ akg_status({}) / ← ok</code>). File contents are always <strong>data, never instructions</strong>.</p>
 
         <h3 id="ai-stream">Streaming <a class="anchor" href="#ai-stream">#</a></h3>
         <p>On by default. Tokens stream as they arrive; if the provider ignores <code>stream:true</code>, GlassMarble falls back to a single response. Disable per-run with <code>--no-stream</code> or globally with <code>GLASSMARBLE_AI_STREAM=0</code>.</p>
 
         <h3 id="ai-sessions">Sessions <a class="anchor" href="#ai-sessions">#</a></h3>
-        <div class="mono light">gmb ai chat <span class="dim"># resume latest</span><br>gmb ai chat --new <span class="dim"># fresh session</span><br>gmb ai sessions <span class="dim"># list, newest first</span><br>gmb ai sessions --delete &lt;id&gt;</div>
-        <p>Transcripts live under <code>.glassmarble/ai/sessions/</code> (<code>0600</code>), trimmed to <code>max_session_messages</code> at turn boundaries — a tool round is never split and the final answer is never dropped.</p>
+        <div class="code-block light">
+          <div class="code-block-header"><span class="code-lang">bash</span></div>
+          <pre><code>gmb ai chat               <span class="dim"># resume latest</span>
+gmb ai chat --new         <span class="dim"># fresh session</span>
+gmb ai sessions           <span class="dim"># list, newest first</span>
+gmb ai sessions --delete &lt;id&gt;</code></pre>
+        </div>
+        <p>Transcripts live under <code>.glassmarble/ai/sessions/</code> (<code>0600</code>), trimmed to <code>max_session_messages</code> at turn boundaries.</p>
 
         <h3 id="ai-guardrails">Guardrails <a class="anchor" href="#ai-guardrails">#</a></h3>
-        <p>Give every run a budget so CI can’t burn tokens:</p>
-        <div class="mono light">gmb ai --max-total-tokens 20000 "question"<br>gmb ai --max-cost 0.5 "question"</div>
-        <p>Checks run before the next request (pre-flight prompt-size) and after each completion (provider-reported usage). Stop reasons are surfaced as <code>Note: token_budget / cost_budget / turn_limit</code>; <code>--verbose</code> adds per-run accounting.</p>
+        <p>Give every run a budget so CI can't burn tokens:</p>
+        <div class="code-block light">
+          <div class="code-block-header"><span class="code-lang">bash</span></div>
+          <pre><code>gmb ai --max-total-tokens 20000 "question"
+gmb ai --max-cost 0.5 "question"</code></pre>
+        </div>
+        <p>Checks run before the next request (pre-flight prompt-size) and after each completion. Stop reasons are surfaced as <code>Note: token_budget / cost_budget / turn_limit</code>; <code>--verbose</code> adds per-run accounting.</p>
 
         <h3 id="ai-artifacts">Artifacts <a class="anchor" href="#ai-artifacts">#</a></h3>
-        <div class="mono light">gmb ai "generate a C4 container diagram" --save c4.md <span class="dim"># → .glassmarble/marbles/c4.md</span><br>gmb ai "write architecture notes" --save notes.md <span class="dim"># → .glassmarble/ai/notes.md</span></div>
-        <p>Artifacts are saved to disk — the terminal shows the path, not a markup dump. The agent keeps answers concise and cites real file paths and symbol IDs.</p>
+        <div class="code-block light">
+          <div class="code-block-header"><span class="code-lang">bash</span></div>
+          <pre><code>gmb ai "generate a C4 container diagram" --save c4.md   <span class="dim"># → .glassmarble/marbles/c4.md</span>
+gmb ai "write architecture notes" --save notes.md        <span class="dim"># → .glassmarble/ai/notes.md</span></code></pre>
+        </div>
 
         <!-- INTEL -->
         <h2 id="intel-events">Architecture intelligence <a class="anchor" href="#intel-events">#</a></h2>
         <p>The post-commit layer that turns the raw graph into evidence you can act on — components, patterns, smells, and a typed event log.</p>
-        <div class="table-wrap"><table><thead><tr><th>ID</th><th>Pattern</th><th>What it means</th></tr></thead><tbody>
-          <tr><td>PR-01</td><td>Layered</td><td>Presentation → domain → data with limited upward edges</td></tr>
-          <tr><td>PR-02</td><td>Clean</td><td>Domain isolated from frameworks</td></tr>
-          <tr><td>PR-03</td><td>Microservices</td><td>Service-bounded components with narrow APIs</td></tr>
-          <tr><td>PR-04</td><td>Bounded Context</td><td>DDD contexts with coherent language</td></tr>
-          <tr><td>PR-05</td><td>CQRS</td><td>Command / query separation</td></tr>
-          <tr><td>PR-06</td><td>Event-Driven</td><td>Pub/sub and event flows</td></tr>
-          <tr><td>PR-07</td><td>Repository</td><td>Persistence behind a repository abstraction</td></tr>
-        </tbody></table></div>
-        <p>Components are inferred via Louvain + directory prefixes; each carries <code>Ca / Ce / Instability = Ce/(Ca+Ce)</code>. Events include <code>SERVICE_ADDED/REMOVED/SPLIT/MERGED</code>, <code>DEPENDENCY_ADDED</code>, <code>CYCLE_INTRODUCED/RESOLVED</code>, <code>LAYER_VIOLATION</code>, <code>COUPLING_INCREASED</code>, …</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>ID</th><th>Pattern</th><th>What it means</th></tr></thead>
+            <tbody>
+              <tr><td>PR-01</td><td>Layered</td><td>Presentation → domain → data with limited upward edges</td></tr>
+              <tr><td>PR-02</td><td>Clean</td><td>Domain isolated from frameworks</td></tr>
+              <tr><td>PR-03</td><td>Microservices</td><td>Service-bounded components with narrow APIs</td></tr>
+              <tr><td>PR-04</td><td>Bounded Context</td><td>DDD contexts with coherent language</td></tr>
+              <tr><td>PR-05</td><td>CQRS</td><td>Command / query separation</td></tr>
+              <tr><td>PR-06</td><td>Event-Driven</td><td>Pub/sub and event flows</td></tr>
+              <tr><td>PR-07</td><td>Repository</td><td>Persistence behind a repository abstraction</td></tr>
+            </tbody>
+          </table>
+        </div>
 
         <h3 id="intel-memory">Developer memory <a class="anchor" href="#intel-memory">#</a></h3>
         <p>Every event becomes a claim with a label that tells you how much to trust it:</p>
-        <div class="table-wrap"><table><thead><tr><th>Label</th><th>Trust</th><th>Source</th></tr></thead><tbody>
-          <tr><td><code>FACT</code></td><td>Observed</td><td>Graph diff</td></tr>
-          <tr><td><code>EXPLICIT_REASON</code></td><td>Stated</td><td>Commit / PR / docs</td></tr>
-          <tr><td><code>INFERENCE</code></td><td>Derived</td><td>Heuristic</td></tr>
-          <tr><td><code>SPECULATION</code></td><td>Guess</td><td>Low confidence</td></tr>
-        </tbody></table></div>
-        <div class="mono light">gmb memory --ask "how did auth evolve?"<br>gmb memory --component payments<br>gmb memory --correct &lt;target&gt; --kind STATE --value "…" <span class="dim"># overlay, flagged, audited</span></div>
-        <p>Corrections (<code>INTENT / LABEL / STATE / CONFIDENCE / REJECT / ACCEPT</code>) are recorded in <code>corrections.jsonl</code> and replayed deterministically on every view.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Label</th><th>Trust</th><th>Source</th></tr></thead>
+            <tbody>
+              <tr><td><code>FACT</code></td><td>Observed</td><td>Graph diff</td></tr>
+              <tr><td><code>EXPLICIT_REASON</code></td><td>Stated</td><td>Commit / PR / docs</td></tr>
+              <tr><td><code>INFERENCE</code></td><td>Derived</td><td>Heuristic</td></tr>
+              <tr><td><code>SPECULATION</code></td><td>Guess</td><td>Low confidence</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="code-block light">
+          <div class="code-block-header"><span class="code-lang">bash</span></div>
+          <pre><code>gmb memory --ask "how did auth evolve?"
+gmb memory --component payments
+gmb memory --correct &lt;target&gt; --kind STATE --value "…"  <span class="dim"># overlay, flagged, audited</span></code></pre>
+        </div>
 
         <h3 id="intel-snapshot">Snapshots &amp; timeline <a class="anchor" href="#intel-snapshot">#</a></h3>
-        <div class="mono light">gmb snapshot --create | --list | --at &lt;ref&gt; | --diff '&lt;base&gt; &lt;head&gt;' | --replay &lt;ref&gt; [--diagram class]<br>gmb timeline [--component &lt;name&gt;] [--full] [--format text|json|mermaid]<br>gmb stats [--bench] [--arch]</div>
-        <p>Artifacts: <code>intelligence/latest.json</code>, <code>snapshots/index.json + snap_&lt;hash&gt;.json</code>, <code>memory/events.jsonl</code>, <code>memory/conventions.json</code>. Prune with <code>housekeeping --prune-snapshots --keep 30</code>.</p>
+        <div class="code-block light">
+          <div class="code-block-header"><span class="code-lang">bash</span></div>
+          <pre><code>gmb snapshot --create | --list | --at &lt;ref&gt; | --diff '&lt;base&gt; &lt;head&gt;' | --replay &lt;ref&gt; [--diagram class]
+gmb timeline [--component &lt;name&gt;] [--full] [--format text|json|mermaid]
+gmb stats [--bench] [--arch]</code></pre>
+        </div>
 
         <!-- INTEGRATIONS -->
         <h2 id="int-neo4j">Neo4j export <a class="anchor" href="#int-neo4j">#</a></h2>
         <p>Export the same deterministic graph as Cypher and explore it in Bloom or with custom queries.</p>
-        <div class="mono dark">gmb export -f neo4j -o architecture.cypher<br>cypher-shell -u neo4j -p password -f architecture.cypher</div>
-        <div class="mono light"><span class="dim">// hotspots in Neo4j</span><br>MATCH (n:GMNode)&lt;-[r:CALLS]-()<br>RETURN n.name, count(r) AS in_degree<br>ORDER BY in_degree DESC LIMIT 10</div>
-        <p>Nodes become <code>GMNode:&lt;Kind&gt;</code> with <code>id, name, file_path</code>; edges become <code>MATCH … CREATE (a)-[:CALLS]->(b)</code> with <code>line_number, confidence</code>. See <code>docs/neo4j.md</code>.</p>
+        <div class="code-block">
+          <div class="code-block-header"><span class="code-lang">bash</span></div>
+          <pre><code>gmb export -f neo4j -o architecture.cypher
+cypher-shell -u neo4j -p password -f architecture.cypher</code></pre>
+        </div>
+        <div class="code-block light">
+          <div class="code-block-header"><span class="code-lang">cypher</span></div>
+          <pre><code><span class="dim">// hotspots in Neo4j</span>
+MATCH (n:GMNode)&lt;-[r:CALLS]-()
+RETURN n.name, count(r) AS in_degree
+ORDER BY in_degree DESC LIMIT 10</code></pre>
+        </div>
 
         <h3 id="int-relationships">Relationship types <a class="anchor" href="#int-relationships">#</a></h3>
-        <p>Every edge constant belongs to one producer family and one view tag. The families drive diagram extraction.</p>
-        <div class="table-wrap"><table><thead><tr><th>Family</th><th>View</th><th>Examples</th></tr></thead><tbody>
-          <tr><td>STRUCTURAL</td><td><code>structural</code></td><td><code>Contains</code> · <code>BelongsTo</code> · <code>Implements</code> · <code>Extends</code></td></tr>
-          <tr><td>BEHAVIORAL</td><td><code>structural</code></td><td><code>Calls</code> · <code>SpawnsConcurrent</code> · <code>CallsCloudAPI</code></td></tr>
-          <tr><td>DYNAMIC</td><td><code>dynamic</code></td><td><code>ControlFlow</code> · <code>DataFlow</code> · <code>HeapAlias</code></td></tr>
-          <tr><td>SECURITY</td><td><code>security</code></td><td><code>SecuritySink</code> · <code>QueriesDB</code> (secondary)</td></tr>
-        </tbody></table></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Family</th><th>View</th><th>Examples</th></tr></thead>
+            <tbody>
+              <tr><td>STRUCTURAL</td><td><code>structural</code></td><td><code>Contains</code> · <code>BelongsTo</code> · <code>Implements</code> · <code>Extends</code></td></tr>
+              <tr><td>BEHAVIORAL</td><td><code>structural</code></td><td><code>Calls</code> · <code>SpawnsConcurrent</code> · <code>CallsCloudAPI</code></td></tr>
+              <tr><td>DYNAMIC</td><td><code>dynamic</code></td><td><code>ControlFlow</code> · <code>DataFlow</code> · <code>HeapAlias</code></td></tr>
+              <tr><td>SECURITY</td><td><code>security</code></td><td><code>SecuritySink</code> · <code>QueriesDB</code> (secondary)</td></tr>
+            </tbody>
+          </table>
+        </div>
 
         <h3 id="int-languages">Supported languages <a class="anchor" href="#int-languages">#</a></h3>
         <p>14 full tree-sitter grammars + 3 declaration-only. Check yours with <code>gmb inspect --languages</code>.</p>
-        <div class="table-wrap"><table><thead><tr><th>Language</th><th>Extensions</th><th>Support</th></tr></thead><tbody>
-          <tr><td>Go</td><td><code>.go</code></td><td>full — CFG/DFG</td></tr>
-          <tr><td>Python</td><td><code>.py</code> · <code>.pyi</code></td><td>full</td></tr>
-          <tr><td>JavaScript</td><td><code>.js</code> · <code>.mjs</code> · <code>.cjs</code> · <code>.jsx</code></td><td>full</td></tr>
-          <tr><td>TypeScript</td><td><code>.ts</code> · <code>.tsx</code> · <code>.cts</code> · <code>.mts</code></td><td>full</td></tr>
-          <tr><td>C / C++ / C#</td><td><code>.c</code> · <code>.h</code> · <code>.cpp</code> · <code>.cs</code></td><td>full</td></tr>
-          <tr><td>Java / HTML / CSS / JSON</td><td><code>.java</code> · <code>.html</code> · <code>.css</code> · <code>.json</code></td><td>full</td></tr>
-          <tr><td>Ruby / PHP / Rust</td><td><code>.rb</code> · <code>.php</code> · <code>.rs</code></td><td>full</td></tr>
-          <tr><td>Kotlin / Swift / Scala</td><td><code>.kt</code> · <code>.swift</code> · <code>.scala</code></td><td>decl-only</td></tr>
-        </tbody></table></div>
-        <div class="callout"><i>✦</i><p><strong>Keep exploring.</strong> The exhaustive flag tables, JSON fields, and per-command examples live in <a href="https://github.com/Syamchand123/GlassMarble/blob/main/docs/commands_master_reference.md" style="color:var(--violet);font-weight:600">commands_master_reference.md</a>. Config deep-dives are in <code>docs/configuration.md</code> and <code>docs/akg_format.md</code>.</p></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Language</th><th>Extensions</th><th>Support</th></tr></thead>
+            <tbody>
+              <tr><td>Go</td><td><code>.go</code></td><td>full — CFG/DFG</td></tr>
+              <tr><td>Python</td><td><code>.py</code> · <code>.pyi</code></td><td>full</td></tr>
+              <tr><td>JavaScript</td><td><code>.js</code> · <code>.mjs</code> · <code>.cjs</code> · <code>.jsx</code></td><td>full</td></tr>
+              <tr><td>TypeScript</td><td><code>.ts</code> · <code>.tsx</code> · <code>.cts</code> · <code>.mts</code></td><td>full</td></tr>
+              <tr><td>C / C++ / C#</td><td><code>.c</code> · <code>.h</code> · <code>.cpp</code> · <code>.cs</code></td><td>full</td></tr>
+              <tr><td>Java / HTML / CSS / JSON</td><td><code>.java</code> · <code>.html</code> · <code>.css</code> · <code>.json</code></td><td>full</td></tr>
+              <tr><td>Ruby / PHP / Rust</td><td><code>.rb</code> · <code>.php</code> · <code>.rs</code></td><td>full</td></tr>
+              <tr><td>Kotlin / Swift / Scala</td><td><code>.kt</code> · <code>.swift</code> · <code>.scala</code></td><td>decl-only</td></tr>
+            </tbody>
+          </table>
+        </div>
 
-        <footer>
+        <div class="callout">
+          <div class="callout-icon">✦</div>
+          <div><strong>Keep exploring.</strong> The exhaustive flag tables, JSON fields, and per-command examples live in <a href="https://github.com/Syamchand123/GlassMarble/blob/main/docs/commands_master_reference.md" target="_blank" rel="noopener">commands_master_reference.md</a>. Config deep-dives are in <code>docs/configuration.md</code> and <code>docs/akg_format.md</code>.</div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="docs-footer">
           <span>© GlassMarble · MIT · <a href="https://github.com/Syamchand123/GlassMarble" style="text-decoration:underline;text-underline-offset:3px">github.com/Syamchand123/GlassMarble</a></span>
-          <span style="display:flex;gap:1.6rem"><a href="downloads.html">Download</a><a href="index.html">Overview</a><a href="https://github.com/Syamchand123/GlassMarble/releases">Releases</a></span>
+          <div class="footer-links">
+            <a href="downloads.html">Download</a>
+            <a href="index.html">Overview</a>
+            <a href="https://github.com/Syamchand123/GlassMarble/releases" target="_blank" rel="noopener">Releases</a>
+          </div>
         </footer>
       </div>
     </main>
   </div>
+
   <script>
-    const navLinks=[...document.querySelectorAll('.sidebar a')];
-    const heads=[...document.querySelectorAll('h2[id], h3[id]')];
-    const obs=new IntersectionObserver(es=>{
-      es.forEach(e=>{
-        if(e.isIntersecting){
-          const id=e.target.id;
-          navLinks.forEach(a=>a.classList.toggle('active', a.getAttribute('href')==='#'+id));
-          if(location.hash!==`#${id}`) history.replaceState(null,'',`#${id}`);
-        }
-      })
-    },{rootMargin:'-40% 0px -55% 0px',threshold:0});
-    heads.forEach(h=>obs.observe(h));
-    const s=document.getElementById('search');
-    s.addEventListener('input',()=>{
-      const q=s.value.toLowerCase().trim();
-      document.querySelectorAll('.nav-group').forEach(g=>{
-        let vis=false;
-        g.querySelectorAll('a').forEach(a=>{
-          const m=!q||a.textContent.toLowerCase().includes(q);
-          a.style.display=m?'block':'none';
-          if(m) vis=true;
-        });
-        g.style.display=vis||!q?'block':'none';
-      })
+    // ── Sidebar mobile toggle ──────────────────────────────────
+    const sidebar = document.getElementById('docsSidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      overlay.classList.add('open');
+      sidebarToggle.setAttribute('aria-expanded', 'true');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('open');
+      sidebarToggle.setAttribute('aria-expanded', 'false');
+    }
+    sidebarToggle.addEventListener('click', () => {
+      sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
     });
-    // copy buttons for every mono block
-    document.querySelectorAll('.mono').forEach(block=>{
-      if(block.querySelector('.copy-btn')) return;
-      block.style.position='relative';
-      const btn=document.createElement('button');
-      btn.className='copy-btn';
-      btn.textContent='Copy';
-      btn.setAttribute('aria-label','Copy code');
-      btn.addEventListener('click',()=>{
-        const text=block.innerText.replace(/^Copy\s*/,'');
-        navigator.clipboard.writeText(text).then(()=>{
-          const o=btn.textContent; btn.textContent='Copied!'; setTimeout(()=>btn.textContent=o,1400);
+    overlay.addEventListener('click', closeSidebar);
+
+    // ── Active sidebar link on scroll ──────────────────────────
+    const navLinks = [...document.querySelectorAll('.docs-sidebar .nav-link')];
+    const headings = [...document.querySelectorAll('h2[id], h3[id]')];
+
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+          if (location.hash !== `#${id}`) history.replaceState(null, '', `#${id}`);
+        }
+      });
+    }, { rootMargin: '-35% 0px -58% 0px', threshold: 0 });
+
+    headings.forEach(h => io.observe(h));
+
+    // ── Sidebar search ──────────────────────────────────────────
+    const searchInput = document.getElementById('sidebarSearch');
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.toLowerCase().trim();
+      document.querySelectorAll('.nav-group').forEach(group => {
+        let visible = false;
+        group.querySelectorAll('.nav-link').forEach(link => {
+          const match = !q || link.textContent.toLowerCase().includes(q);
+          link.style.display = match ? 'block' : 'none';
+          if (match) visible = true;
+        });
+        group.style.display = (visible || !q) ? 'block' : 'none';
+      });
+    });
+
+    // ── Copy buttons ────────────────────────────────────────────
+    document.querySelectorAll('.code-copy').forEach(btn => {
+      btn.addEventListener('click', () => {
+        let text = '';
+        if (btn.dataset.copy) {
+          text = btn.dataset.copy;
+        } else {
+          const block = btn.closest('.code-block');
+          const pre = block && block.querySelector('pre code');
+          text = pre ? pre.innerText : '';
+        }
+        navigator.clipboard.writeText(text.replace(/^Copy\s*/, '')).then(() => {
+          const orig = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(() => btn.textContent = orig, 1500);
         });
       });
-      block.appendChild(btn);
     });
-    // live version badge
-    fetch('https://api.github.com/repos/Syamchand123/GlassMarble/releases/latest',{headers:{'Accept':'application/vnd.github.v3+json'}})
-      .then(r=>r.ok?r.json():null).then(d=>{
-        if(d&&d.tag_name){
-          const el=document.getElementById('versionBadge');
-          if(el) el.textContent=`GlassMarble ${d.tag_name}`;
-        }
-      }).catch(()=>{});
-    // top nav active + mobile drawer
-    (function(){
-      const file=(location.pathname.split('/').pop()||'index.html').split('?')[0].split('#')[0]||'index.html';
-      document.querySelectorAll('.site-nav [data-nav], .nav-drawer [data-nav]').forEach(a=>{
-        const href=a.getAttribute('href');
-        const isActive=href===file;
-        a.classList.toggle('is-active',isActive);
-        if(isActive) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');
-      });
-      const toggle=document.getElementById('navToggle');
-      const drawer=document.getElementById('navDrawer');
-      if(toggle&&drawer){
-        toggle.addEventListener('click',()=>{
-          const open=drawer.classList.toggle('open');
-          drawer.hidden=!open;
-          toggle.setAttribute('aria-expanded',String(open));
+
+    // Verify code copy special case
+    const verifyCopyBtn = document.getElementById('verifyCopyBtn');
+    if (verifyCopyBtn) {
+      verifyCopyBtn.addEventListener('click', () => {
+        const code = document.getElementById('verifyCode');
+        const text = code ? code.innerText.replace(/^Copy\s*/, '') : '';
+        navigator.clipboard.writeText(text).then(() => {
+          verifyCopyBtn.textContent = 'Copied!';
+          setTimeout(() => verifyCopyBtn.textContent = 'Copy', 1500);
         });
-        drawer.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
-          drawer.classList.remove('open');drawer.hidden=true;toggle.setAttribute('aria-expanded','false');
-        }));
-      }
-    })();
-    // hide nav on scroll down — slides to right, shows on scroll up
-    (function(){
-      const nav=document.querySelector('.site-nav');
-      const drawer=document.getElementById('navDrawer');
-      if(!nav) return;
-      let lastY=window.scrollY, hidden=false;
-      const thr=70;
-      window.addEventListener('scroll',()=>{
-        const y=window.scrollY, dy=y-lastY;
-        if(y<=thr){
-          if(hidden){ nav.classList.remove('is-hidden'); if(drawer) drawer.classList.remove('is-hidden'); hidden=false; }
-        } else if(dy>4 && !hidden){
-          nav.classList.add('is-hidden');
-          if(drawer){ drawer.classList.add('is-hidden'); drawer.classList.remove('open'); drawer.hidden=true; const t=document.getElementById('navToggle'); if(t) t.setAttribute('aria-expanded','false'); }
-          hidden=true;
-        } else if(dy<-4 && hidden){
-          nav.classList.remove('is-hidden');
-          if(drawer) drawer.classList.remove('is-hidden');
-          hidden=false;
-        }
-        lastY=y;
-      },{passive:true});
-    })();
+      });
+    }
+
+    // ── Live version hydration ──────────────────────────────────
+    fetch('https://api.github.com/repos/Syamchand123/GlassMarble/releases/latest', {
+      headers: { 'Accept': 'application/vnd.github.v3+json' }
+    }).then(r => r.ok ? r.json() : null).then(d => {
+      if (!d || !d.tag_name) return;
+      const tag = d.tag_name;
+      // Sidebar version badge
+      const vt = document.getElementById('versionTag');
+      if (vt) vt.textContent = tag;
+      // All inline version spans in content
+      document.querySelectorAll('.gm-ver-inline').forEach(el => el.textContent = tag);
+      // Page title and social meta
+      document.title = `Docs — GlassMarble ${tag}`;
+      const ogT = document.querySelector('meta[property="og:title"]');
+      if (ogT) ogT.content = `GlassMarble Docs — ${tag}`;
+      const twT = document.querySelector('meta[name="twitter:title"]');
+      if (twT) twT.content = `GlassMarble Docs — ${tag}`;
+    }).catch(() => { });
+
+    // ── Sidebar nav links close sidebar on mobile ───────────────
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 1024) closeSidebar();
+      });
+    });
   </script>
 </body>
 </html>

@@ -3,466 +3,1100 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Download — GlassMarble v1.0.0</title>
-  <meta name="description" content="Download GlassMarble v1.0.0 — free, open-source CLI. 17 languages, 31 diagrams, grounded AI. Every platform. One binary.">
-  <meta name="theme-color" content="#f6f6f6">
+  <title>Download — GlassMarble</title>
+  <meta name="description" content="Download GlassMarble — free, open-source CLI. 17 languages, 31 diagrams, grounded AI. Every platform. One binary.">
+  <meta name="theme-color" content="#09090b">
   <link rel="icon" type="image/png" href="assets/LOGO_PIXEL.png">
   <link rel="apple-touch-icon" href="assets/LOGO_PIXEL.png">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Download GlassMarble v1.0.0">
+  <meta property="og:title" content="Download GlassMarble — latest release">
   <meta property="og:description" content="One binary. 17 languages → 31 living diagrams. Free, MIT, verified.">
   <meta property="og:url" content="https://syamchand123.github.io/GlassMarbleWebsite/downloads.html">
   <meta property="og:image" content="https://syamchand123.github.io/GlassMarbleWebsite/assets/og-image.png">
   <link rel="canonical" href="https://syamchand123.github.io/GlassMarbleWebsite/downloads.html">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Download GlassMarble v1.0.0">
+  <meta name="twitter:title" content="Download GlassMarble — latest release">
   <meta name="twitter:description" content="One binary. 17 languages → 31 living diagrams. Free, MIT, verified.">
   <meta name="twitter:image" content="https://syamchand123.github.io/GlassMarbleWebsite/assets/og-image.png">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Download GlassMarble v1.0.0","url":"https://syamchand123.github.io/GlassMarbleWebsite/downloads.html","description":"Download GlassMarble v1.0.0 — free, open-source CLI. Every platform. One binary.","isPartOf":{"@type":"WebSite","name":"GlassMarble","url":"https://syamchand123.github.io/GlassMarbleWebsite/"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Download GlassMarble — latest release","url":"https://syamchand123.github.io/GlassMarbleWebsite/downloads.html","description":"Download GlassMarble — free, open-source CLI. Every platform. One binary.","isPartOf":{"@type":"WebSite","name":"GlassMarble","url":"https://syamchand123.github.io/GlassMarbleWebsite/"}}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    *,*::before,*::after{box-sizing:border-box;border:0;margin:0;padding:0}
-    html{scrollbar-width:none;font-size:0.694445vw;font-family:'Inter',-apple-system,'Helvetica Neue',sans-serif;-webkit-font-smoothing:antialiased;background:#f6f6f6;color:#1a1a1a}
-    ::-webkit-scrollbar{display:none}
-    :root{--bg:#f6f6f6;--black:#1a1a1a;--grey:#9f9f9f;--muted:#6b7280;--white:#fff;--border:#e4e4e4;--border2:#ececec;--violet:#7c5cfb;--violet2:#6d28d9;--ease-spring:cubic-bezier(0.075,0.82,0.165,1);--ease-out:cubic-bezier(0,0,0.2,1)}
-    body{background:transparent;overflow-x:hidden;line-height:1;min-height:100vh}
-    a{color:inherit;text-decoration:none}
-    ul{list-style:none}
-    button{font:inherit;cursor:pointer;background:none;color:inherit}
-    a:focus-visible,button:focus-visible{outline:2px solid var(--black);outline-offset:3px;border-radius:4px}
-    #bg-scene{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
-    .bg-grain{position:absolute;inset:0;opacity:0.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px 180px}
-    .bg-vignette{position:absolute;inset:0;background:radial-gradient(ellipse 115% 105% at 50% 40%, transparent 60%, rgba(26,26,26,0.06) 100%)}
-    #edge-fade{position:fixed;inset:0;pointer-events:none;z-index:200}
-    #edge-fade::before,#edge-fade::after{content:'';position:absolute;left:0;width:100%;height:3rem}
-    #edge-fade::before{top:0;background:linear-gradient(to bottom,var(--bg),transparent)}
-    #edge-fade::after{bottom:0;background:linear-gradient(to top,var(--bg),transparent)}
-    .site-logo{position:fixed;top:3.5rem;left:3.5rem;z-index:210;width:5rem;height:5rem;border-radius:1.2rem;overflow:hidden;box-shadow:0 0.4rem 1.6rem rgba(0,0,0,0.14);transition:transform 0.3s var(--ease-spring),box-shadow 0.3s var(--ease-out)}
-    .site-logo:hover{transform:translateY(-0.2rem);box-shadow:0 0.8rem 2.4rem rgba(0,0,0,0.18)}
-    .site-logo img{width:100%;height:100%;object-fit:cover;display:block}
-    .site-nav{position:fixed;top:3.5rem;right:3.5rem;z-index:211;display:flex;align-items:center;gap:0.6rem;transition:transform 0.32s var(--ease-spring),opacity 0.28s var(--ease-out);will-change:transform,opacity}
-    .nav-link{font-size:1.35rem;letter-spacing:-0.01em;color:var(--grey);padding:0.7rem 1.4rem;border-radius:999px;transition:background 0.2s,color 0.2s}
-    .nav-link:hover{color:var(--black);background:var(--white)}
-    .nav-link.is-active{color:var(--black);background:var(--white);box-shadow:0 0.4rem 1.6rem rgba(0,0,0,0.06)}
-    .nav-cta{height:4rem;padding:0 1.8rem;border-radius:999px;background:var(--black);color:var(--white);display:inline-flex;align-items:center;gap:0.7rem;font-size:1.25rem;font-weight:500;transition:background 0.2s,scale 0.2s var(--ease-spring)}
-    .nav-cta:hover{background:#2a2a2a;scale:1.02}
-    .nav-cta:active{scale:0.97}
-    .nav-toggle{display:none;width:4.2rem;height:4.2rem;border-radius:999px;background:var(--white);border:1px solid var(--border);align-items:center;justify-content:center;flex-direction:column;gap:0.45rem;flex:0 0 auto;box-shadow:0 0.4rem 1.2rem rgba(0,0,0,0.06)}
-    .nav-toggle span{display:block;width:1.6rem;height:1.8px;background:var(--black);border-radius:999px;transition:transform 0.2s var(--ease-spring),opacity 0.2s}
-    .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(0.32rem) rotate(45deg)}
-    .nav-toggle[aria-expanded="true"] span:nth-child(2){transform:translateY(-0.32rem) rotate(-45deg)}
-    .nav-drawer{position:fixed;top:0;left:0;right:0;background:rgba(246,246,246,0.97);backdrop-filter:blur(12px) saturate(1.1);border-bottom:1px solid var(--border);padding:8rem 2.4rem 2rem;display:flex;flex-direction:column;gap:0.4rem;transform:translateY(-100%);opacity:0;pointer-events:none;transition:transform 0.38s var(--ease-spring),opacity 0.28s var(--ease-out);z-index:209}
-    .nav-drawer.open{transform:translateY(0);opacity:1;pointer-events:auto}
-    .nav-drawer a{font-size:1.6rem;font-weight:500;letter-spacing:-0.01em;padding:1.3rem 1.4rem;border-radius:1.2rem;color:var(--grey);transition:background 0.2s,color 0.2s}
-    .nav-drawer a:hover{background:var(--white);color:var(--black)}
-    .nav-drawer a.is-active{background:var(--white);color:var(--black);box-shadow:0 0.4rem 1.6rem rgba(0,0,0,0.06)}
-    .nav-drawer .nav-drawer-cta{margin-top:0.8rem;height:4.6rem;border-radius:999px;background:var(--black);color:var(--white);display:inline-flex;align-items:center;justify-content:center;gap:0.6rem;font-size:1.4rem;font-weight:500}
-    .site-nav.is-hidden{transform:translateX(42%);opacity:0;pointer-events:none}
-    .nav-drawer.is-hidden{transform:translateY(-100%) !important;opacity:0 !important;pointer-events:none !important}
-    @media(max-width:640px){.site-nav .nav-link,.site-nav .nav-cta{display:none}.nav-toggle{display:flex !important}}
-    .wrap{max-width:104rem;margin:0 auto;padding:0 3.5rem}
-    .hero{padding:12.5rem 0 4.5rem}
-    .eyebrow{display:inline-flex;align-items:center;gap:0.8rem;font-size:1.05rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--grey);margin-bottom:1.4rem}
-    .eyebrow i{width:0.6rem;height:0.6rem;border-radius:50%;background:#10b981;box-shadow:0 0 0 0.4rem rgba(16,185,129,0.14)}
-    .hero h1{font-size:5.1rem;font-weight:600;letter-spacing:-0.045em;line-height:0.96;color:var(--black);max-width:64rem}
-    .hero h1 em{font-weight:300;color:var(--grey);font-style:normal}
-    .hero p{font-size:1.5rem;line-height:1.7;color:var(--muted);max-width:60rem;margin-top:1.6rem;letter-spacing:-0.01em}
-    .hero-actions{display:flex;flex-wrap:wrap;gap:0.9rem;margin-top:2.6rem}
-    .btn{height:4.7rem;padding:0 2rem;border-radius:999px;display:inline-flex;align-items:center;gap:0.8rem;font-size:1.3rem;font-weight:500;transition:background 0.2s,color 0.2s,scale 0.2s var(--ease-spring);border:1px solid transparent;letter-spacing:-0.01em}
-    .btn:active{scale:0.97}
-    .btn-dark{background:var(--black);color:var(--white)}
-    .btn-dark:hover{background:#2a2a2a}
-    .btn-light{background:var(--white);color:var(--black);border-color:var(--border)}
-    .btn-light:hover{background:#f9f9f9}
-    .meta{font-size:1.15rem;color:var(--grey);margin-top:1.3rem;letter-spacing:-0.01em}
-    .meta a{color:var(--black);text-decoration:underline;text-underline-offset:3px}
-    .section{padding:4.8rem 0;border-top:1px solid #f0f0f0}
-    .section:first-of-type{border-top:none}
-    .section h2{font-size:2.5rem;letter-spacing:-0.03em;font-weight:600;color:var(--black);margin-bottom:0.9rem}
-    .section h2 span{font-weight:300;color:var(--grey)}
-    .section .lead{font-size:1.4rem;line-height:1.7;color:var(--muted);max-width:64rem;margin-bottom:2.6rem;letter-spacing:-0.01em}
-    .install-stack{display:flex;flex-direction:column;gap:1.2rem}
-    .install-item{background:var(--white);border:1px solid var(--border);border-radius:2.2rem;padding:2.2rem 2.4rem 2rem;box-shadow:0 0.6rem 2rem rgba(0,0,0,0.04);min-width:0;overflow:hidden;transition:border-color 0.2s,box-shadow 0.2s}
-    .install-item:hover{border-color:#d9dbe0;box-shadow:0 0.8rem 2.4rem rgba(0,0,0,0.06)}
-    .install-item.is-featured{border-color:var(--violet);box-shadow:0 0.8rem 2.4rem rgba(124,92,251,0.08)}
-    .install-head{display:flex;align-items:center;gap:1.4rem;margin-bottom:1.6rem;min-width:0}
-    .install-icon{width:3.6rem;height:3.6rem;border-radius:1rem;display:grid;place-items:center;flex:0 0 auto;background:#f5f3ff;color:var(--violet);border:1px solid #ede9fe}
-    .install-icon svg{width:1.8rem;height:1.8rem}
-    .install-icon.is-dark{background:#111827;color:#fff;border-color:#1f2937}
-    .install-icon.is-green{background:#ecfdf5;color:#059669;border-color:#d1fae5}
-    .install-meta{min-width:0;flex:1}
-    .install-meta h3{font-size:1.5rem;font-weight:600;letter-spacing:-0.015em;color:var(--black);line-height:1.2}
-    .install-meta p{font-size:1.25rem;line-height:1.5;color:var(--muted);margin-top:0.2rem;overflow-wrap:break-word}
-    .install-badge{font-size:1.05rem;letter-spacing:0.06em;text-transform:uppercase;font-weight:600;color:var(--violet);background:#f5f3ff;border:1px solid #ede9fe;padding:0.45rem 0.9rem;border-radius:999px;white-space:nowrap}
-    .install-badge.is-muted{color:var(--grey);background:#f9fafb;border-color:var(--border)}
-    .install-code{position:relative;background:#0f1115;border-radius:1.4rem;padding:1.4rem 5.2rem 1.4rem 1.6rem;overflow:hidden}
-    .install-code code{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:1.28rem;line-height:1.6;color:#e5e7eb;white-space:nowrap;display:block;overflow-x:auto;scrollbar-width:thin}
-    .install-code .dim{color:#9ca3af}
-    .install-code::-webkit-scrollbar{height:4px}
-    .install-copy{position:absolute;top:1rem;right:1rem;font-size:1.05rem;letter-spacing:0.06em;text-transform:uppercase;font-weight:500;color:#d1d5db;background:#1f2937;border:1px solid #374151;padding:0.5rem 0.9rem;border-radius:999px;transition:background 0.2s,color 0.2s}
-    .install-copy:hover{background:#374151;color:#fff}
-    .install-foot{margin-top:1.2rem;display:flex;flex-wrap:wrap;gap:0.8rem 1.6rem;font-size:1.2rem;color:var(--grey);align-items:center}
-    .install-foot code{font-family:'JetBrains Mono',monospace;font-size:1.05rem;background:#f3f4f6;border:1px solid var(--border);padding:0.2rem 0.55rem;border-radius:0.6rem;color:#111}
-    .install-foot .hint{color:var(--muted)}
-    .install-foot .hint code{background:#f9fafb}
-    .install-alt{margin-top:1.4rem;background:#f9fafb;border:1px dashed var(--border);border-radius:1.6rem;padding:1.6rem 1.8rem;display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap;min-width:0;overflow:hidden}
-    .install-alt strong{font-size:1.25rem;color:var(--black)}
-    .install-alt p{font-size:1.25rem;line-height:1.5;color:var(--muted);min-width:0}
-    .install-alt .tag{white-space:nowrap}
-    .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.4rem}
-    @media(max-width:860px){.cards{grid-template-columns:1fr}}
-    .card{background:var(--white);border:1px solid var(--border);border-radius:2.4rem;padding:2.6rem;box-shadow:0 0.6rem 2rem rgba(0,0,0,0.04);min-width:0;overflow:hidden}
-    .card h3{font-size:1.55rem;font-weight:600;letter-spacing:-0.015em;margin-bottom:0.6rem}
-    .card p{font-size:1.35rem;line-height:1.6;color:var(--muted);overflow-wrap:break-word;word-break:break-word}
-    .card .mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:1.22rem;background:#f3f4f6;border:1px solid var(--border);border-radius:1rem;padding:1.2rem 1.4rem;margin-top:1.4rem;overflow-x:auto;overflow-y:hidden;white-space:nowrap;color:#111827;max-width:100%;display:block;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
-    .card .mono::-webkit-scrollbar{height:4px}
-    .card .mono::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:999px}
-    .card .mono .dim{color:#9ca3af}
-    .copy{position:relative}
-    .copy-btn{position:absolute;top:0.8rem;right:0.8rem;font-size:1.1rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--grey);background:var(--white);border:1px solid var(--border);padding:0.5rem 0.9rem;border-radius:999px}
-    .copy-btn:hover{color:var(--black)}
-    .table-wrap{background:var(--white);border:1px solid var(--border);border-radius:2.2rem;overflow:auto;box-shadow:0 0.8rem 2.8rem rgba(0,0,0,0.05);-webkit-overflow-scrolling:touch;scrollbar-width:thin}
-    table{width:100%;border-collapse:collapse;font-size:1.35rem}
-    th{font-size:1.05rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--grey);font-weight:600;text-align:left;padding:1.5rem 2rem;background:#fcfcfd;border-bottom:1px solid var(--border)}
-    td{padding:1.35rem 2rem;border-bottom:1px solid #f3f4f6;color:#1f2937;vertical-align:middle}
-    tr:last-child td{border-bottom:0}
-    tbody tr{transition:background 0.15s}
-    tbody tr:hover{background:#fcfcfe}
-    tr.is-featured{background:#f5f3ff !important}
-    tr.is-featured td{border-bottom-color:#ede9fe}
-    .size-badge{font-variant-numeric:tabular-nums}
-    .tag{font-family:'JetBrains Mono',monospace;font-size:1.15rem;background:#f3f4f6;border:1px solid var(--border);padding:0.22rem 0.6rem;border-radius:0.6rem;color:#111;white-space:nowrap}
-    .dl-btn{display:inline-flex;align-items:center;gap:0.45rem;height:3.2rem;padding:0 1.3rem;border-radius:999px;background:var(--black);color:var(--white);font-size:1.2rem;font-weight:500;white-space:nowrap;transition:background 0.2s,scale 0.2s var(--ease-spring)}
-    .dl-btn:hover{background:#2a2a2a;scale:1.02}
-    .dl-btn:active{scale:0.96}
-    .dl-btn svg{width:1.3rem;height:1.3rem;opacity:0.9}
-    .os{display:inline-flex;align-items:center;gap:0.7rem;font-weight:500;color:var(--black);white-space:nowrap}
-    .os i{width:2.2rem;height:2.2rem;border-radius:0.6rem;display:grid;place-items:center;background:#f3f4f6;border:1px solid var(--border);color:var(--muted);flex:0 0 auto}
-    .os i svg{width:1.3rem;height:1.3rem}
-    .arch{color:var(--muted);font-size:1.25rem;white-space:nowrap}
-    .verify{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
-    @media(max-width:860px){.verify{grid-template-columns:1fr}}
-    .callout{border:1px solid #e0e7ff;background:#f5f3ff;border-radius:2rem;padding:2rem 2.2rem;display:flex;gap:1.4rem;align-items:flex-start;min-width:0;overflow:hidden}
-    .callout i{width:2.8rem;height:2.8rem;border-radius:50%;background:var(--violet);color:var(--white);display:grid;place-items:center;flex:0 0 auto;font-style:normal;font-size:1.4rem;font-weight:600}
-    .callout p{font-size:1.35rem;line-height:1.6;color:#374151;min-width:0;overflow-wrap:break-word;word-break:break-word}
-    .callout .tag{display:inline;word-break:break-all;overflow-wrap:anywhere;white-space:normal}
-    .steps{counter-reset:s}
-    .step{display:grid;grid-template-columns:3.2rem 1fr;gap:1.4rem;padding:1.8rem 0;border-bottom:1px solid var(--border2)}
-    .step:last-child{border-bottom:0}
-    .step i{width:3.2rem;height:3.2rem;border-radius:50%;background:var(--black);color:var(--white);display:grid;place-items:center;font-style:normal;font-size:1.3rem;font-weight:600}
-    .step h4{font-size:1.5rem;font-weight:600;letter-spacing:-0.01em}
-    .step p{font-size:1.35rem;line-height:1.6;color:var(--muted);margin-top:0.4rem}
-    footer{padding:5rem 0 4rem;border-top:1px solid var(--border);margin-top:4rem;display:flex;justify-content:space-between;gap:2rem;flex-wrap:wrap;font-size:1.25rem;color:var(--grey)}
-    @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto} .nav-cta,.nav-toggle,.nav-drawer,.site-nav .nav-link{transition:none !important} *{animation:none !important}}
-    @media(max-width:1024px){html{font-size:0.85vw}.site-logo{top:2.4rem;left:2.4rem;width:4.2rem;height:4.2rem}.site-nav{top:2.4rem;right:2.4rem}.wrap{padding:0 2.4rem}.hero{padding-top:11rem}.hero h1{font-size:4.4rem}}
-    @media(max-width:640px){html{font-size:2.7vw}.cards{grid-template-columns:1fr}th,td{padding:1.2rem 1.4rem}.hero h1{font-size:3.6rem}}
+    /* ── Reset ───────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; border: 0; }
+    html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { font: inherit; cursor: pointer; background: none; color: inherit; }
+    a:focus-visible, button:focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 2px; border-radius: 6px; }
+
+    /* ── Design tokens (shadcn/ui light) ────────────────────── */
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 240 10% 3.9%;
+      --card: 0 0% 100%;
+      --card-foreground: 240 10% 3.9%;
+      --popover: 0 0% 100%;
+      --popover-foreground: 240 10% 3.9%;
+      --primary: 240 5.9% 10%;
+      --primary-foreground: 0 0% 98%;
+      --secondary: 240 4.8% 95.9%;
+      --secondary-foreground: 240 5.9% 10%;
+      --muted: 240 4.8% 95.9%;
+      --muted-foreground: 240 3.8% 46.1%;
+      --accent: 240 4.8% 95.9%;
+      --accent-foreground: 240 5.9% 10%;
+      --destructive: 0 84.2% 60.2%;
+      --border: 240 5.9% 90%;
+      --input: 240 5.9% 90%;
+      --ring: 240 5.9% 10%;
+      --radius: 0.5rem;
+      /* brand violet */
+      --violet: 256 89% 66%;
+      --violet-fg: 0 0% 100%;
+      --violet-muted: 256 89% 96%;
+      --violet-border: 256 89% 88%;
+      /* code */
+      --code-bg: 240 10% 7%;
+      --code-fg: 213 31% 91%;
+      --code-muted: 220 9% 46%;
+      --code-dim: 240 6% 35%;
+    }
+
+    /* ── Base ───────────────────────────────────────────────── */
+    body {
+      font-family: 'Geist', -apple-system, 'Helvetica Neue', sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      color: hsl(var(--foreground));
+      background: hsl(var(--background));
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Subtle page background ─────────────────────────────── */
+    .page-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, hsl(256 89% 66% / 0.06) 0%, transparent 70%),
+        hsl(var(--background));
+    }
+
+    /* ── Top Navigation ─────────────────────────────────────── */
+    .site-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      height: 60px;
+      border-bottom: 1px solid hsl(var(--border));
+      background: hsl(var(--background) / 0.85);
+      backdrop-filter: blur(16px) saturate(1.5);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      gap: 0;
+    }
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+      color: hsl(var(--foreground));
+      margin-right: 32px;
+      flex-shrink: 0;
+    }
+    .header-logo img {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      object-fit: cover;
+    }
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+    }
+    .nav-item {
+      font-size: 13.5px;
+      font-weight: 450;
+      color: hsl(var(--muted-foreground));
+      padding: 5px 12px;
+      border-radius: calc(var(--radius) - 2px);
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav-item:hover { color: hsl(var(--foreground)); background: hsl(var(--muted)); }
+    .nav-item.active { color: hsl(var(--foreground)); font-weight: 500; background: hsl(var(--muted)); }
+    .header-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 6px;
+      height: 32px; padding: 0 14px;
+      border: 1px solid hsl(var(--border));
+      border-radius: var(--radius);
+      font-size: 13px; font-weight: 500;
+      color: hsl(var(--foreground));
+      background: transparent;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .btn-outline:hover { background: hsl(var(--muted)); }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 6px;
+      height: 32px; padding: 0 14px;
+      border-radius: var(--radius);
+      font-size: 13px; font-weight: 500;
+      color: hsl(var(--primary-foreground));
+      background: hsl(var(--primary));
+      transition: opacity 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.88; }
+    /* Mobile nav toggle */
+    .nav-toggle {
+      display: none; width: 34px; height: 34px;
+      border: 1px solid hsl(var(--border)); border-radius: var(--radius);
+      align-items: center; justify-content: center; flex-direction: column;
+      gap: 4px; background: transparent; cursor: pointer; margin-left: auto;
+    }
+    .nav-toggle span {
+      display: block; width: 16px; height: 1.5px;
+      background: hsl(var(--foreground)); border-radius: 2px;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] span:nth-child(2) { transform: translateY(-5.5px) rotate(-45deg); }
+    .nav-drawer {
+      position: fixed; top: 60px; left: 0; right: 0;
+      background: hsl(var(--background));
+      border-bottom: 1px solid hsl(var(--border));
+      padding: 12px 16px 16px;
+      display: flex; flex-direction: column; gap: 2px;
+      transform: translateY(-110%); opacity: 0; pointer-events: none;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s;
+      z-index: 49;
+    }
+    .nav-drawer.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+    .nav-drawer a {
+      font-size: 14px; font-weight: 500; padding: 10px 12px;
+      border-radius: var(--radius); color: hsl(var(--muted-foreground));
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav-drawer a:hover, .nav-drawer a.active { color: hsl(var(--foreground)); background: hsl(var(--muted)); }
+    .nav-drawer-github {
+      margin-top: 8px; display: flex; align-items: center; justify-content: center;
+      gap: 6px; height: 38px; border-radius: var(--radius);
+      background: hsl(var(--primary)); color: hsl(var(--primary-foreground));
+      font-size: 14px; font-weight: 500;
+    }
+    @media (max-width: 640px) {
+      .header-nav, .header-actions { display: none; }
+      .nav-toggle { display: flex; }
+    }
+
+    /* ── Page layout ─────────────────────────────────────────── */
+    .page { max-width: 900px; margin: 0 auto; padding: 96px 24px 80px; }
+
+    /* ── Page hero ───────────────────────────────────────────── */
+    .hero { padding-bottom: 48px; border-bottom: 1px solid hsl(var(--border)); }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11.5px; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: hsl(var(--violet));
+      background: hsl(var(--violet-muted)); border: 1px solid hsl(var(--violet-border));
+      padding: 3px 10px; border-radius: 999px; margin-bottom: 16px;
+    }
+    .hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: hsl(var(--violet)); }
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 700; letter-spacing: -0.035em; line-height: 1.1;
+      color: hsl(var(--foreground));
+    }
+    .hero h1 em { font-weight: 300; color: hsl(var(--muted-foreground)); font-style: normal; }
+    .hero-desc {
+      font-size: 15px; line-height: 1.7; color: hsl(var(--muted-foreground));
+      max-width: 560px; margin-top: 12px;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+    .hero-btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      height: 40px; padding: 0 20px; border-radius: var(--radius);
+      font-size: 14px; font-weight: 600;
+      color: hsl(var(--primary-foreground));
+      background: hsl(var(--primary));
+      transition: opacity 0.15s;
+    }
+    .hero-btn-primary:hover { opacity: 0.88; }
+    .hero-btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      height: 40px; padding: 0 20px; border-radius: var(--radius);
+      font-size: 14px; font-weight: 500;
+      border: 1px solid hsl(var(--border));
+      color: hsl(var(--foreground));
+      background: hsl(var(--background));
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .hero-btn-secondary:hover { background: hsl(var(--muted)); }
+    .hero-meta {
+      font-size: 12.5px; color: hsl(var(--muted-foreground)); margin-top: 14px;
+      display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+    }
+    .hero-meta a { color: hsl(var(--violet)); font-weight: 500; }
+    .hero-meta a:hover { text-decoration: underline; }
+    .hero-meta-sep { color: hsl(var(--border)); }
+
+    /* ── Section ─────────────────────────────────────────────── */
+    .section { padding: 40px 0; border-bottom: 1px solid hsl(var(--border)); }
+    .section:last-child { border-bottom: none; }
+    .section-header { margin-bottom: 20px; }
+    .section-title {
+      font-size: 18px; font-weight: 600; letter-spacing: -0.02em;
+      color: hsl(var(--foreground));
+    }
+    .section-title span { font-weight: 400; color: hsl(var(--muted-foreground)); }
+    .section-desc {
+      font-size: 13.5px; line-height: 1.65; color: hsl(var(--muted-foreground));
+      margin-top: 6px;
+    }
+
+    /* ── Install tabs ────────────────────────────────────────── */
+    .tab-list {
+      display: flex; gap: 0; border: 1px solid hsl(var(--border));
+      border-radius: var(--radius); padding: 3px;
+      background: hsl(var(--muted)); width: fit-content; margin-bottom: 20px;
+    }
+    .tab-btn {
+      display: flex; align-items: center; gap: 7px;
+      padding: 6px 14px; border-radius: calc(var(--radius) - 2px);
+      font-size: 13px; font-weight: 500;
+      color: hsl(var(--muted-foreground));
+      transition: color 0.15s, background 0.15s, box-shadow 0.15s;
+      border: 1px solid transparent;
+    }
+    .tab-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+    .tab-btn.active {
+      color: hsl(var(--foreground));
+      background: hsl(var(--background));
+      border-color: hsl(var(--border));
+      box-shadow: 0 1px 3px hsl(0 0% 0% / 0.08);
+    }
+    .tab-btn:hover:not(.active) { color: hsl(var(--foreground)); }
+
+    /* ── Install card ────────────────────────────────────────── */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    .install-card {
+      border: 1px solid hsl(var(--border));
+      border-radius: calc(var(--radius) + 4px);
+      overflow: hidden;
+      background: hsl(var(--card));
+      box-shadow: 0 1px 4px hsl(0 0% 0% / 0.06);
+      transition: box-shadow 0.2s;
+    }
+    .install-card:hover { box-shadow: 0 4px 16px hsl(0 0% 0% / 0.09); }
+    .install-card-header {
+      padding: 20px 22px 16px;
+      display: flex; align-items: flex-start; gap: 14px;
+      border-bottom: 1px solid hsl(var(--border));
+    }
+    .install-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: grid; place-items: center; flex-shrink: 0;
+      border: 1px solid hsl(var(--border));
+    }
+    .install-icon svg { width: 20px; height: 20px; }
+    .install-icon.violet { background: hsl(var(--violet-muted)); color: hsl(var(--violet)); border-color: hsl(var(--violet-border)); }
+    .install-icon.dark { background: hsl(240 10% 10%); color: hsl(0 0% 90%); border-color: hsl(240 10% 20%); }
+    .install-icon.green { background: hsl(142 72% 96%); color: hsl(142 72% 35%); border-color: hsl(142 72% 85%); }
+    .install-card-meta { flex: 1; min-width: 0; }
+    .install-card-meta h3 { font-size: 15px; font-weight: 600; letter-spacing: -0.015em; }
+    .install-card-meta p { font-size: 13px; color: hsl(var(--muted-foreground)); margin-top: 2px; line-height: 1.5; }
+    .install-badge {
+      flex-shrink: 0; font-size: 11px; font-weight: 600; letter-spacing: 0.07em;
+      text-transform: uppercase; padding: 3px 9px; border-radius: 999px;
+      border: 1px solid; align-self: flex-start; margin-top: 2px;
+    }
+    .install-badge.violet { color: hsl(var(--violet)); background: hsl(var(--violet-muted)); border-color: hsl(var(--violet-border)); }
+    .install-badge.muted { color: hsl(var(--muted-foreground)); background: hsl(var(--muted)); border-color: hsl(var(--border)); }
+    .install-card-body { padding: 16px 22px 20px; }
+    /* Code block */
+    .code-block {
+      position: relative;
+      background: hsl(var(--code-bg));
+      border-radius: calc(var(--radius) - 2px);
+      padding: 14px 16px;
+      overflow: hidden;
+    }
+    .code-block code {
+      font-family: 'Geist Mono', 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 13px; line-height: 1.7;
+      color: hsl(var(--code-fg));
+      white-space: pre-wrap; word-break: break-all;
+      display: block;
+      padding-right: 64px;
+    }
+    .code-block .dim { color: hsl(var(--code-dim)); }
+    .copy-btn {
+      position: absolute; top: 10px; right: 10px;
+      display: flex; align-items: center; gap: 5px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+      color: hsl(var(--code-muted));
+      background: hsl(240 10% 14%);
+      border: 1px solid hsl(240 10% 22%);
+      padding: 4px 10px; border-radius: 6px;
+      transition: color 0.15s, background 0.15s;
+    }
+    .copy-btn:hover { color: hsl(var(--code-fg)); background: hsl(240 10% 18%); }
+    .install-foot {
+      display: flex; flex-wrap: wrap; gap: 8px 16px;
+      font-size: 12.5px; color: hsl(var(--muted-foreground));
+      margin-top: 12px; align-items: center;
+    }
+    .install-foot code {
+      font-family: 'Geist Mono', monospace; font-size: 12px;
+      background: hsl(var(--muted)); border: 1px solid hsl(var(--border));
+      padding: 1px 6px; border-radius: 4px; color: hsl(var(--foreground));
+    }
+
+    /* ── Build-from-source note ──────────────────────────────── */
+    .source-note {
+      margin-top: 14px;
+      padding: 12px 16px;
+      background: hsl(var(--muted) / 0.5);
+      border: 1px dashed hsl(var(--border));
+      border-radius: var(--radius);
+      font-size: 13px; color: hsl(var(--muted-foreground));
+      display: flex; align-items: center; flex-wrap: wrap; gap: 6px;
+    }
+    .source-note code {
+      font-family: 'Geist Mono', monospace; font-size: 12px;
+      background: hsl(var(--background)); border: 1px solid hsl(var(--border));
+      padding: 1px 6px; border-radius: 4px; color: hsl(var(--foreground));
+    }
+    .source-note a { color: hsl(var(--violet)); font-weight: 600; }
+    .source-note a:hover { text-decoration: underline; }
+
+    /* ── Platform table ──────────────────────────────────────── */
+    .table-container {
+      border: 1px solid hsl(var(--border));
+      border-radius: calc(var(--radius) + 2px);
+      overflow: hidden;
+      background: hsl(var(--card));
+      box-shadow: 0 1px 4px hsl(0 0% 0% / 0.05);
+    }
+    .table-container table {
+      width: 100%; border-collapse: collapse; font-size: 13.5px;
+    }
+    .table-container thead tr { background: hsl(var(--muted) / 0.5); }
+    .table-container th {
+      font-size: 11.5px; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: hsl(var(--muted-foreground));
+      text-align: left; padding: 12px 18px;
+      border-bottom: 1px solid hsl(var(--border));
+    }
+    .table-container td {
+      padding: 13px 18px;
+      border-bottom: 1px solid hsl(var(--border) / 0.7);
+      color: hsl(var(--foreground));
+      vertical-align: middle;
+    }
+    .table-container tr:last-child td { border-bottom: none; }
+    .table-container tbody tr { transition: background 0.12s; }
+    .table-container tbody tr:hover { background: hsl(var(--muted) / 0.4); }
+    .table-container tbody tr.recommended { background: hsl(var(--violet-muted) / 0.4); }
+    .table-container tbody tr.recommended:hover { background: hsl(var(--violet-muted) / 0.6); }
+
+    /* OS cell */
+    .os-cell { display: flex; align-items: center; gap: 10px; }
+    .os-icon {
+      width: 28px; height: 28px; border-radius: 7px;
+      display: grid; place-items: center; flex-shrink: 0;
+      background: hsl(var(--muted)); border: 1px solid hsl(var(--border));
+      color: hsl(var(--muted-foreground));
+    }
+    .os-icon svg { width: 14px; height: 14px; }
+    .os-name { font-weight: 500; font-size: 13.5px; }
+    .os-sub { font-size: 12px; color: hsl(var(--muted-foreground)); }
+
+    /* arch tag */
+    .arch-tag {
+      display: inline-flex; align-items: center;
+      font-family: 'Geist Mono', monospace; font-size: 12px;
+      background: hsl(var(--muted)); border: 1px solid hsl(var(--border));
+      padding: 2px 8px; border-radius: 5px; color: hsl(var(--foreground));
+      white-space: nowrap;
+    }
+    /* filename tag */
+    .file-tag {
+      display: inline-flex; align-items: center;
+      font-family: 'Geist Mono', monospace; font-size: 11.5px;
+      background: hsl(var(--muted) / 0.6); border: 1px solid hsl(var(--border));
+      padding: 2px 7px; border-radius: 5px; color: hsl(var(--foreground));
+      max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    /* download button */
+    .dl-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      height: 30px; padding: 0 12px;
+      border-radius: var(--radius);
+      background: hsl(var(--primary)); color: hsl(var(--primary-foreground));
+      font-size: 12px; font-weight: 600; white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .dl-btn:hover { opacity: 0.88; }
+    .dl-btn svg { width: 12px; height: 12px; }
+
+    /* recommended badge */
+    .rec-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 10.5px; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: hsl(var(--violet));
+      background: hsl(var(--violet-muted)); border: 1px solid hsl(var(--violet-border));
+      padding: 2px 7px; border-radius: 999px; margin-left: 6px;
+    }
+
+    /* table meta footer */
+    .table-footer {
+      padding: 10px 18px;
+      background: hsl(var(--muted) / 0.3);
+      border-top: 1px solid hsl(var(--border));
+      font-size: 12px; color: hsl(var(--muted-foreground));
+      display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+    }
+    .table-footer a { color: hsl(var(--violet)); font-weight: 500; }
+    .table-footer a:hover { text-decoration: underline; }
+    .table-footer code {
+      font-family: 'Geist Mono', monospace; font-size: 11.5px;
+      background: hsl(var(--background)); border: 1px solid hsl(var(--border));
+      padding: 1px 5px; border-radius: 4px; color: hsl(var(--foreground));
+    }
+
+    /* ── Verify section ──────────────────────────────────────── */
+    .verify-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+    @media (max-width: 640px) { .verify-grid { grid-template-columns: 1fr; } }
+    .verify-card {
+      background: hsl(var(--card)); border: 1px solid hsl(var(--border));
+      border-radius: calc(var(--radius) + 2px); padding: 16px 18px;
+      display: flex; gap: 12px; align-items: flex-start;
+    }
+    .verify-icon {
+      width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+      display: grid; place-items: center; font-size: 16px;
+    }
+    .verify-icon.violet { background: hsl(var(--violet-muted)); }
+    .verify-icon.slate { background: hsl(var(--muted)); }
+    .verify-card h4 { font-size: 13px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 3px; }
+    .verify-card p { font-size: 12.5px; line-height: 1.55; color: hsl(var(--muted-foreground)); }
+    /* Multi-line code block */
+    .code-block.multiline code {
+      white-space: pre; overflow-x: auto; word-break: normal;
+      padding-right: 70px; scrollbar-width: thin;
+    }
+    .code-block.multiline code::-webkit-scrollbar { height: 4px; }
+    .code-block.multiline code::-webkit-scrollbar-thumb { background: hsl(240 10% 22%); border-radius: 2px; }
+
+    /* ── Callout ─────────────────────────────────────────────── */
+    .callout {
+      display: flex; gap: 12px; align-items: flex-start;
+      padding: 14px 16px; border-radius: var(--radius);
+      border: 1px solid hsl(var(--violet-border));
+      background: hsl(var(--violet-muted) / 0.5);
+      font-size: 13px; line-height: 1.6; color: hsl(var(--foreground));
+      margin-top: 16px;
+    }
+    .callout-icon {
+      width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+      background: hsl(var(--violet)); color: hsl(var(--violet-fg));
+      display: grid; place-items: center; font-size: 11px; font-weight: 700;
+      margin-top: 1px;
+    }
+    .callout a { color: hsl(var(--violet)); font-weight: 600; }
+    .callout a:hover { text-decoration: underline; }
+
+    /* ── Footer ──────────────────────────────────────────────── */
+    .site-footer {
+      border-top: 1px solid hsl(var(--border));
+      padding: 28px 0 24px;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 16px; flex-wrap: wrap;
+      font-size: 12.5px; color: hsl(var(--muted-foreground));
+    }
+    .site-footer a { transition: color 0.15s; }
+    .site-footer a:hover { color: hsl(var(--foreground)); }
+    .footer-links { display: flex; gap: 20px; }
+
+    /* ── Responsiveness ──────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .page { padding: 76px 16px 60px; }
+      .tab-list { width: 100%; overflow-x: auto; }
+      .table-container { overflow-x: auto; }
+      .table-container table { min-width: 560px; }
+    }
+    @media (max-width: 860px) {
+      .install-card-header { flex-wrap: wrap; }
+    }
+
+    /* ── Size badge inline ───────────────────────────────────── */
+    .size-badge {
+      font-size: 11.5px; color: hsl(var(--muted-foreground));
+      font-family: 'Geist Mono', monospace; margin-left: 6px;
+    }
+
+    /* ── Scrollbar ───────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 3px; }
   </style>
 </head>
 <body>
-  <div id="bg-scene" aria-hidden="true"><i class="bg-grain"></i><i class="bg-vignette"></i></div>
-  <div id="edge-fade" aria-hidden="true"></div>
-  <a class="site-logo" href="index.html" aria-label="GlassMarble — back to overview"><img src="assets/LOGO_PIXEL.png" alt="GlassMarble"></a>
-  <nav class="site-nav" aria-label="Primary">
-    <a href="index.html" class="nav-link" data-nav="overview">Overview</a>
-    <a href="downloads.html" class="nav-link is-active" data-nav="download" aria-current="page">Download</a>
-    <a href="docs.html" class="nav-link" data-nav="docs">Docs</a>
-    <a href="https://github.com/Syamchand123/GlassMarble" target="_blank" rel="noopener" class="nav-cta">GitHub <span aria-hidden="true">↗</span></a>
-    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navDrawer"><span></span><span></span></button>
-  </nav>
+  <div class="page-bg" aria-hidden="true"></div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <a class="header-logo" href="index.html" aria-label="GlassMarble home">
+      <img src="assets/LOGO_PIXEL.png" alt="GlassMarble">
+      GlassMarble
+    </a>
+    <nav class="header-nav" aria-label="Primary">
+      <a href="index.html" class="nav-item" data-nav="overview">Overview</a>
+      <a href="downloads.html" class="nav-item active" data-nav="download" aria-current="page">Download</a>
+      <a href="docs.html" class="nav-item" data-nav="docs">Docs</a>
+    </nav>
+    <div class="header-actions">
+      <a href="https://github.com/Syamchand123/GlassMarble" target="_blank" rel="noopener" class="btn-outline">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+        GitHub
+      </a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navDrawer">
+      <span></span><span></span>
+    </button>
+  </header>
+
   <div class="nav-drawer" id="navDrawer" hidden>
     <a href="index.html" data-nav="overview">Overview</a>
-    <a href="downloads.html" data-nav="download">Download</a>
+    <a href="downloads.html" class="active" data-nav="download">Download</a>
     <a href="docs.html" data-nav="docs">Docs</a>
-    <a href="https://github.com/Syamchand123/GlassMarble" target="_blank" rel="noopener" class="nav-drawer-cta">GitHub ↗</a>
+    <a href="https://github.com/Syamchand123/GlassMarble" target="_blank" rel="noopener" class="nav-drawer-github">
+      GitHub ↗
+    </a>
   </div>
 
-  <main class="wrap">
+  <div class="page">
+    <!-- Hero -->
     <header class="hero">
-      <h1>Download <em>GlassMarble.</em><br>One binary. Every platform.</h1>
-      <p>17 languages → one deterministic GraphJSON → 31 living diagrams, governance, and grounded AI. No backend. No account. Just <code style="font-family:JetBrains Mono,monospace;background:#fff;border:1px solid #e4e4e4;padding:0.15rem 0.5rem;border-radius:0.5rem">gmb</code>.</p>
-      <div class="hero-actions">
-        <a class="btn btn-dark" href="https://github.com/Syamchand123/GlassMarble/releases/tag/v1.0.0">View v1.0.0 release →</a>
-        <a class="btn btn-light" href="https://github.com/Syamchand123/GlassMarble">Star on GitHub ☆</a>
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        <span id="dl-badge-ver">latest</span> · MIT · Free
       </div>
-      <p class="meta">Checksums + Cosign + SBOM + SLSA published per release. Installers verify <span class="tag">checksums.txt</span> automatically. <a href="docs.html#getting-started-verify">Verify a release</a></p>
+      <h1>Download <em>GlassMarble.</em><br>One binary. Every platform.</h1>
+      <p class="hero-desc">17 languages → one deterministic GraphJSON → 31 living diagrams, governance, and grounded AI. No backend. No account. Just <code style="font-family:'Geist Mono',monospace;background:hsl(var(--muted));border:1px solid hsl(var(--border));padding:1px 6px;border-radius:4px;font-size:13px">gmb</code>.</p>
+      <div class="hero-actions">
+        <a class="hero-btn-primary" id="dl-release-btn" href="https://github.com/Syamchand123/GlassMarble/releases/latest" target="_blank" rel="noopener">
+          View latest release
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </a>
+        <a class="hero-btn-secondary" href="https://github.com/Syamchand123/GlassMarble" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+          Star on GitHub
+        </a>
+      </div>
+      <p class="hero-meta">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        Checksums · Cosign · SBOM · SLSA per release
+        <span class="hero-meta-sep">·</span>
+        Installers verify <code style="font-family:'Geist Mono',monospace;font-size:11.5px;background:hsl(var(--muted));border:1px solid hsl(var(--border));padding:1px 5px;border-radius:3px">checksums.txt</code> automatically
+        <span class="hero-meta-sep">·</span>
+        <a href="docs.html#getting-started-verify">Verify a release →</a>
+      </p>
     </header>
 
+    <!-- Quick Install -->
     <section class="section" id="quick">
-      <h2>Quick install <span>— pick your OS, one command</span></h2>
-      <p class="lead">Same static binary everywhere — <code>gmb</code> and <code>glassmarble</code> are aliases. No daemon, no service, just PATH.</p>
+      <div class="section-header">
+        <h2 class="section-title">Quick install <span>— pick your OS, one command</span></h2>
+        <p class="section-desc">Same static binary everywhere — <code style="font-family:'Geist Mono',monospace;background:hsl(var(--muted));border:1px solid hsl(var(--border));padding:1px 5px;border-radius:3px;font-size:12px">gmb</code> and <code style="font-family:'Geist Mono',monospace;background:hsl(var(--muted));border:1px solid hsl(var(--border));padding:1px 5px;border-radius:3px;font-size:12px">glassmarble</code> are aliases. No daemon, no service, just PATH.</p>
+      </div>
 
-      <div class="install-stack">
-        <div class="install-item is-featured">
-          <div class="install-head">
-            <div class="install-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 4v8l-7 4-7-4V7l7-4z"/><path d="M12 7v10"/><path d="M5 7l7 4 7-4"/><path d="M5 12l7 4 7-4"/></svg>
+      <!-- OS Tabs -->
+      <div class="tab-list" role="tablist" aria-label="Operating systems">
+        <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-mac" id="btn-mac" data-tab="mac">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          macOS
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-linux" id="btn-linux" data-tab="linux">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.88-.38 1.102-.511.23-.132.43-.285.601-.507l.087-.087c.747-.31 1.474-.951 2.132-1.693.836-.94 1.58-2.012 2.124-2.979.273-.485.494-.964.638-1.4.132-.428.196-.829.19-1.2-.132-1.245-.944-2.103-1.84-2.7-.896-.6-1.91-.98-2.81-1.6-.9-.62-1.73-1.459-2.084-2.682l-.04-.143c-.037-.14-.068-.276-.094-.41-.022-.107-.034-.234-.034-.355.001-.165.013-.38.064-.62.087-.38.2-.77.387-1.113.187-.343.434-.614.774-.745.17-.065.352-.103.534-.107.42 0 .99.175 1.65.617.34.225.724.541 1.088.819.37.28.715.54 1.01.67.295.13.56.15.79.054.23-.097.406-.28.56-.543.155-.264.275-.588.375-.915.1-.327.18-.657.24-.971.06-.314.1-.611.1-.871 0-.348-.05-.635-.15-.837-.11-.207-.28-.336-.52-.383a1.408 1.408 0 00-.298-.03z"/></svg>
+          Linux
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-win" id="btn-win" data-tab="win">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 12V6.75l6-1.32v6.57H3zm17 0V5.1L11 3.5V12h9zm-17 1h6v6.31L3 18V13zm17 0h-9v8.5l9-1.55V13z"/></svg>
+          Windows
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-go" id="btn-go" data-tab="go">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.811 10.231c-.047 0-.058-.023-.035-.059l.246-.315c.023-.035.081-.058.128-.058h4.172c.046 0 .058.035.035.07l-.199.303c-.023.036-.082.07-.117.07l-4.23-.011zM.047 11.306c-.047 0-.059-.023-.035-.058l.245-.316c.023-.035.082-.058.129-.058h5.328c.047 0 .07.035.058.07l-.093.28c-.012.047-.058.07-.105.07l-5.527.012zm2.828 1.075c-.047 0-.059-.035-.035-.07l.163-.292c.023-.035.07-.07.117-.07h2.337c.047 0 .07.035.07.082l-.023.28c0 .047-.047.082-.082.082l-2.547-.012zM18.439 7.43c-.854.234-1.473.409-2.315.643-.21.059-.222.07-.397-.14-.199-.234-.35-.386-.63-.527-.842-.433-1.66-.303-2.431.14-.912.525-1.379 1.344-1.367 2.42.012 1.064.746 1.94 1.8 2.104.91.14 1.672-.164 2.268-.831.129-.152.245-.315.374-.491h-2.385c-.292 0-.362-.187-.268-.432.187-.468.527-1.252.726-1.648.058-.128.187-.339.455-.339h5.14c-.012.187-.012.374-.035.561-.116.901-.397 1.731-.853 2.502-.784 1.31-1.86 2.163-3.372 2.455-1.253.233-2.409.07-3.443-.668-1.12-.785-1.695-1.847-1.743-3.208-.047-1.4.409-2.655 1.32-3.732.972-1.16 2.199-1.88 3.68-2.128 1.24-.21 2.42-.07 3.476.676.7.479 1.19 1.12 1.472 1.93.058.152-.012.234-.176.258z"/></svg>
+          Go toolchain
+        </button>
+      </div>
+
+      <!-- macOS -->
+      <div class="tab-panel active" id="tab-mac" role="tabpanel" aria-labelledby="btn-mac">
+        <div class="install-card">
+          <div class="install-card-header">
+            <div class="install-icon violet">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
             </div>
-            <div class="install-meta">
+            <div class="install-card-meta">
               <h3>macOS &amp; Linux</h3>
-              <p>One-liner via <code>curl</code> — installs to <code>/usr/local/bin</code> or <code>~/.local/bin</code></p>
+              <p>One-liner via <code style="font-family:'Geist Mono',monospace;font-size:12px;background:hsl(var(--muted));border:1px solid hsl(var(--border));padding:1px 5px;border-radius:3px">curl</code> — installs to <code style="font-family:'Geist Mono',monospace;font-size:12px;background:hsl(var(--muted));border:1px solid hsl(var(--border));padding:1px 5px;border-radius:3px">/usr/local/bin</code> or <code style="font-family:'Geist Mono',monospace;font-size:12px;background:hsl(var(--muted));border:1px solid hsl(var(--border));padding:1px 5px;border-radius:3px">~/.local/bin</code></p>
             </div>
-            <span class="install-badge">Terminal</span>
+            <span class="install-badge violet">Recommended</span>
           </div>
-          <div class="install-code">
-            <code>curl -fsSL https://raw.githubusercontent.com/Syamchand123/GlassMarble/main/install.sh | sh</code>
-            <button class="install-copy" data-copy="curl -fsSL https://raw.githubusercontent.com/Syamchand123/GlassMarble/main/install.sh | sh">Copy</button>
-          </div>
-          <div class="install-foot">
-            <span>Auto-added to PATH · <span class="hint">then: <code>gmb version</code></span></span>
-            <span style="margin-left:auto;font-size:1.15rem;color:var(--grey)">Supports glibc / musl · arm64 &amp; amd64</span>
-          </div>
-        </div>
-
-        <div class="install-item">
-          <div class="install-head">
-            <div class="install-icon is-dark" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>
+          <div class="install-card-body">
+            <div class="code-block">
+              <code>curl -fsSL https://raw.githubusercontent.com/Syamchand123/GlassMarble/main/install.sh | sh</code>
+              <button class="copy-btn" data-copy="curl -fsSL https://raw.githubusercontent.com/Syamchand123/GlassMarble/main/install.sh | sh">Copy</button>
             </div>
-            <div class="install-meta">
-              <h3>Windows</h3>
-              <p>PowerShell 5.1+ via <code>irm | iex</code> — User PATH</p>
+            <div class="install-foot">
+              <span>Auto-added to PATH</span>
+              <span>→ then: <code>gmb version</code></span>
+              <span style="margin-left:auto">Supports glibc / musl · arm64 &amp; amd64</span>
             </div>
-            <span class="install-badge is-muted">PowerShell</span>
-          </div>
-          <div class="install-code">
-            <code>irm https://raw.githubusercontent.com/Syamchand123/GlassMarble/main/install.ps1 | iex</code>
-            <button class="install-copy" data-copy="irm https://raw.githubusercontent.com/Syamchand123/GlassMarble/main/install.ps1 | iex">Copy</button>
-          </div>
-          <div class="install-foot">
-            <span>Installs to <code>%LOCALAPPDATA%\Programs\gmb</code></span>
-            <span class="hint">restart shell → <code>gmb version</code></span>
-          </div>
-        </div>
-
-        <div class="install-item">
-          <div class="install-head">
-            <div class="install-icon is-green" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 18l-2-6 4-3 5 0 4 3-2 6-4 2-5-2z"/><path d="M9 9l2 3 2-3"/><path d="M8 13h8"/></svg>
-            </div>
-            <div class="install-meta">
-              <h3>Go toolchain</h3>
-              <p>Works everywhere Go does — pin for reproducibility</p>
-            </div>
-            <span class="install-badge is-muted">Go 1.25+</span>
-          </div>
-          <div class="install-code">
-            <code>go install github.com/Syamchand123/GlassMarble@latest</code>
-            <button class="install-copy" data-copy="go install github.com/Syamchand123/GlassMarble@latest">Copy</button>
-          </div>
-          <div class="install-foot">
-            <span class="hint">Pin: <code>go install github.com/Syamchand123/GlassMarble@v1.0.0</code></span>
-            <span style="margin-left:auto;font-size:1.15rem;color:var(--grey)">CGO static · verifiable</span>
           </div>
         </div>
       </div>
 
-      <div class="install-alt">
-        <p><strong style="color:var(--black)">Build from source</strong> &nbsp; <span class="tag">git clone https://github.com/Syamchand123/GlassMarble.git && cd GlassMarble && make build</span> → <span class="tag">./gmb</span> · <span class="tag">make test</span> &nbsp; <a href="docs.html#getting-started-first-run" style="color:var(--violet);font-weight:600;white-space:nowrap">First run →</a></p>
+      <!-- Linux -->
+      <div class="tab-panel" id="tab-linux" role="tabpanel" aria-labelledby="btn-linux">
+        <div class="install-card">
+          <div class="install-card-header">
+            <div class="install-icon dark">
+              <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px"><path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.88-.38 1.102-.511.23-.132.43-.285.601-.507l.087-.087c.747-.31 1.474-.951 2.132-1.693.836-.94 1.58-2.012 2.124-2.979.273-.485.494-.964.638-1.4.132-.428.196-.829.19-1.2-.132-1.245-.944-2.103-1.84-2.7-.896-.6-1.91-.98-2.81-1.6-.9-.62-1.73-1.459-2.084-2.682l-.04-.143c-.037-.14-.068-.276-.094-.41-.022-.107-.034-.234-.034-.355.001-.165.013-.38.064-.62.087-.38.2-.77.387-1.113.187-.343.434-.614.774-.745.17-.065.352-.103.534-.107.42 0 .99.175 1.65.617.34.225.724.541 1.088.819.37.28.715.54 1.01.67.295.13.56.15.79.054.23-.097.406-.28.56-.543.155-.264.275-.588.375-.915.1-.327.18-.657.24-.971.06-.314.1-.611.1-.871 0-.348-.05-.635-.15-.837-.11-.207-.28-.336-.52-.383a1.408 1.408 0 00-.298-.03z"/></svg>
+            </div>
+            <div class="install-card-meta">
+              <h3>Linux</h3>
+              <p>Same installer script — works on glibc and musl (Alpine) systems.</p>
+            </div>
+            <span class="install-badge muted">Terminal</span>
+          </div>
+          <div class="install-card-body">
+            <div class="code-block">
+              <code>curl -fsSL https://raw.githubusercontent.com/Syamchand123/GlassMarble/main/install.sh | sh</code>
+              <button class="copy-btn" data-copy="curl -fsSL https://raw.githubusercontent.com/Syamchand123/GlassMarble/main/install.sh | sh">Copy</button>
+            </div>
+            <div class="install-foot">
+              <span>Installs to <code>/usr/local/bin</code> or <code>~/.local/bin</code></span>
+              <span style="margin-left:auto">glibc / musl · amd64 &amp; arm64</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Windows -->
+      <div class="tab-panel" id="tab-win" role="tabpanel" aria-labelledby="btn-win">
+        <div class="install-card">
+          <div class="install-card-header">
+            <div class="install-icon dark">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 12V6.75l6-1.32v6.57H3zm17 0V5.1L11 3.5V12h9zm-17 1h6v6.31L3 18V13zm17 0h-9v8.5l9-1.55V13z"/></svg>
+            </div>
+            <div class="install-card-meta">
+              <h3>Windows</h3>
+              <p>PowerShell 5.1+ via <code style="font-family:'Geist Mono',monospace;font-size:12px;background:hsl(var(--muted));border:1px solid hsl(var(--border));padding:1px 5px;border-radius:3px">irm | iex</code> — installs to User PATH</p>
+            </div>
+            <span class="install-badge muted">PowerShell</span>
+          </div>
+          <div class="install-card-body">
+            <div class="code-block">
+              <code>irm https://raw.githubusercontent.com/Syamchand123/GlassMarble/main/install.ps1 | iex</code>
+              <button class="copy-btn" data-copy="irm https://raw.githubusercontent.com/Syamchand123/GlassMarble/main/install.ps1 | iex">Copy</button>
+            </div>
+            <div class="install-foot">
+              <span>Installs to <code>%LOCALAPPDATA%\Programs\gmb</code></span>
+              <span>→ restart shell then: <code>gmb version</code></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Go toolchain -->
+      <div class="tab-panel" id="tab-go" role="tabpanel" aria-labelledby="btn-go">
+        <div class="install-card">
+          <div class="install-card-header">
+            <div class="install-icon green">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.811 10.231c-.047 0-.058-.023-.035-.059l.246-.315c.023-.035.081-.058.128-.058h4.172c.046 0 .058.035.035.07l-.199.303c-.023.036-.082.07-.117.07l-4.23-.011zM.047 11.306c-.047 0-.059-.023-.035-.058l.245-.316c.023-.035.082-.058.129-.058h5.328c.047 0 .07.035.058.07l-.093.28c-.012.047-.058.07-.105.07l-5.527.012zm2.828 1.075c-.047 0-.059-.035-.035-.07l.163-.292c.023-.035.07-.07.117-.07h2.337c.047 0 .07.035.07.082l-.023.28c0 .047-.047.082-.082.082l-2.547-.012zM18.439 7.43c-.854.234-1.473.409-2.315.643-.21.059-.222.07-.397-.14-.199-.234-.35-.386-.63-.527-.842-.433-1.66-.303-2.431.14-.912.525-1.379 1.344-1.367 2.42.012 1.064.746 1.94 1.8 2.104.91.14 1.672-.164 2.268-.831.129-.152.245-.315.374-.491h-2.385c-.292 0-.362-.187-.268-.432.187-.468.527-1.252.726-1.648.058-.128.187-.339.455-.339h5.14c-.012.187-.012.374-.035.561-.116.901-.397 1.731-.853 2.502-.784 1.31-1.86 2.163-3.372 2.455-1.253.233-2.409.07-3.443-.668-1.12-.785-1.695-1.847-1.743-3.208-.047-1.4.409-2.655 1.32-3.732.972-1.16 2.199-1.88 3.68-2.128 1.24-.21 2.42-.07 3.476.676.7.479 1.19 1.12 1.472 1.93.058.152-.012.234-.176.258z"/></svg>
+            </div>
+            <div class="install-card-meta">
+              <h3>Go toolchain</h3>
+              <p>Works everywhere Go does — pin for reproducibility. Requires Go 1.25+</p>
+            </div>
+            <span class="install-badge muted">Go 1.25+</span>
+          </div>
+          <div class="install-card-body">
+            <div class="code-block">
+              <code>go install github.com/Syamchand123/GlassMarble@latest</code>
+              <button class="copy-btn" data-copy="go install github.com/Syamchand123/GlassMarble@latest">Copy</button>
+            </div>
+            <div class="install-foot">
+              <span>Pin: <code>go install github.com/Syamchand123/GlassMarble@<span class="gm-ver-inline">latest</span></code></span>
+              <span style="margin-left:auto">CGO static · verifiable</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Build from source -->
+      <div class="source-note" style="margin-top:14px">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+        <strong>Build from source</strong>
+        <code>git clone https://github.com/Syamchand123/GlassMarble.git &amp;&amp; cd GlassMarble &amp;&amp; make build</code>
+        → <code>./gmb</code> · <code>make test</code>
+        &nbsp;<a href="docs.html#getting-started-first-run">First run →</a>
       </div>
     </section>
 
+    <!-- Platform matrix -->
     <section class="section" id="matrix">
-      <h2>Platform matrix <span>— every release ships all six</span></h2>
-      <p class="lead">Direct downloads from the <a href="https://github.com/Syamchand123/GlassMarble/releases" style="color:var(--violet);font-weight:500">GitHub release</a>. Both <span class="tag">gmb</span> and <span class="tag">glassmarble</span> binaries are inside each archive. Checksums are in <span class="tag">checksums.txt</span>.</p>
-      <div class="table-wrap">
+      <div class="section-header">
+        <h2 class="section-title">Platform matrix <span>— every release ships all six</span></h2>
+        <p class="section-desc">Direct downloads from the <a href="https://github.com/Syamchand123/GlassMarble/releases" style="color:hsl(var(--violet));font-weight:500">GitHub release</a>. Both <code style="font-family:'Geist Mono',monospace;font-size:12px;background:hsl(var(--muted));border:1px solid hsl(var(--border));padding:1px 5px;border-radius:3px">gmb</code> and <code style="font-family:'Geist Mono',monospace;font-size:12px;background:hsl(var(--muted));border:1px solid hsl(var(--border));padding:1px 5px;border-radius:3px">glassmarble</code> binaries are inside each archive.</p>
+      </div>
+
+      <div class="table-container">
         <table>
-          <thead><tr><th>Platform</th><th>Arch</th><th>File</th><th></th></tr></thead>
+          <thead>
+            <tr>
+              <th>Platform</th>
+              <th>Architecture</th>
+              <th>Archive</th>
+              <th style="text-align:right">Download</th>
+            </tr>
+          </thead>
           <tbody>
             <tr>
-              <td><span class="os"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2a6 6 0 0 0-1.8 11.7c.2.2.3.5.3.8v1.2a1.5 1.5 0 0 0 3 0v-1.2c0-.3.1-.6.3-.8A6 6 0 0 0 12 2z"/><path d="M9 18h6"/></svg></i>macOS 12+</span></td>
-              <td><span class="arch">arm64 <span style="color:#9f9f9f">(M1–M4)</span></span></td>
-              <td><span class="tag">gmb_v1.0.0_darwin_arm64.tar.gz</span></td>
-              <td style="text-align:right"><a class="dl-btn" href="https://github.com/Syamchand123/GlassMarble/releases/download/v1.0.0/gmb_v1.0.0_darwin_arm64.tar.gz">Download <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 3v9M3.5 8.5L8 13l4.5-4.5"/><path d="M2 13h12"/></svg></a></td>
+              <td>
+                <div class="os-cell">
+                  <div class="os-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                  </div>
+                  <div>
+                    <div class="os-name">macOS 12+</div>
+                    <div class="os-sub">Apple Silicon</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="arch-tag">arm64 <span style="color:hsl(var(--muted-foreground));margin-left:4px">M1–M4</span></span></td>
+              <td><span class="file-tag" data-asset="darwin_arm64.tar.gz">gmb_…_darwin_arm64.tar.gz</span></td>
+              <td style="text-align:right"><a class="dl-btn" data-asset="darwin_arm64.tar.gz" href="https://github.com/Syamchand123/GlassMarble/releases/latest">↓ Download</a></td>
             </tr>
             <tr>
-              <td><span class="os"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2a6 6 0 0 0-1.8 11.7c.2.2.3.5.3.8v1.2a1.5 1.5 0 0 0 3 0v-1.2c0-.3.1-.6.3-.8A6 6 0 0 0 12 2z"/><path d="M9 18h6"/></svg></i>macOS 12+</span></td>
-              <td><span class="arch">amd64 <span style="color:#9f9f9f">(Intel)</span></span></td>
-              <td><span class="tag">gmb_v1.0.0_darwin_amd64.tar.gz</span></td>
-              <td style="text-align:right"><a class="dl-btn" href="https://github.com/Syamchand123/GlassMarble/releases/download/v1.0.0/gmb_v1.0.0_darwin_amd64.tar.gz">Download <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 3v9M3.5 8.5L8 13l4.5-4.5"/><path d="M2 13h12"/></svg></a></td>
+              <td>
+                <div class="os-cell">
+                  <div class="os-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                  </div>
+                  <div>
+                    <div class="os-name">macOS 12+</div>
+                    <div class="os-sub">Intel</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="arch-tag">amd64 <span style="color:hsl(var(--muted-foreground));margin-left:4px">Intel</span></span></td>
+              <td><span class="file-tag" data-asset="darwin_amd64.tar.gz">gmb_…_darwin_amd64.tar.gz</span></td>
+              <td style="text-align:right"><a class="dl-btn" data-asset="darwin_amd64.tar.gz" href="https://github.com/Syamchand123/GlassMarble/releases/latest">↓ Download</a></td>
             </tr>
             <tr>
-              <td><span class="os"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 8h2M7 12h5M7 16h3"/><path d="M14 8h3M14 12h3M14 16h3"/></svg></i>Linux <span style="font-weight:400;color:#9f9f9f">glibc / musl</span></span></td>
-              <td><span class="arch">amd64 <span style="color:#9f9f9f">(x86_64)</span></span></td>
-              <td><span class="tag">gmb_v1.0.0_linux_amd64.tar.gz</span></td>
-              <td style="text-align:right"><a class="dl-btn" href="https://github.com/Syamchand123/GlassMarble/releases/download/v1.0.0/gmb_v1.0.0_linux_amd64.tar.gz">Download <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 3v9M3.5 8.5L8 13l4.5-4.5"/><path d="M2 13h12"/></svg></a></td>
+              <td>
+                <div class="os-cell">
+                  <div class="os-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.88-.38 1.102-.511.23-.132.43-.285.601-.507l.087-.087c.747-.31 1.474-.951 2.132-1.693.836-.94 1.58-2.012 2.124-2.979.273-.485.494-.964.638-1.4.132-.428.196-.829.19-1.2-.132-1.245-.944-2.103-1.84-2.7-.896-.6-1.91-.98-2.81-1.6-.9-.62-1.73-1.459-2.084-2.682l-.04-.143c-.037-.14-.068-.276-.094-.41-.022-.107-.034-.234-.034-.355.001-.165.013-.38.064-.62.087-.38.2-.77.387-1.113.187-.343.434-.614.774-.745.17-.065.352-.103.534-.107.42 0 .99.175 1.65.617.34.225.724.541 1.088.819.37.28.715.54 1.01.67.295.13.56.15.79.054.23-.097.406-.28.56-.543.155-.264.275-.588.375-.915.1-.327.18-.657.24-.971.06-.314.1-.611.1-.871 0-.348-.05-.635-.15-.837-.11-.207-.28-.336-.52-.383a1.408 1.408 0 00-.298-.03z"/></svg>
+                  </div>
+                  <div>
+                    <div class="os-name">Linux</div>
+                    <div class="os-sub">glibc / musl</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="arch-tag">amd64 <span style="color:hsl(var(--muted-foreground));margin-left:4px">x86_64</span></span></td>
+              <td><span class="file-tag" data-asset="linux_amd64.tar.gz">gmb_…_linux_amd64.tar.gz</span></td>
+              <td style="text-align:right"><a class="dl-btn" data-asset="linux_amd64.tar.gz" href="https://github.com/Syamchand123/GlassMarble/releases/latest">↓ Download</a></td>
             </tr>
             <tr>
-              <td><span class="os"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 8h2M7 12h5M7 16h3"/><path d="M14 8h3M14 12h3M14 16h3"/></svg></i>Linux</span></td>
-              <td><span class="arch">arm64 <span style="color:#9f9f9f">(aarch64)</span></span></td>
-              <td><span class="tag">gmb_v1.0.0_linux_arm64.tar.gz</span></td>
-              <td style="text-align:right"><a class="dl-btn" href="https://github.com/Syamchand123/GlassMarble/releases/download/v1.0.0/gmb_v1.0.0_linux_arm64.tar.gz">Download <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 3v9M3.5 8.5L8 13l4.5-4.5"/><path d="M2 13h12"/></svg></a></td>
+              <td>
+                <div class="os-cell">
+                  <div class="os-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.88-.38 1.102-.511.23-.132.43-.285.601-.507l.087-.087c.747-.31 1.474-.951 2.132-1.693.836-.94 1.58-2.012 2.124-2.979.273-.485.494-.964.638-1.4.132-.428.196-.829.19-1.2-.132-1.245-.944-2.103-1.84-2.7-.896-.6-1.91-.98-2.81-1.6-.9-.62-1.73-1.459-2.084-2.682l-.04-.143c-.037-.14-.068-.276-.094-.41-.022-.107-.034-.234-.034-.355.001-.165.013-.38.064-.62.087-.38.2-.77.387-1.113.187-.343.434-.614.774-.745.17-.065.352-.103.534-.107.42 0 .99.175 1.65.617.34.225.724.541 1.088.819.37.28.715.54 1.01.67.295.13.56.15.79.054.23-.097.406-.28.56-.543.155-.264.275-.588.375-.915.1-.327.18-.657.24-.971.06-.314.1-.611.1-.871 0-.348-.05-.635-.15-.837-.11-.207-.28-.336-.52-.383a1.408 1.408 0 00-.298-.03z"/></svg>
+                  </div>
+                  <div>
+                    <div class="os-name">Linux</div>
+                    <div class="os-sub">ARM</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="arch-tag">arm64 <span style="color:hsl(var(--muted-foreground));margin-left:4px">aarch64</span></span></td>
+              <td><span class="file-tag" data-asset="linux_arm64.tar.gz">gmb_…_linux_arm64.tar.gz</span></td>
+              <td style="text-align:right"><a class="dl-btn" data-asset="linux_arm64.tar.gz" href="https://github.com/Syamchand123/GlassMarble/releases/latest">↓ Download</a></td>
             </tr>
             <tr>
-              <td><span class="os"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg></i>Windows 10/11</span></td>
-              <td><span class="arch">amd64 <span style="color:#9f9f9f">(x64)</span></span></td>
-              <td><span class="tag">gmb_v1.0.0_windows_amd64.zip</span></td>
-              <td style="text-align:right"><a class="dl-btn" href="https://github.com/Syamchand123/GlassMarble/releases/download/v1.0.0/gmb_v1.0.0_windows_amd64.zip">Download <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 3v9M3.5 8.5L8 13l4.5-4.5"/><path d="M2 13h12"/></svg></a></td>
+              <td>
+                <div class="os-cell">
+                  <div class="os-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 12V6.75l6-1.32v6.57H3zm17 0V5.1L11 3.5V12h9zm-17 1h6v6.31L3 18V13zm17 0h-9v8.5l9-1.55V13z"/></svg>
+                  </div>
+                  <div>
+                    <div class="os-name">Windows 10/11</div>
+                    <div class="os-sub">64-bit</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="arch-tag">amd64 <span style="color:hsl(var(--muted-foreground));margin-left:4px">x64</span></span></td>
+              <td><span class="file-tag" data-asset="windows_amd64.zip">gmb_…_windows_amd64.zip</span></td>
+              <td style="text-align:right"><a class="dl-btn" data-asset="windows_amd64.zip" href="https://github.com/Syamchand123/GlassMarble/releases/latest">↓ Download</a></td>
             </tr>
             <tr>
-              <td><span class="os"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg></i>Windows 11</span></td>
-              <td><span class="arch">arm64</span></td>
-              <td><span class="tag">gmb_v1.0.0_windows_arm64.zip</span></td>
-              <td style="text-align:right"><a class="dl-btn" href="https://github.com/Syamchand123/GlassMarble/releases/download/v1.0.0/gmb_v1.0.0_windows_arm64.zip">Download <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 3v9M3.5 8.5L8 13l4.5-4.5"/><path d="M2 13h12"/></svg></a></td>
+              <td>
+                <div class="os-cell">
+                  <div class="os-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 12V6.75l6-1.32v6.57H3zm17 0V5.1L11 3.5V12h9zm-17 1h6v6.31L3 18V13zm17 0h-9v8.5l9-1.55V13z"/></svg>
+                  </div>
+                  <div>
+                    <div class="os-name">Windows 11</div>
+                    <div class="os-sub">ARM</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="arch-tag">arm64</span></td>
+              <td><span class="file-tag" data-asset="windows_arm64.zip">gmb_…_windows_arm64.zip</span></td>
+              <td style="text-align:right"><a class="dl-btn" data-asset="windows_arm64.zip" href="https://github.com/Syamchand123/GlassMarble/releases/latest">↓ Download</a></td>
             </tr>
           </tbody>
         </table>
-      </div>
-      <p class="meta" style="margin-top:1rem">Installers verify SHA256 via <span class="tag">checksums.txt</span> automatically. For full supply-chain verification see <a href="#verify">Verify</a>.</p>
-    </section>
-
-    <section class="section" id="verify">
-      <h2>Verify <span>— Sigstore, SBOM, SLSA</span></h2>
-      <p class="lead">Every release publishes <span class="tag">checksums.txt</span>, <span class="tag">checksums.txt.pem</span>, <span class="tag">checksums.txt.sig</span>, SLSA provenance (intoto) and SBOM (SPDX). Installers check SHA256 for you; Cosign is optional hardening.</p>
-      <div class="table-wrap"><div style="padding:2rem 2rem 1.4rem">
-        <div style="font-family:JetBrains Mono,monospace;font-size:1.25rem;background:#0f1115;color:#e5e7eb;border-radius:1.4rem;padding:1.6rem 1.8rem;overflow:auto;line-height:1.7">
-          <span style="color:#9ca3af"># pin these</span><br>
-          VERSION=v1.0.0<br>
-          ARCH=linux_amd64 &nbsp;<span style="color:#6b7280"># or darwin_arm64, windows_amd64 …</span><br><br>
-          curl -fsSLO "https://github.com/Syamchand123/GlassMarble/releases/download/${VERSION}/gmb_${VERSION#v}_${ARCH}.tar.gz"<br>
-          curl -fsSLO "https://github.com/Syamchand123/GlassMarble/releases/download/${VERSION}/checksums.txt"<br>
-          curl -fsSLO "https://github.com/Syamchand123/GlassMarble/releases/download/${VERSION}/checksums.txt.pem"<br>
-          curl -fsSLO "https://github.com/Syamchand123/GlassMarble/releases/download/${VERSION}/checksums.txt.sig"<br><br>
-          sha256sum -c --ignore-missing checksums.txt<br>
-          cosign verify-blob \<br>
-          &nbsp;&nbsp;--certificate-identity-regexp "https://github.com/Syamchand123/GlassMarble/.github/workflows/release.yml@refs/tags/${VERSION}" \<br>
-          &nbsp;&nbsp;--certificate-oidc-issuer https://token.actions.githubusercontent.com \<br>
-          &nbsp;&nbsp;--signature checksums.txt.sig --certificate checksums.txt.pem checksums.txt
+        <div class="table-footer">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          Installers verify SHA256 via <code>checksums.txt</code> automatically.
+          For full supply-chain verification see <a href="#verify">Verify →</a>
         </div>
-        <p style="font-size:1.25rem;color:#6b7280;margin-top:1.2rem">Builds are static (CGO, musl). SBOM via Syft/SPDX is attached per release. Full steps → <a href="docs.html#getting-started-verify" style="color:var(--violet);font-weight:500">Docs → Verify a release</a></p>
-      </div></div>
+      </div>
     </section>
 
-    <footer>
+    <!-- Verify section -->
+    <section class="section" id="verify">
+      <div class="section-header">
+        <h2 class="section-title">Verify <span>— Sigstore · SBOM · SLSA</span></h2>
+        <p class="section-desc">Every release publishes <code style="font-family:'Geist Mono',monospace;font-size:12px;background:hsl(var(--muted));border:1px solid hsl(var(--border));padding:1px 5px;border-radius:3px">checksums.txt</code>, Cosign signature, SLSA provenance (intoto), and SBOM (SPDX). Installers check SHA256 automatically — Cosign is optional hardening.</p>
+      </div>
+
+      <div class="verify-grid">
+        <div class="verify-card">
+          <div class="verify-icon violet">🔐</div>
+          <div>
+            <h4>SHA-256 checksums</h4>
+            <p>Automatically verified by installers via <code style="font-family:'Geist Mono',monospace;font-size:11.5px;background:hsl(var(--muted));border:1px solid hsl(var(--border));padding:1px 5px;border-radius:3px">checksums.txt</code> on every download.</p>
+          </div>
+        </div>
+        <div class="verify-card">
+          <div class="verify-icon violet">📜</div>
+          <div>
+            <h4>Sigstore / Cosign</h4>
+            <p>Keyless signing via GitHub Actions OIDC. Verify with <code style="font-family:'Geist Mono',monospace;font-size:11.5px;background:hsl(var(--muted));border:1px solid hsl(var(--border));padding:1px 5px;border-radius:3px">cosign verify-blob</code>.</p>
+          </div>
+        </div>
+        <div class="verify-card">
+          <div class="verify-icon slate">🏗️</div>
+          <div>
+            <h4>SLSA provenance</h4>
+            <p>In-toto attestation attached to each release. Proves build from source commit.</p>
+          </div>
+        </div>
+        <div class="verify-card">
+          <div class="verify-icon slate">📦</div>
+          <div>
+            <h4>SBOM (SPDX)</h4>
+            <p>Software Bill of Materials generated by Syft, attached per release alongside provenance.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-block multiline">
+        <code id="verify-code"># set these to the release you want to verify
+VERSION=<span class="gm-ver-inline">latest</span>
+ARCH=linux_amd64  # or darwin_arm64, windows_amd64 …
+
+curl -fsSLO "https://github.com/Syamchand123/GlassMarble/releases/download/${VERSION}/gmb_${VERSION#v}_${ARCH}.tar.gz"
+curl -fsSLO "https://github.com/Syamchand123/GlassMarble/releases/download/${VERSION}/checksums.txt"
+curl -fsSLO "https://github.com/Syamchand123/GlassMarble/releases/download/${VERSION}/checksums.txt.pem"
+curl -fsSLO "https://github.com/Syamchand123/GlassMarble/releases/download/${VERSION}/checksums.txt.sig"
+
+sha256sum -c --ignore-missing checksums.txt
+cosign verify-blob \
+  --certificate-identity-regexp "https://github.com/Syamchand123/GlassMarble/.github/workflows/release.yml@refs/tags/${VERSION}" \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+  --signature checksums.txt.sig --certificate checksums.txt.pem checksums.txt</code>
+        <button class="copy-btn" data-copy-id="verify-code">Copy</button>
+      </div>
+
+      <div class="callout">
+        <div class="callout-icon">i</div>
+        <div>Builds are static (CGO, musl). SBOM via Syft/SPDX is attached per release. Full steps → <a href="docs.html#getting-started-verify">Docs → Verify a release</a></div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
       <span>© GlassMarble · MIT · <a href="https://github.com/Syamchand123/GlassMarble" style="text-decoration:underline;text-underline-offset:3px">github.com/Syamchand123/GlassMarble</a></span>
-      <span style="display:flex;gap:1.6rem"><a href="docs.html">Docs</a><a href="https://github.com/Syamchand123/GlassMarble/releases">Releases</a><a href="https://github.com/Syamchand123/GlassMarble/issues">Issues</a></span>
+      <div class="footer-links">
+        <a href="docs.html">Docs</a>
+        <a href="https://github.com/Syamchand123/GlassMarble/releases" target="_blank" rel="noopener">Releases</a>
+        <a href="https://github.com/Syamchand123/GlassMarble/issues" target="_blank" rel="noopener">Issues</a>
+      </div>
     </footer>
-  </main>
+  </div>
+
   <script>
-    document.querySelectorAll('.copy-btn,.install-copy').forEach(b=>{
-      b.addEventListener('click',()=>{
-        const t=b.getAttribute('data-copy'); navigator.clipboard.writeText(t).then(()=>{
-          const o=b.textContent; b.textContent='Copied!'; setTimeout(()=>b.textContent=o,1400)
-        })
-      })
-    });
-    // nav active + mobile drawer
-    (function(){
-      const file=(location.pathname.split('/').pop()||'index.html').split('?')[0].split('#')[0]||'index.html';
-      document.querySelectorAll('[data-nav]').forEach(a=>{
-        const href=a.getAttribute('href');
-        const isActive=href===file;
-        a.classList.toggle('is-active',isActive);
-        if(isActive) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');
+    // ── Tab switching ──────────────────────────────────────────
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.dataset.tab;
+        document.querySelectorAll('.tab-btn').forEach(b => {
+          b.classList.toggle('active', b === btn);
+          b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
+        });
+        document.querySelectorAll('.tab-panel').forEach(p => {
+          p.classList.toggle('active', p.id === 'tab-' + tab);
+        });
       });
-      const toggle=document.getElementById('navToggle');
-      const drawer=document.getElementById('navDrawer');
-      if(toggle&&drawer){
-        toggle.addEventListener('click',()=>{
-          const open=drawer.classList.toggle('open');
-          drawer.hidden=!open;
-          toggle.setAttribute('aria-expanded',String(open));
-          toggle.setAttribute('aria-label',open?'Close menu':'Open menu');
-        });
-        drawer.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
-          drawer.classList.remove('open');drawer.hidden=true;toggle.setAttribute('aria-expanded','false');
-        }));
-        document.addEventListener('click',e=>{
-          if(!drawer.classList.contains('open')) return;
-          if(drawer.contains(e.target)||toggle.contains(e.target)) return;
-          drawer.classList.remove('open');drawer.hidden=true;toggle.setAttribute('aria-expanded','false');
-        });
-      }
-    })();
-    // OS auto-detect — highlight matching platform row
-    (function(){
-      const ua=navigator.userAgent.toLowerCase();
-      const plat=navigator.platform.toLowerCase();
-      let target=null;
-      if(/mac/.test(plat) || /mac/.test(ua)){
-        target = /arm/.test(ua) || /aarch64/.test(ua) ? 'darwin_arm64' : 'darwin_arm64';
-        // default to arm64 on Apple Silicon, but highlight both mac rows; pick first mac
-        const row=document.querySelector('a[href*="darwin_arm64"]');
-        if(row) row.closest('tr')?.classList.add('is-featured');
-        // also highlight both mac rows subtly
-        document.querySelectorAll('a[href*="darwin_"]').forEach(a=>a.closest('tr')?.style.setProperty('background','#f5f3ff'));
-        return;
-      }
-      if(/win/.test(plat)){
-        const isArm = /arm/.test(ua);
-        const sel=isArm?'windows_arm64':'windows_amd64';
-        const row=document.querySelector(`a[href*="${sel}"]`);
-        if(row) row.closest('tr')?.classList.add('is-featured');
-        document.querySelectorAll(`a[href*="${sel}"]`).forEach(a=>a.closest('tr')?.style.setProperty('background','#f5f3ff'));
-        return;
-      }
-      // linux default
-      const isArm = /arm|aarch64/.test(ua) || /arm/.test(plat);
-      const sel=isArm?'linux_arm64':'linux_amd64';
-      const row=document.querySelector(`a[href*="${sel}"]`);
-      if(row) row.closest('tr')?.classList.add('is-featured');
-    })();
-    // live file sizes + checksums tooltip (GitHub API, no auth)
-    (function(){
-      const api='https://api.github.com/repos/Syamchand123/GlassMarble/releases/tags/v1.0.0';
-      fetch(api,{headers:{'Accept':'application/vnd.github.v3+json'}}).then(r=>r.ok?r.json():null).then(data=>{
-        if(!data||!data.assets) return;
-        const map=new Map(data.assets.map(a=>[a.name,{size:a.size,url:a.browser_download_url}]));
-        document.querySelectorAll('td .tag').forEach(tag=>{
-          const name=tag.textContent.trim();
-          const info=map.get(name);
-          if(!info) return;
-          const mb=(info.size/1024/1024).toFixed(1);
-          tag.title=`${name} · ${mb} MB · ${info.size.toLocaleString()} bytes`;
-          // append size badge after tag if not already
-          if(!tag.nextElementSibling||!tag.nextElementSibling.classList.contains('size-badge')){
-            const badge=document.createElement('span');
-            badge.className='size-badge';
-            badge.textContent=`${mb} MB`;
-            badge.style.cssText='margin-left:0.6rem;font-size:1.05rem;color:var(--grey);font-family:Inter,sans-serif';
-            tag.insertAdjacentElement('afterend',badge);
-          }
-        });
-      }).catch(()=>{});
-      // checksums tooltip — fetch checksums.txt for SHA
-      fetch('https://raw.githubusercontent.com/Syamchand123/GlassMarble/main/docs/checksums.txt').catch(()=>null);
-      fetch('https://github.com/Syamchand123/GlassMarble/releases/download/v1.0.0/checksums.txt').then(r=>r.ok?r.text():null).then(txt=>{
-        if(!txt) return;
-        const lines=txt.split('\n');
-        const shaMap=new Map();
-        lines.forEach(l=>{
-          const m=l.trim().match(/^([a-f0-9]{64})\s+\*?(.+)$/i);
-          if(m) shaMap.set(m[2].trim(), m[1]);
-        });
-        document.querySelectorAll('td .tag').forEach(tag=>{
-          const sha=shaMap.get(tag.textContent.trim());
-          if(sha) tag.title=(tag.title?tag.title+' · ':'')+`SHA256 ${sha.slice(0,12)}…`;
-        });
-      }).catch(()=>{});
-    })();
-    // hide nav on scroll down — slides to right, shows on scroll up
-    (function(){
-      const nav=document.querySelector('.site-nav');
-      const drawer=document.getElementById('navDrawer');
-      if(!nav) return;
-      let lastY=window.scrollY, hidden=false;
-      const thr=70;
-      window.addEventListener('scroll',()=>{
-        const y=window.scrollY, dy=y-lastY;
-        if(y<=thr){
-          if(hidden){ nav.classList.remove('is-hidden'); if(drawer) drawer.classList.remove('is-hidden'); hidden=false; }
-        } else if(dy>4 && !hidden){
-          nav.classList.add('is-hidden');
-          if(drawer){ drawer.classList.add('is-hidden'); drawer.classList.remove('open'); drawer.hidden=true; const t=document.getElementById('navToggle'); if(t) t.setAttribute('aria-expanded','false'); }
-          hidden=true;
-        } else if(dy<-4 && hidden){
-          nav.classList.remove('is-hidden');
-          if(drawer) drawer.classList.remove('is-hidden');
-          hidden=false;
+    });
+
+    // ── Copy buttons ───────────────────────────────────────────
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        let text = '';
+        if (btn.dataset.copy) {
+          text = btn.dataset.copy;
+        } else if (btn.dataset.copyId) {
+          const el = document.getElementById(btn.dataset.copyId);
+          text = el ? el.innerText.replace(/^Copy\s*/, '') : '';
         }
-        lastY=y;
-      },{passive:true});
+        navigator.clipboard.writeText(text).then(() => {
+          const orig = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(() => btn.textContent = orig, 1500);
+        });
+      });
+    });
+
+    // ── Mobile nav ─────────────────────────────────────────────
+    (function () {
+      const toggle = document.getElementById('navToggle');
+      const drawer = document.getElementById('navDrawer');
+      if (!toggle || !drawer) return;
+      toggle.addEventListener('click', () => {
+        const open = drawer.classList.toggle('open');
+        drawer.hidden = !open;
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      });
+      drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        drawer.classList.remove('open'); drawer.hidden = true;
+        toggle.setAttribute('aria-expanded', 'false');
+      }));
+      document.addEventListener('click', e => {
+        if (!drawer.classList.contains('open')) return;
+        if (drawer.contains(e.target) || toggle.contains(e.target)) return;
+        drawer.classList.remove('open'); drawer.hidden = true;
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    })();
+
+    // ── OS auto-detect — switch to matching tab ────────────────
+    (function () {
+      const ua = navigator.userAgent.toLowerCase();
+      const plat = (navigator.platform || '').toLowerCase();
+      let tabId = 'mac';
+      if (/win/.test(plat) || /windows/.test(ua)) tabId = 'win';
+      else if (/linux/.test(plat) || /linux/.test(ua)) tabId = 'linux';
+      const btn = document.querySelector(`[data-tab="${tabId}"]`);
+      if (btn) btn.click();
+
+      // also highlight recommended row in table
+      const selectors = { mac: 'darwin_arm64', win: 'windows_amd64', linux: 'linux_amd64' };
+      const sel = selectors[tabId] || 'linux_amd64';
+      document.querySelectorAll(`a[href*="${sel}"]`).forEach(a => {
+        const row = a.closest('tr');
+        if (row) row.classList.add('recommended');
+      });
+    })();
+
+    // ── Live version + asset hydration from GitHub API ─────────
+    (function () {
+      const REPO = 'Syamchand123/GlassMarble';
+      const BASE = `https://github.com/${REPO}/releases/download`;
+      const FALLBACK_VER = 'latest';
+
+      fetch(`https://api.github.com/repos/${REPO}/releases/latest`, {
+        headers: { 'Accept': 'application/vnd.github.v3+json' }
+      }).then(r => r.ok ? r.json() : null).then(data => {
+        const tag = (data && data.tag_name) ? data.tag_name : FALLBACK_VER;
+        // strip leading 'v' for filenames (e.g. "v1.2.3" → "1.2.3")
+        const ver = tag.startsWith('v') ? tag.slice(1) : tag;
+
+        // 1. All inline version text spans
+        document.querySelectorAll('.gm-ver-inline').forEach(el => {
+          el.textContent = tag;
+        });
+
+        // 2. Hero badge version
+        const badge = document.getElementById('dl-badge-ver');
+        if (badge) badge.textContent = tag;
+
+        // 3. Hero "View release" button
+        const releaseBtn = document.getElementById('dl-release-btn');
+        if (releaseBtn && data && data.html_url) {
+          releaseBtn.href = data.html_url;
+          releaseBtn.childNodes[0].textContent = `View ${tag} release\n          `;
+        }
+
+        // 4. Page <title> and OG meta
+        document.title = `Download — GlassMarble ${tag}`;
+        const ogTitle = document.querySelector('meta[property="og:title"]');
+        if (ogTitle) ogTitle.content = `Download GlassMarble ${tag}`;
+        const twTitle = document.querySelector('meta[name="twitter:title"]');
+        if (twTitle) twTitle.content = `Download GlassMarble ${tag}`;
+
+        // 5. Download table: file-tag spans and dl-btn links
+        if (tag !== FALLBACK_VER) {
+          document.querySelectorAll('[data-asset]').forEach(el => {
+            const platform = el.dataset.asset; // e.g. "darwin_arm64.tar.gz"
+            const filename = `gmb_${ver}_${platform}`;
+            const url = `${BASE}/${tag}/${filename}`;
+            if (el.tagName === 'SPAN') {
+              el.textContent = filename;
+            } else if (el.tagName === 'A') {
+              el.href = url;
+            }
+          });
+        }
+
+        // 6. File sizes from release assets
+        if (data && data.assets) {
+          const map = new Map(data.assets.map(a => [a.name, a.size]));
+          document.querySelectorAll('.file-tag[data-asset]').forEach(tag_el => {
+            const platform = tag_el.dataset.asset;
+            const ver_stripped = tag.startsWith('v') ? tag.slice(1) : tag;
+            const filename = `gmb_${ver_stripped}_${platform}`;
+            const size = map.get(filename);
+            if (!size) return;
+            const mb = (size / 1024 / 1024).toFixed(1);
+            if (!tag_el.nextElementSibling || !tag_el.nextElementSibling.classList.contains('size-badge')) {
+              const badge = document.createElement('span');
+              badge.className = 'size-badge';
+              badge.textContent = `${mb} MB`;
+              tag_el.insertAdjacentElement('afterend', badge);
+            }
+          });
+        }
+      }).catch(() => { /* silently use defaults */ });
     })();
   </script>
 </body>
