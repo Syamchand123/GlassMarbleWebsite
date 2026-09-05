@@ -2363,8 +2363,228 @@ const PROJECTS = [
     ]
   },
   {
-    id: 'ai-architect',
+    id: 'visualization-server',
     num: '03',
+    name: 'Visualization Server',
+    sub: 'Interactive web UI. Air-gapped & local.',
+    accent: 'sky',
+    visual: `
+<svg viewBox="0 0 670 688" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GlassMarble interactive visualization server and web UI">
+  <defs>
+    <linearGradient id="ui-bg-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#121824"/>
+      <stop offset="100%" stop-color="#0d1017"/>
+    </linearGradient>
+    <radialGradient id="ui-blast-radial" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.22"/>
+      <stop offset="50%" stop-color="#0284c7" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="670" height="688" fill="#101114"/>
+  <rect x="40" y="40" width="590" height="608" rx="24" fill="url(#ui-bg-glow)" stroke="#222f3e" stroke-width="1.5"/>
+
+  <!-- Browser Titlebar -->
+  <circle cx="68" cy="68" r="5" fill="#ff5f56"/><circle cx="86" cy="68" r="5" fill="#ffbd2e"/><circle cx="104" cy="68" r="5" fill="#27c93f"/>
+  <rect x="124" y="54" width="280" height="28" rx="14" fill="#16202c" stroke="#253347" stroke-width="1"/>
+  <circle cx="138" cy="68" r="3" fill="#38bdf8" class="m-pulse"/>
+  <text x="150" y="73" font-family="ui-monospace,Consolas,monospace" font-size="13" fill="#94a3b8">http://127.0.0.1:8080/ui</text>
+  
+  <rect x="475" y="54" width="135" height="28" rx="14" fill="#0f291e" stroke="#059669" stroke-width="1"/>
+  <circle cx="490" cy="68" r="3.5" fill="#34d399" class="m-pulse"/>
+  <text x="502" y="73" font-family="ui-monospace,Consolas,monospace" font-size="11" font-weight="600" fill="#86efac">100% LOCAL &middot; AIR-GAP</text>
+  <line x1="40" y1="96" x2="630" y2="96" stroke="#202a38"/>
+
+  <!-- UI Left Toolbar / Filter Panel -->
+  <rect x="56" y="112" width="154" height="466" rx="14" fill="#111620" stroke="#1e293b"/>
+  <text x="70" y="136" font-family="ui-monospace,Consolas,monospace" font-size="11" font-weight="600" fill="#64748b">GRAPH CONTROLS</text>
+  
+  <!-- Filter Item 1 -->
+  <rect x="68" y="152" width="130" height="28" rx="6" fill="#16202e" stroke="#2563eb" stroke-width="1"/>
+  <rect x="76" y="160" width="12" height="12" rx="3" fill="#38bdf8"/>
+  <path d="M79 166 L82 169 L86 163" stroke="#0f172a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <text x="96" y="171" font-family="ui-monospace,Consolas,monospace" font-size="12" fill="#e2e8f0">Call Graph</text>
+
+  <!-- Filter Item 2 -->
+  <rect x="68" y="188" width="130" height="28" rx="6" fill="#16202e" stroke="#2563eb" stroke-width="1"/>
+  <rect x="76" y="196" width="12" height="12" rx="3" fill="#38bdf8"/>
+  <path d="M79 202 L82 205 L86 199" stroke="#0f172a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <text x="96" y="207" font-family="ui-monospace,Consolas,monospace" font-size="12" fill="#e2e8f0">Blast Radius</text>
+
+  <!-- Filter Item 3 -->
+  <rect x="68" y="224" width="130" height="28" rx="6" fill="#16202e" stroke="#2563eb" stroke-width="1"/>
+  <rect x="76" y="232" width="12" height="12" rx="3" fill="#38bdf8"/>
+  <path d="M79 238 L82 241 L86 235" stroke="#0f172a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <text x="96" y="243" font-family="ui-monospace,Consolas,monospace" font-size="12" fill="#e2e8f0">PageRank</text>
+
+  <!-- Filter Item 4 -->
+  <rect x="68" y="260" width="130" height="28" rx="6" fill="#0d1117" stroke="#1e293b"/>
+  <rect x="76" y="268" width="12" height="12" rx="3" fill="none" stroke="#475569" stroke-width="1.2"/>
+  <text x="96" y="279" font-family="ui-monospace,Consolas,monospace" font-size="12" fill="#64748b">Dataflow (DFG)</text>
+
+  <!-- Depth Slider Widget -->
+  <line x1="68" y1="308" x2="198" y2="308" stroke="#1e293b"/>
+  <text x="70" y="328" font-family="ui-monospace,Consolas,monospace" font-size="11" fill="#64748b">IMPACT DEPTH: 3</text>
+  <rect x="68" y="338" width="130" height="5" rx="2.5" fill="#1e293b"/>
+  <rect x="68" y="338" width="85" height="5" rx="2.5" fill="#38bdf8"/>
+  <circle cx="153" cy="340" r="6" fill="#38bdf8"/>
+
+  <!-- Cytoscape Stats badge -->
+  <rect x="68" y="360" width="130" height="42" rx="8" fill="#131d2a" stroke="#1e3a5f"/>
+  <text x="78" y="377" font-family="ui-monospace,Consolas,monospace" font-size="11" fill="#7dd3fc">Cytoscape 2D/3D</text>
+  <text x="78" y="394" font-family="ui-monospace,Consolas,monospace" font-size="10" fill="#94a3b8">Force-directed &middot; 60fps</text>
+
+  <!-- Cycle badge -->
+  <rect x="68" y="412" width="130" height="38" rx="8" fill="#281717" stroke="#7f1d1d"/>
+  <text x="78" y="428" font-family="ui-monospace,Consolas,monospace" font-size="11" fill="#f87171">Cycles: 0 detected</text>
+  <text x="78" y="443" font-family="ui-monospace,Consolas,monospace" font-size="10" fill="#ef4444">&check; Pure DAG</text>
+
+  <!-- Export button -->
+  <rect x="68" y="534" width="130" height="30" rx="6" fill="#1e293b" stroke="#334155"/>
+  <text x="133" y="553" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="11" font-weight="600" fill="#f1f5f9">Export SVG / PNG</text>
+
+  <!-- Main Canvas (Force-Directed Graph) -->
+  <rect x="220" y="112" width="394" height="466" rx="14" fill="#0c0e14" stroke="#1e2634"/>
+  
+  <!-- Background Grid Dots -->
+  <g fill="#1a2230" opacity="0.6">
+    <circle cx="250" cy="140" r="1.5"/><circle cx="310" cy="140" r="1.5"/><circle cx="370" cy="140" r="1.5"/><circle cx="430" cy="140" r="1.5"/><circle cx="490" cy="140" r="1.5"/><circle cx="550" cy="140" r="1.5"/>
+    <circle cx="250" cy="200" r="1.5"/><circle cx="310" cy="200" r="1.5"/><circle cx="370" cy="200" r="1.5"/><circle cx="430" cy="200" r="1.5"/><circle cx="490" cy="200" r="1.5"/><circle cx="550" cy="200" r="1.5"/>
+    <circle cx="250" cy="260" r="1.5"/><circle cx="310" cy="260" r="1.5"/><circle cx="370" cy="260" r="1.5"/><circle cx="430" cy="260" r="1.5"/><circle cx="490" cy="260" r="1.5"/><circle cx="550" cy="260" r="1.5"/>
+    <circle cx="250" cy="320" r="1.5"/><circle cx="310" cy="320" r="1.5"/><circle cx="370" cy="320" r="1.5"/><circle cx="430" cy="320" r="1.5"/><circle cx="490" cy="320" r="1.5"/><circle cx="550" cy="320" r="1.5"/>
+    <circle cx="250" cy="380" r="1.5"/><circle cx="310" cy="380" r="1.5"/><circle cx="370" cy="380" r="1.5"/><circle cx="430" cy="380" r="1.5"/><circle cx="490" cy="380" r="1.5"/><circle cx="550" cy="380" r="1.5"/>
+    <circle cx="250" cy="440" r="1.5"/><circle cx="310" cy="440" r="1.5"/><circle cx="370" cy="440" r="1.5"/><circle cx="430" cy="440" r="1.5"/><circle cx="490" cy="440" r="1.5"/><circle cx="550" cy="440" r="1.5"/>
+    <circle cx="250" cy="500" r="1.5"/><circle cx="310" cy="500" r="1.5"/><circle cx="370" cy="500" r="1.5"/><circle cx="430" cy="500" r="1.5"/><circle cx="490" cy="500" r="1.5"/><circle cx="550" cy="500" r="1.5"/>
+  </g>
+
+  <!-- Blast Radius Ambient Radial Glow -->
+  <circle cx="417" cy="330" r="150" fill="url(#ui-blast-radial)"/>
+  <circle cx="417" cy="330" r="120" fill="none" stroke="#0284c7" stroke-width="1" stroke-dasharray="4 4" class="m-orbit"/>
+  <circle cx="417" cy="330" r="68" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="6 3" class="m-orbit-rev"/>
+
+  <!-- Graph Edges with Dash Flow -->
+  <!-- Center (Auth) to Gateway -->
+  <line x1="417" y1="330" x2="310" y2="210" stroke="#334155" stroke-width="2"/>
+  <line x1="417" y1="330" x2="310" y2="210" stroke="#38bdf8" stroke-width="2" class="m-dashflow"/>
+  
+  <!-- Center (Auth) to OrderSvc -->
+  <line x1="417" y1="330" x2="520" y2="220" stroke="#334155" stroke-width="2"/>
+  <line x1="417" y1="330" x2="520" y2="220" stroke="#38bdf8" stroke-width="2" class="m-dashflow"/>
+
+  <!-- Center (Auth) to PaymentWorker -->
+  <line x1="417" y1="330" x2="530" y2="440" stroke="#334155" stroke-width="2"/>
+  <line x1="417" y1="330" x2="530" y2="440" stroke="#34d399" stroke-width="2" class="m-dashflow"/>
+
+  <!-- Center (Auth) to DBPool -->
+  <line x1="417" y1="330" x2="310" y2="450" stroke="#334155" stroke-width="2"/>
+  <line x1="417" y1="330" x2="310" y2="450" stroke="#a78bfa" stroke-width="2" class="m-dashflow"/>
+
+  <!-- OrderSvc to PaymentWorker -->
+  <line x1="520" y1="220" x2="530" y2="440" stroke="#253347" stroke-width="1.5"/>
+
+  <!-- Gateway to DBPool -->
+  <line x1="310" y1="210" x2="310" y2="450" stroke="#253347" stroke-width="1.5"/>
+
+  <!-- Satellite Node 1: API Gateway -->
+  <g transform="translate(310, 210)">
+    <circle cx="0" cy="0" r="22" fill="#132337" stroke="#38bdf8" stroke-width="2" class="m-node"/>
+    <text x="0" y="4" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="10" font-weight="600" fill="#7dd3fc">GW</text>
+    <rect x="-42" y="26" width="84" height="18" rx="4" fill="#0f172a" stroke="#1e293b"/>
+    <text x="0" y="38" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="10" fill="#94a3b8">api-gateway</text>
+  </g>
+
+  <!-- Satellite Node 2: OrderService -->
+  <g transform="translate(520, 220)">
+    <circle cx="0" cy="0" r="22" fill="#201a33" stroke="#a78bfa" stroke-width="2" class="m-node d1"/>
+    <text x="0" y="4" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="10" font-weight="600" fill="#c4b5fd">ORD</text>
+    <rect x="-40" y="26" width="80" height="18" rx="4" fill="#0f172a" stroke="#1e293b"/>
+    <text x="0" y="38" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="10" fill="#94a3b8">order_svc</text>
+  </g>
+
+  <!-- Satellite Node 3: PaymentWorker -->
+  <g transform="translate(530, 440)">
+    <circle cx="0" cy="0" r="22" fill="#132b20" stroke="#34d399" stroke-width="2" class="m-node d2"/>
+    <text x="0" y="4" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="10" font-weight="600" fill="#86efac">PAY</text>
+    <rect x="-44" y="26" width="88" height="18" rx="4" fill="#0f172a" stroke="#1e293b"/>
+    <text x="0" y="38" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="10" fill="#94a3b8">payment_worker</text>
+  </g>
+
+  <!-- Satellite Node 4: DB Pool -->
+  <g transform="translate(310, 450)">
+    <circle cx="0" cy="0" r="22" fill="#2d2214" stroke="#fbbf24" stroke-width="2" class="m-node d3"/>
+    <text x="0" y="4" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="10" font-weight="600" fill="#fde68a">SQL</text>
+    <rect x="-38" y="26" width="76" height="18" rx="4" fill="#0f172a" stroke="#1e293b"/>
+    <text x="0" y="38" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="10" fill="#94a3b8">db_pool</text>
+  </g>
+
+  <!-- Central Target Node: AuthService (Blast Radius origin) -->
+  <g transform="translate(417, 330)">
+    <circle cx="0" cy="0" r="32" fill="#143048" stroke="#38bdf8" stroke-width="2.5" class="m-pulse"/>
+    <circle cx="0" cy="0" r="40" fill="none" stroke="#38bdf8" stroke-width="1.5" opacity="0.5" class="m-ripple"/>
+    <text x="0" y="-3" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="12" font-weight="700" fill="#bae6fd">AUTH</text>
+    <text x="0" y="11" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="9" fill="#7dd3fc">P:0.84</text>
+    <!-- Hover Tooltip Card -->
+    <g transform="translate(44, -48)">
+      <rect x="0" y="0" width="138" height="54" rx="8" fill="#0a0f18" stroke="#0284c7" stroke-width="1.2"/>
+      <text x="10" y="18" font-family="ui-monospace,Consolas,monospace" font-size="11" font-weight="600" fill="#f8fafc">auth/service.go</text>
+      <text x="10" y="32" font-family="ui-monospace,Consolas,monospace" font-size="9.5" fill="#38bdf8">Impact: 14 downstream</text>
+      <text x="10" y="46" font-family="ui-monospace,Consolas,monospace" font-size="9.5" fill="#94a3b8">Rank: #1 Criticality</text>
+    </g>
+  </g>
+
+  <!-- Bottom REST Endpoint Telemetry Bar -->
+  <rect x="40" y="596" width="590" height="52" fill="#0c0e13"/>
+  <line x1="40" y1="596" x2="630" y2="596" stroke="#1f2633"/>
+  <text x="64" y="628" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#38bdf8">&gt; GET /api/impact?node=auth/service.go&amp;depth=3</text>
+  <text x="608" y="628" text-anchor="end" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#34d399">200 OK &middot; 3.4ms</text>
+</svg>`,
+    cards: [
+      {
+        num: '01',
+        badge: 'Interactive Web UI',
+        title: 'Zero dependencies. 100% air-gapped web canvas.',
+        body: `<p>Start a browser-based interactive architecture explorer with a single command: <code>gmb ui</code> (or alias <code>gmb serve</code>). Powered by embedded Cytoscape.js and Mermaid engines compiled directly into the static binary, the visualization server runs entirely offline with <strong>zero external CDNs, zero Google Fonts, and zero telemetry</strong>.</p>
+<p>Explore your Architecture Knowledge Graph with high-performance 2D/3D force-directed layouts, pan-and-zoom controls, real-time symbol search, and instant clustering across packages and microservices.</p>`,
+        termTitle: 'gmb ui',
+        terminal: `<span class="tl"><span class="tc">$</span> gmb ui --port 8080 --open</span>
+<span class="tl"><span class="td">  [1/3] Loading AKG:</span>    3,847 nodes &middot; 12,091 edges from .glassmarble/akg.json</span>
+<span class="tl"><span class="td">  [2/3] Mounting routes:</span> /api/graph, /api/impact, /api/search, /api/smells</span>
+<span class="tl"><span class="td">  [3/3] Embedded assets:</span> Cytoscape.js 3.30 &middot; Mermaid 10.9 &middot; Zero CDN calls</span>
+<span class="tl"><span class="ts">  &check; Visualization server live at</span> <span class="tw">http://127.0.0.1:8080</span></span>
+<span class="tl"><span class="td">  &rarr; Opened default browser &middot; Press Ctrl+C to terminate</span></span>`,
+        tags: ['Cytoscape.js', 'Force-Directed Layout', 'Zero External CDNs', '100% Air-Gapped', 'Symbol Search', 'Mermaid Live Render', 'Sub-5ms Latency']
+      },
+      {
+        num: '02',
+        badge: 'Live Graph Analytics',
+        title: 'Dynamic blast radius, cycles & PageRank hotspots.',
+        body: `<p>The web UI is not just a static diagram viewer — it is an active architectural observatory. Click any file, method, or package node to calculate its live blast radius across upstream callers and downstream dependencies before you touch a line of code.</p>`,
+        grid: [
+          { title: 'Dynamic Blast Radius', desc: 'Trace forward and reverse impact with customizable depth sliders (1 to 10 hops), isolating critical dependency paths and breaking changes.' },
+          { title: 'Architecture Smells Overlay', desc: 'Instantly highlights circular package dependencies, god-node antipatterns, cut vertices (single points of failure), and dead code.' },
+          { title: 'Timeline Scrubbing', desc: 'Replay your architecture\'s evolution commit-by-commit using saved historical snapshots to visually identify when architectural drift occurred.' },
+          { title: 'Export Anywhere', desc: 'Export high-resolution SVGs, publication-quality PNGs, raw Mermaid markdown, or machine-readable GraphJSON with a single click.' }
+        ],
+        tags: ['Blast Radius Simulation', 'Cycle Detection', 'Cut Vertices', 'PageRank Centrality', 'Timeline Scrubbing', 'High-Res SVG/PNG Export']
+      },
+      {
+        num: '03',
+        badge: 'REST Architecture API',
+        title: 'Clean JSON endpoints for scripts and pipelines.',
+        body: `<p>In addition to serving the rich web application, <code>gmb ui</code> exposes high-throughput JSON REST endpoints. Query your codebase\'s architectural topology, search symbols by prefix, and compute graph algorithms programmatically from CI/CD runners, internal dashboards, or developer tooling.</p>`,
+        grid: [
+          { title: 'GET /api/graph', desc: 'Returns nodes and edges filtered by abstraction level (package, file, function), scope, and format with sub-10ms response times.' },
+          { title: 'GET /api/impact', desc: 'Computes upstream and downstream impact trees, reachability matrices, and risk scores for specified target nodes.' },
+          { title: 'GET /api/search', desc: 'Instant prefix, fuzzy, and FQN symbol lookup backed by GlassMarble\'s in-memory symbol trie.' },
+          { title: 'GET /api/algorithms/*', desc: 'Direct access to graph analysis algorithms: PageRank centrality, topological sorts, strongly connected components, and cycle sets.' }
+        ],
+        tags: ['REST API', 'JSON Endpoints', 'Sub-10ms Response', 'CI/CD Gateways', 'CORS Configurable', 'Internal Dashboards']
+      }
+    ]
+  },
+  {
+    id: 'ai-architect',
+    num: '04',
     name: 'AI Architect',
     sub: 'Grounded answers from real code.',
     accent: 'mint',
@@ -2491,8 +2711,189 @@ const PROJECTS = [
     ]
   },
   {
+    id: 'mcp-server',
+    num: '05',
+    name: 'MCP Server',
+    sub: 'Cursor. Claude. Windsurf. Connected.',
+    accent: 'violet',
+    visual: `
+<svg viewBox="0 0 670 688" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GlassMarble Model Context Protocol MCP server">
+  <defs>
+    <linearGradient id="mcp-bg-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#191528"/>
+      <stop offset="100%" stop-color="#0f0c18"/>
+    </linearGradient>
+    <radialGradient id="mcp-hub-radial" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.25"/>
+      <stop offset="60%" stop-color="#7c3aed" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="670" height="688" fill="#101114"/>
+  <rect x="40" y="40" width="590" height="608" rx="24" fill="url(#mcp-bg-glow)" stroke="#32254e" stroke-width="1.5"/>
+
+  <!-- MCP Terminal Window Bar -->
+  <circle cx="68" cy="68" r="5" fill="#ff5f56"/><circle cx="86" cy="68" r="5" fill="#ffbd2e"/><circle cx="104" cy="68" r="5" fill="#27c93f"/>
+  <text x="124" y="74" font-family="ui-monospace,Consolas,monospace" font-size="16" fill="#94a3b8">gmb mcp --transport stdio --read-only</text>
+  <rect class="m-caret" x="488" y="57" width="8" height="20" fill="#a78bfa"/>
+  <rect x="510" y="52" width="102" height="28" rx="14" fill="#261b40" stroke="#7c3aed" stroke-width="1"/>
+  <circle cx="524" cy="66" r="3.5" fill="#a78bfa" class="m-pulse"/>
+  <text x="535" y="71" font-family="ui-monospace,Consolas,monospace" font-size="11" font-weight="600" fill="#c4b5fd">MCP READY</text>
+  <line x1="40" y1="96" x2="630" y2="96" stroke="#251b3d"/>
+
+  <!-- Supported IDE Clients Row -->
+  <g transform="translate(0, 114)">
+    <rect x="65" y="0" width="118" height="46" rx="10" fill="#151322" stroke="#2a2240"/>
+    <circle cx="84" cy="23" r="5" fill="#a78bfa"/>
+    <text x="96" y="27" font-family="ui-monospace,Consolas,monospace" font-size="12" font-weight="600" fill="#e2e8f0">Claude</text>
+
+    <rect x="203" y="0" width="118" height="46" rx="10" fill="#151322" stroke="#2a2240"/>
+    <circle cx="222" cy="23" r="5" fill="#38bdf8"/>
+    <text x="234" y="27" font-family="ui-monospace,Consolas,monospace" font-size="12" font-weight="600" fill="#e2e8f0">Cursor</text>
+
+    <rect x="341" y="0" width="118" height="46" rx="10" fill="#151322" stroke="#2a2240"/>
+    <circle cx="360" cy="23" r="5" fill="#34d399"/>
+    <text x="372" y="27" font-family="ui-monospace,Consolas,monospace" font-size="12" font-weight="600" fill="#e2e8f0">Windsurf</text>
+
+    <rect x="479" y="0" width="126" height="46" rx="10" fill="#151322" stroke="#2a2240"/>
+    <circle cx="498" cy="23" r="5" fill="#fbbf24"/>
+    <text x="510" y="27" font-family="ui-monospace,Consolas,monospace" font-size="12" font-weight="600" fill="#e2e8f0">Claude Code</text>
+  </g>
+
+  <!-- Flow Lines to GlassMarble MCP Hub -->
+  <line x1="124" y1="160" x2="335" y2="280" stroke="#372c54" stroke-width="1.5"/>
+  <line x1="124" y1="160" x2="335" y2="280" stroke="#a78bfa" stroke-width="1.5" class="m-dashflow"/>
+
+  <line x1="262" y1="160" x2="335" y2="280" stroke="#372c54" stroke-width="1.5"/>
+  <line x1="262" y1="160" x2="335" y2="280" stroke="#38bdf8" stroke-width="1.5" class="m-dashflow"/>
+
+  <line x1="400" y1="160" x2="335" y2="280" stroke="#372c54" stroke-width="1.5"/>
+  <line x1="400" y1="160" x2="335" y2="280" stroke="#34d399" stroke-width="1.5" class="m-dashflow"/>
+
+  <line x1="542" y1="160" x2="335" y2="280" stroke="#372c54" stroke-width="1.5"/>
+  <line x1="542" y1="160" x2="335" y2="280" stroke="#fbbf24" stroke-width="1.5" class="m-dashflow"/>
+
+  <!-- Orbiting Tool Rings -->
+  <circle cx="335" cy="300" r="140" fill="url(#mcp-hub-radial)"/>
+  <circle cx="335" cy="300" r="120" fill="none" stroke="#2d2248" stroke-width="1.5" stroke-dasharray="6 4" class="m-orbit"/>
+  <circle cx="335" cy="300" r="68" fill="none" stroke="#3e2d63" stroke-width="1.2" stroke-dasharray="4 4" class="m-orbit-rev"/>
+
+  <!-- Satellite MCP Tool Nodes -->
+  <!-- Tool 1: akg_query -->
+  <g transform="translate(215, 290)">
+    <circle cx="0" cy="0" r="18" fill="#1c162e" stroke="#a78bfa" stroke-width="2" class="m-node"/>
+    <text x="0" y="4" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="9.5" font-weight="600" fill="#c4b5fd">QUERY</text>
+    <rect x="-38" y="22" width="76" height="17" rx="4" fill="#0d0c14" stroke="#251d38"/>
+    <text x="0" y="34" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="9" fill="#94a3b8">akg_query</text>
+  </g>
+
+  <!-- Tool 2: analyze_impact -->
+  <g transform="translate(455, 290)">
+    <circle cx="0" cy="0" r="18" fill="#142232" stroke="#38bdf8" stroke-width="2" class="m-node d1"/>
+    <text x="0" y="4" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="9" font-weight="600" fill="#7dd3fc">IMPACT</text>
+    <rect x="-44" y="22" width="88" height="17" rx="4" fill="#0d0c14" stroke="#251d38"/>
+    <text x="0" y="34" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="9" fill="#94a3b8">analyze_impact</text>
+  </g>
+
+  <!-- Tool 3: trace_call_path -->
+  <g transform="translate(260, 400)">
+    <circle cx="0" cy="0" r="18" fill="#11291f" stroke="#34d399" stroke-width="2" class="m-node d2"/>
+    <text x="0" y="4" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="9.5" font-weight="600" fill="#86efac">TRACE</text>
+    <rect x="-44" y="22" width="88" height="17" rx="4" fill="#0d0c14" stroke="#251d38"/>
+    <text x="0" y="34" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="9" fill="#94a3b8">trace_call_path</text>
+  </g>
+
+  <!-- Tool 4: detect_cycles -->
+  <g transform="translate(410, 400)">
+    <circle cx="0" cy="0" r="18" fill="#2e2113" stroke="#fbbf24" stroke-width="2" class="m-node d3"/>
+    <text x="0" y="4" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="9" font-weight="600" fill="#fde68a">CYCLES</text>
+    <rect x="-42" y="22" width="84" height="17" rx="4" fill="#0d0c14" stroke="#251d38"/>
+    <text x="0" y="34" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="9" fill="#94a3b8">detect_cycles</text>
+  </g>
+
+  <!-- Central MCP Server Hub -->
+  <g transform="translate(335, 300)">
+    <circle cx="0" cy="0" r="34" fill="#251642" stroke="#a78bfa" stroke-width="2.5" class="m-pulse"/>
+    <circle cx="0" cy="0" r="42" fill="none" stroke="#a78bfa" stroke-width="1.5" opacity="0.4" class="m-ripple"/>
+    <text x="0" y="-3" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="13" font-weight="700" fill="#e9d5ff">MCP</text>
+    <text x="0" y="12" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="9.5" fill="#c4b5fd">GATEWAY</text>
+  </g>
+
+  <!-- MCP Resources Bar -->
+  <g transform="translate(65, 462)">
+    <rect x="0" y="0" width="540" height="34" rx="8" fill="#12101c" stroke="#251c38"/>
+    <text x="14" y="21" font-family="ui-monospace,Consolas,monospace" font-size="11" fill="#71717a">RESOURCES:</text>
+    <text x="96" y="21" font-family="ui-monospace,Consolas,monospace" font-size="11" fill="#c4b5fd">gmb://intelligence &middot; gmb://timeline &middot; gmb://memory &middot; gmb://rules</text>
+  </g>
+
+  <!-- Live JSON-RPC 2.0 Request / Response Window -->
+  <g transform="translate(65, 510)">
+    <rect x="0" y="0" width="540" height="74" rx="8" fill="#0d0b13" stroke="#211734"/>
+    <text x="14" y="24" font-family="ui-monospace,Consolas,monospace" font-size="11.5" fill="#a78bfa">&rarr; {"jsonrpc":"2.0","method":"tools/call","params":{"name":"analyze_impact"}}</text>
+    <text x="14" y="44" font-family="ui-monospace,Consolas,monospace" font-size="11.5" fill="#34d399">&larr; {"result":{"affected_nodes":14,"blast_radius":"LOW","breaking":false}}</text>
+    <text x="14" y="62" font-family="ui-monospace,Consolas,monospace" font-size="10.5" fill="#64748b">&check; tool executed in 1.9ms &middot; authenticated stdio transport</text>
+  </g>
+
+  <!-- Bottom Bar -->
+  <rect x="40" y="596" width="590" height="52" fill="#0c0a12"/>
+  <line x1="40" y1="596" x2="630" y2="596" stroke="#201732"/>
+  <text x="64" y="628" font-family="ui-monospace,Consolas,monospace" font-size="15" fill="#a78bfa">&check; MCP Server active: 30+ tools &middot; stdio/http &middot; sandboxed</text>
+  <text x="608" y="628" text-anchor="end" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#64748b">read-only default</text>
+</svg>`,
+    cards: [
+      {
+        num: '01',
+        badge: 'Native AI Toolchain',
+        title: '30+ compiler-grade tools for AI agents.',
+        body: `<p>GlassMarble includes a fully native, specification-compliant <strong>Model Context Protocol (MCP)</strong> server: <code>gmb mcp</code>. Connect your codebase\'s living Architecture Knowledge Graph directly into <strong>Claude Desktop, Cursor, Windsurf, Claude Code</strong>, or any MCP-compatible AI environment.</p>
+<p>Instead of feeding thousands of raw files or hallucinating call paths, AI agents execute targeted, compiler-verified tool calls to inspect symbol definitions, trace reachability, and verify invariants in milliseconds.</p>`,
+        termTitle: 'gmb mcp',
+        terminal: `<span class="tl"><span class="tc">$</span> gmb mcp --print-config cursor</span>
+<span class="tl"><span class="td"># Generated cursor configuration (~/.cursor/mcp.json):</span></span>
+<span class="tl">{</span>
+<span class="tl">  <span class="tw">"mcpServers"</span>: {</span>
+<span class="tl">    <span class="tw">"glassmarble"</span>: {</span>
+<span class="tl">      <span class="tw">"command"</span>: <span class="ts">"gmb"</span>,</span>
+<span class="tl">      <span class="tw">"args"</span>: [<span class="ts">"mcp"</span>, <span class="ts">"--transport"</span>, <span class="ts">"stdio"</span>, <span class="ts">"--read-only"</span>]</span>
+<span class="tl">    }</span>
+<span class="tl">  }</span>
+<span class="tl">}</span>
+<span class="tl"> </span>
+<span class="tl"><span class="tc">$</span> gmb mcp</span>
+<span class="tl"><span class="ts">&check; MCP server running on stdio</span> <span class="td">(30 tools &middot; 6 resources &middot; read-only: true)</span></span>`,
+        tags: ['MCP Spec 2024-11-05', 'Claude Desktop', 'Cursor IDE', 'Windsurf', 'Claude Code', 'Stdio & HTTP', 'Zero Hallucinations']
+      },
+      {
+        num: '02',
+        badge: 'Tools & Resources Catalog',
+        title: 'Deep graph queries, blast radius, and architectural memory.',
+        body: `<p>With over 30 compiler-backed tools and first-class <code>gmb://</code> resources, AI agents gain full situational awareness over the entire repository without blowing past context token budgets:</p>`,
+        grid: [
+          { title: 'Graph & Symbol Queries', desc: 'akg_query, akg_get_node, and find_references return precise AST declarations, imports, and cross-package caller chains.' },
+          { title: 'Impact & Flow Analysis', desc: 'analyze_impact and trace_call_path simulate blast radius and verify reachability before any refactoring or code edit is committed.' },
+          { title: 'Codebase Hygiene', desc: 'detect_cycles, find_dead_code, and get_hotspots expose circular imports, orphaned functions, and high-churn instability.' },
+          { title: 'Memory & Invariants', desc: 'query_developer_memory, get_intelligence, and verify_invariants enforce architectural drift rules and architectural decisions.' }
+        ],
+        tags: ['akg_query', 'analyze_impact', 'trace_call_path', 'detect_cycles', 'find_dead_code', 'get_hotspots', 'query_developer_memory']
+      },
+      {
+        num: '03',
+        badge: 'Enterprise Security & Sandboxing',
+        title: 'Read-only by default. Strict path sandboxing.',
+        body: `<p>AI agents should never have unrestricted access to your disk or sensitive repositories. GlassMarble\'s MCP server is engineered with defense-in-depth enterprise security controls:</p>`,
+        grid: [
+          { title: 'Enforced Read-Only', desc: 'Runs in read-only mode by default (--read-only). Graph modification and destructive operations are strictly disallowed unless explicitly authorized.' },
+          { title: 'Roots-Aware Sandboxing', desc: 'All file paths referenced in tool calls are strictly validated against client-declared workspace roots to prevent directory traversal attacks.' },
+          { title: 'Bearer Token Authentication', desc: 'When running in HTTP or SSE network transports (--transport http), requests require constant-time token comparison to prevent timing side-channels.' },
+          { title: 'Local & Air-Gapped', desc: 'Runs 100% on your hardware over stdio or localhost sockets. Your code and graph structure never pass through external telemetry servers.' }
+        ],
+        tags: ['Enforced Read-Only', 'Path Sandboxing', 'Constant-Time Auth', 'Zero Telemetry', 'Air-Gapped Ready', 'SOC2 Compliant']
+      }
+    ]
+  },
+  {
     id: 'developer-memory',
-    num: '04',
+    num: '06',
     name: 'Developer Memory',
     sub: 'What changed. Why. What it means.',
     accent: 'amber',
@@ -2616,7 +3017,7 @@ const PROJECTS = [
   },
   {
     id: 'under-the-hood',
-    num: '05',
+    num: '07',
     name: 'Under the Hood',
     sub: 'Enterprise storage. Zero infrastructure.',
     accent: 'sky',
@@ -2748,7 +3149,7 @@ const PROJECTS = [
   },
   {
     id: 'performance',
-    num: '06',
+    num: '08',
     name: 'Performance',
     sub: 'Benchmarked. Budgeted. Fast.',
     accent: 'mint',
@@ -2887,7 +3288,7 @@ const PROJECTS = [
   },
   {
     id: 'launch',
-    num: '07',
+    num: '09',
     name: 'Launch',
     sub: 'available now.',
     accent: 'amber',

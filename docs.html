@@ -578,6 +578,15 @@
             <a href="#diagrams-formats" class="nav-link">Formats</a>
             <a href="#diagrams-scope" class="nav-link">Scope &amp; level</a>
           </div>
+          <!-- Visualization Server -->
+          <div class="nav-group" data-group="ui-server">
+            <div class="nav-group-label">Visualization Server</div>
+            <a href="#ui-overview" class="nav-link">Overview &amp; Quickstart</a>
+            <a href="#ui-canvas" class="nav-link">Interactive Canvas</a>
+            <a href="#ui-analytics" class="nav-link">Live Blast Radius &amp; Smells</a>
+            <a href="#ui-api" class="nav-link">REST Endpoints</a>
+            <a href="#ui-flags" class="nav-link">Flags &amp; Machine Output</a>
+          </div>
           <!-- Graph & storage -->
           <div class="nav-group" data-group="graph">
             <div class="nav-group-label">Graph &amp; storage</div>
@@ -604,6 +613,15 @@
             <a href="#ai-sessions" class="nav-link">Sessions</a>
             <a href="#ai-guardrails" class="nav-link">Guardrails</a>
             <a href="#ai-artifacts" class="nav-link">Artifacts</a>
+          </div>
+          <!-- MCP Server -->
+          <div class="nav-group" data-group="mcp-server">
+            <div class="nav-group-label">MCP Server</div>
+            <a href="#mcp-overview" class="nav-link">Model Context Protocol</a>
+            <a href="#mcp-clients" class="nav-link">Client Configuration</a>
+            <a href="#mcp-tools" class="nav-link">Tools Catalog</a>
+            <a href="#mcp-resources" class="nav-link">Resources &amp; Prompts</a>
+            <a href="#mcp-security" class="nav-link">Security &amp; Sandboxing</a>
           </div>
           <!-- Intelligence -->
           <div class="nav-group" data-group="intel">
@@ -890,9 +908,9 @@ gmb ai chat  <span class="dim"># REPL + session memory</span></code></pre></div>
         <h3 id="arch-system">System view <a class="anchor" href="#arch-system">#</a></h3>
         <div class="code-block light">
           <div class="code-block-header"><span class="code-lang">diagram</span></div>
-          <pre><code>gmb CLI (28 commands)
+          <pre><code>gmb CLI (30 commands)
 → internal/app pipeline
-→ { code_analysis_engine (CPG) | visualization_engine (31 types) }
+→ { code_analysis_engine (CPG) | visualization_engine (31 types) | visualizer/server (web UI) | mcp (JSON-RPC) }
 → internal/akg (GraphJSON v3 + db.lock)
 → { arch_intelligence (patterns/stats) | arch_timeline + memory (snapshots / intelligence) }</code></pre>
         </div>
@@ -901,7 +919,7 @@ gmb ai chat  <span class="dim"># REPL + session memory</span></code></pre></div>
         <ul>
           <li>14 full grammars with tree-sitter; Kotlin / Swift / Scala are declaration-only (no intra-method CFG/DFG). JSON is treated as config.</li>
           <li>Static analysis only — no runtime inspection; heuristic edges carry <code>confidence &lt; 1.0</code>.</li>
-          <li>Store is GraphJSON v3 — Turtle/RDF export is not part of v1.0.</li>
+          <li>Store is GraphJSON v3 — Turtle/RDF export is planned for future releases.</li>
           <li><code>aging</code>, <code>fusion</code>, <code>learning</code> are pipeline phases invoked via <code>gmb analyze</code>, not standalone commands.</li>
         </ul>
 
@@ -915,7 +933,8 @@ gmb ai chat  <span class="dim"># REPL + session memory</span></code></pre></div>
               <tr><td><strong>Build</strong></td><td><code>init</code> · <code>analyze</code> · <code>watch</code> · <code>hooks</code> · <code>import</code> · <code>export</code></td><td>Create and maintain the graph</td></tr>
               <tr><td><strong>Query</strong></td><td><code>status</code> · <code>tree</code> · <code>dependency</code> · <code>hotspot</code> · <code>inspect</code> · <code>diff</code> · <code>doctor</code> · <code>patterns</code> · <code>stats</code> · <code>timeline</code></td><td>Read and explore the graph</td></tr>
               <tr><td><strong>Govern</strong></td><td><code>drift</code> · <code>compare</code> · <code>snapshot</code></td><td>Enforce and diff architecture</td></tr>
-              <tr><td><strong>Visualize &amp; Reason</strong></td><td><code>visualize</code> · <code>ai</code> · <code>why</code></td><td>Draw and ask</td></tr>
+              <tr><td><strong>Visualize &amp; Web</strong></td><td><code>visualize</code> · <code>ui</code> · <code>serve</code></td><td>Static diagram generator &amp; local interactive web UI (<a href="#ui-overview" style="color:hsl(var(--violet));font-weight:500">docs</a>)</td></tr>
+              <tr><td><strong>AI &amp; MCP Protocol</strong></td><td><code>mcp</code> · <code>ai</code> · <code>why</code></td><td>Model Context Protocol server (<a href="#mcp-overview" style="color:hsl(var(--violet));font-weight:500">docs</a>), reasoning shell &amp; why-engine</td></tr>
               <tr><td><strong>Utility</strong></td><td><code>housekeeping</code> · <code>completion</code> · <code>version</code> · <code>dev</code></td><td>Maintain the workspace</td></tr>
             </tbody>
           </table>
@@ -1086,6 +1105,115 @@ gmb visualize dependency --format dot -o out.dot</code></pre>
         <div class="callout">
           <div class="callout-icon">◈</div>
           <div><strong>Deterministic:</strong> nodes and edges are emitted sorted → byte-equal across runs. Truncation happens at projection time, before rendering; unknown entry → <code>exit 2</code>.</div>
+        </div>
+
+        <!-- VISUALIZATION SERVER -->
+        <h2 id="ui-overview">Visualization Server <span class="section-sub">— interactive web UI</span> <a class="anchor" href="#ui-overview">#</a></h2>
+        <p>A built-in, local-only web application and REST API server for exploring, simulating, and auditing your codebase's Architecture Knowledge Graph. Launch it instantly with <code>gmb ui</code> or alias <code>gmb serve</code>.</p>
+        <div class="pill-row">
+          <span class="pill">Zero External CDNs</span>
+          <span class="pill">100% Local &amp; Air-Gapped</span>
+          <span class="pill">Embedded Cytoscape.js</span>
+          <span class="pill">Embedded Mermaid 10.9</span>
+          <span class="pill">REST API</span>
+        </div>
+        <p>Unlike traditional web tooling that relies on remote script CDNs, Google Fonts, or cloud servers, the GlassMarble visualization server bundles all JavaScript, stylesheets, and graph rendering engines directly into the static Go binary. No internet connection is required, no external network requests are dispatched, and your proprietary architecture never leaves your workstation.</p>
+        
+        <div class="code-block light">
+          <div class="code-block-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy">Copy</button>
+          </div>
+          <pre><code><span class="dim"># Launch interactive web UI on default port :8080 and open browser</span>
+gmb ui
+
+<span class="dim"># Custom port, bind address, and headless execution (e.g., remote dev or CI)</span>
+gmb ui --port 9000 --host 0.0.0.0 --no-open
+
+<span class="dim"># Machine startup output emitting JSON document for tool orchestration</span>
+gmb ui --port 8080 --json</code></pre>
+        </div>
+
+        <h3 id="ui-canvas">Interactive Canvas — 2D/3D Force-Directed <a class="anchor" href="#ui-canvas">#</a></h3>
+        <p>The visualization server renders the full graph using a highly optimized force-directed physics simulation powered by embedded Cytoscape.js. Explore multi-thousand-node repositories fluidly at 60 FPS:</p>
+        <div class="grid2">
+          <div class="mini-card">
+            <h4>Smooth Pan &amp; Zoom</h4>
+            <p>Freely zoom from top-level microservice boundaries down to individual method implementations with hardware-accelerated canvas rendering.</p>
+          </div>
+          <div class="mini-card">
+            <h4>Hierarchical Clustering</h4>
+            <p>Dynamically collapse and expand package namespaces, directories, and architectural layers to isolate subsystems without visual clutter.</p>
+          </div>
+          <div class="mini-card">
+            <h4>Instant Symbol Filter</h4>
+            <p>Search any type, method, or interface with instant prefix matching backed by GlassMarble's in-memory symbol trie.</p>
+          </div>
+          <div class="mini-card">
+            <h4>Live Mermaid Panel</h4>
+            <p>Toggle between interactive node graphs and live-rendered Mermaid diagrams with copyable markdown and syntax verification.</p>
+          </div>
+        </div>
+
+        <h3 id="ui-analytics">Live Blast Radius &amp; Architecture Smells <a class="anchor" href="#ui-analytics">#</a></h3>
+        <p>Click any node in the canvas to turn the viewer into an interactive blast radius and risk simulation suite:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Capability</th><th>Trigger</th><th>Visual Feedback</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Dynamic Blast Radius</strong></td><td>Click node + adjust Depth Slider (1–10 hops)</td><td>Highlights upstream callers in blue and downstream transitives in orange; non-impacted nodes dim out.</td></tr>
+              <tr><td><strong>Circular Dependencies</strong></td><td>Toggle <em>Cycle Overlay</em></td><td>Traces strongly connected components and circular reference loops in bright red warning paths.</td></tr>
+              <tr><td><strong>Cut Vertices (SPOF)</strong></td><td>Toggle <em>Critical Bottlenecks</em></td><td>Flags single points of failure whose removal partitions the architecture into disconnected components.</td></tr>
+              <tr><td><strong>PageRank Centrality</strong></td><td>Toggle <em>Hotspot Heatmap</em></td><td>Nodes scale dynamically based on structural centrality, exposing hidden architectural hubs.</td></tr>
+              <tr><td><strong>Timeline Scrubbing</strong></td><td>Slide Timeline bar across snapshots</td><td>Replays architectural changes commit-by-commit to pinpoint exactly when structural drift was introduced.</td></tr>
+              <tr><td><strong>High-Res Exports</strong></td><td>Click <em>Export SVG / PNG / JSON</em></td><td>Generates publication-ready vector SVGs, crisp PNGs, or raw GraphJSON for documentation and pull requests.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="ui-api">REST API Endpoints <a class="anchor" href="#ui-api">#</a></h3>
+        <p>The visualization server exposes high-performance, deterministic HTTP JSON endpoints designed for integration into developer scripts, automation runners, and internal tooling:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Endpoint</th><th>Method</th><th>Parameters</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>/api/graph</code></td><td><code>GET</code></td><td><code>level=package|file|function</code><br><code>scope=global|folder:&lt;path&gt;</code><br><code>format=json|cytoscape|mermaid</code></td><td>Returns nodes and edges filtered by abstraction tier and namespace boundaries.</td></tr>
+              <tr><td><code>/api/impact</code></td><td><code>GET</code></td><td><code>node=&lt;FQN&gt;</code><br><code>depth=&lt;int&gt;</code> (default: 3)<br><code>direction=forward|backward|both</code></td><td>Calculates full blast radius, reachability matrix, and downstream dependency counts.</td></tr>
+              <tr><td><code>/api/search</code></td><td><code>GET</code></td><td><code>q=&lt;query&gt;</code><br><code>limit=&lt;int&gt;</code> (default: 20)</td><td>Prefix and fuzzy symbol search returning fully qualified names and source file coordinates.</td></tr>
+              <tr><td><code>/api/smells</code></td><td><code>GET</code></td><td><code>types=cycles,god_nodes,orphans</code></td><td>Reports all architectural smells, cyclomatic hotspots, and dead code candidates.</td></tr>
+              <tr><td><code>/api/layers</code></td><td><code>GET</code></td><td><code>strict=true|false</code></td><td>Computes topological layering and flags illegal cross-layer violations.</td></tr>
+              <tr><td><code>/api/algorithms/pagerank</code></td><td><code>GET</code></td><td><code>damping=0.85</code><br><code>iterations=50</code></td><td>Returns normalized architectural centrality scores for every node in the graph.</td></tr>
+              <tr><td><code>/api/timeline</code></td><td><code>GET</code></td><td><code>limit=&lt;int&gt;</code></td><td>Returns snapshot history and commit timeline events from the developer memory ledger.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="ui-flags">CLI Flags &amp; Machine Output <a class="anchor" href="#ui-flags">#</a></h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Flag</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>--port</code></td><td><code>8080</code></td><td>TCP port for the HTTP server. If taken, pass alternative e.g. <code>--port 9090</code>.</td></tr>
+              <tr><td><code>--host</code></td><td><code>127.0.0.1</code></td><td>Network host address to bind. Use <code>0.0.0.0</code> for containerized or remote port-forwarding environments.</td></tr>
+              <tr><td><code>--open</code> / <code>--no-open</code></td><td><code>true</code></td><td>Whether to launch the system default web browser automatically upon server startup.</td></tr>
+              <tr><td><code>--json</code></td><td><code>false</code></td><td>Emit structured machine-readable JSON metadata (PID, URL, mounted endpoints) on stdout upon ready.</td></tr>
+              <tr><td><code>--read-only</code></td><td><code>true</code></td><td>Disallow mutating actions or snapshot writes via the HTTP server for safe multi-user or CI usage.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="code-block light">
+          <div class="code-block-header"><span class="code-lang">json (gmb ui --json)</span></div>
+          <pre><code>{
+  "status": "ready",
+  "url": "http://127.0.0.1:8080",
+  "host": "127.0.0.1",
+  "port": 8080,
+  "pid": 28419,
+  "nodes_loaded": 3847,
+  "edges_loaded": 12091,
+  "routes": ["/api/graph", "/api/impact", "/api/search", "/api/smells", "/api/layers", "/api/timeline"]
+}</code></pre>
         </div>
 
         <!-- AKG -->
@@ -1283,6 +1411,176 @@ gmb ai --max-cost 0.5 "question"</code></pre>
           <div class="code-block-header"><span class="code-lang">bash</span></div>
           <pre><code>gmb ai "generate a C4 container diagram" --save c4.md   <span class="dim"># → .glassmarble/marbles/c4.md</span>
 gmb ai "write architecture notes" --save notes.md        <span class="dim"># → .glassmarble/ai/notes.md</span></code></pre>
+        </div>
+
+        <!-- MCP SERVER -->
+        <h2 id="mcp-overview">MCP Server <span class="section-sub">— Model Context Protocol</span> <a class="anchor" href="#mcp-overview">#</a></h2>
+        <p>A native implementation of Anthropic's <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener" style="color:hsl(var(--violet));font-weight:500">Model Context Protocol (MCP)</a> that connects GlassMarble's living Architecture Knowledge Graph directly into modern AI developer tools. Launch it via <code>gmb mcp</code>.</p>
+        <div class="pill-row">
+          <span class="pill">MCP Spec 2024-11-05</span>
+          <span class="pill">30+ Compiler Tools</span>
+          <span class="pill">6 gmb:// Resources</span>
+          <span class="pill">Stdio &amp; HTTP/SSE</span>
+          <span class="pill">Read-Only Enforced</span>
+        </div>
+        <p>Instead of feeding thousands of raw source files into an LLM context window or letting AI agents hallucinate call hierarchies, the MCP server gives assistants precise, compiler-verified tools to query types, calculate live blast radiuses, detect circular dependencies, and verify architectural invariants in milliseconds.</p>
+
+        <div class="code-block light">
+          <div class="code-block-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy">Copy</button>
+          </div>
+          <pre><code><span class="dim"># Run MCP server on standard input/output (used by desktop and IDE clients)</span>
+gmb mcp
+
+<span class="dim"># Run MCP server over streamable HTTP with bearer token authentication</span>
+gmb mcp --transport http --port 8765 --auth-token "secret-token-here"
+
+<span class="dim"># Print ready-to-use client configurations</span>
+gmb mcp --print-config cursor
+gmb mcp --print-config claude-desktop
+gmb mcp --print-config windsurf
+gmb mcp --print-config claude-code</code></pre>
+        </div>
+
+        <h3 id="mcp-clients">Client Configuration — Claude, Cursor, Windsurf <a class="anchor" href="#mcp-clients">#</a></h3>
+        <p>GlassMarble integrates with all leading MCP-compliant coding environments. Add the server snippet to your editor configuration:</p>
+
+        <div class="grid2">
+          <div>
+            <h4>Cursor IDE (<code>~/.cursor/mcp.json</code>)</h4>
+            <div class="code-block light">
+              <div class="code-block-header">
+                <span class="code-lang">json</span>
+                <button class="code-copy">Copy</button>
+              </div>
+              <pre><code>{
+  "mcpServers": {
+    "glassmarble": {
+      "command": "gmb",
+      "args": ["mcp", "--transport", "stdio", "--read-only"]
+    }
+  }
+}</code></pre>
+            </div>
+          </div>
+          <div>
+            <h4>Claude Desktop (<code>claude_desktop_config.json</code>)</h4>
+            <div class="code-block light">
+              <div class="code-block-header">
+                <span class="code-lang">json</span>
+                <button class="code-copy">Copy</button>
+              </div>
+              <pre><code>{
+  "mcpServers": {
+    "glassmarble": {
+      "command": "gmb",
+      "args": ["mcp", "--transport", "stdio", "--read-only"]
+    }
+  }
+}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div>
+            <h4>Windsurf IDE (<code>mcp_config.json</code>)</h4>
+            <div class="code-block light">
+              <div class="code-block-header">
+                <span class="code-lang">json</span>
+                <button class="code-copy">Copy</button>
+              </div>
+              <pre><code>{
+  "mcpServers": {
+    "glassmarble": {
+      "command": "gmb",
+      "args": ["mcp", "--transport", "stdio", "--read-only"]
+    }
+  }
+}</code></pre>
+            </div>
+          </div>
+          <div>
+            <h4>Claude Code CLI</h4>
+            <div class="code-block light">
+              <div class="code-block-header">
+                <span class="code-lang">bash</span>
+                <button class="code-copy">Copy</button>
+              </div>
+              <pre><code>claude mcp add glassmarble -- gmb mcp --transport stdio --read-only</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <h3 id="mcp-tools">Tools Catalog — 30+ Compiler Tools <a class="anchor" href="#mcp-tools">#</a></h3>
+        <p>The MCP server publishes over 30 compiler-backed tools covering symbol lookup, flow analysis, structural hygiene, and architectural drift:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Category</th><th>Tool Name</th><th>Inputs &amp; Purpose</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Graph &amp; Query</strong></td><td><code>akg_query</code></td><td>Query nodes by FQN, type, namespace, or regex pattern; returns exact AST definitions.</td></tr>
+              <tr><td><strong>Graph &amp; Query</strong></td><td><code>akg_get_node</code></td><td>Fetch comprehensive metadata, incoming/outgoing edges, and source file coordinates for a node.</td></tr>
+              <tr><td><strong>Graph &amp; Query</strong></td><td><code>find_references</code></td><td>Locate all callsites, interface implementations, and type references across packages.</td></tr>
+              <tr><td><strong>Graph &amp; Query</strong></td><td><code>get_callers</code> / <code>get_callees</code></td><td>Inspect direct upstream callers or downstream dependencies with confidence scores.</td></tr>
+              <tr><td><strong>Impact &amp; Flow</strong></td><td><code>analyze_impact</code></td><td>Simulate blast radius for proposed changes with depth constraints and risk categorization.</td></tr>
+              <tr><td><strong>Impact &amp; Flow</strong></td><td><code>trace_call_path</code></td><td>Compute the exact execution path between two symbols with shortest path and all-paths algorithms.</td></tr>
+              <tr><td><strong>Impact &amp; Flow</strong></td><td><code>get_entrypoints</code></td><td>List all external entrypoints (HTTP routes, CLI commands, gRPC handlers, cron tasks).</td></tr>
+              <tr><td><strong>Hygiene &amp; Quality</strong></td><td><code>detect_cycles</code></td><td>Pinpoint circular import loops and mutual package dependencies with cycle member lists.</td></tr>
+              <tr><td><strong>Hygiene &amp; Quality</strong></td><td><code>find_dead_code</code></td><td>Identify unreachable functions, unused types, and orphaned files with zero incoming calls.</td></tr>
+              <tr><td><strong>Hygiene &amp; Quality</strong></td><td><code>get_hotspots</code></td><td>Rank components with highest complexity, churn frequency, and PageRank centrality.</td></tr>
+              <tr><td><strong>Hygiene &amp; Quality</strong></td><td><code>find_cut_vertices</code></td><td>Identify architectural single points of failure that bridge otherwise disconnected subsystems.</td></tr>
+              <tr><td><strong>Governance</strong></td><td><code>check_architecture_drift</code></td><td>Audit current code against boundary rules defined in <code>config.yaml</code> (flags illegal calls).</td></tr>
+              <tr><td><strong>Governance</strong></td><td><code>verify_invariants</code></td><td>Run automated architectural tests verifying layer boundaries, visibility, and dependencies.</td></tr>
+              <tr><td><strong>Governance</strong></td><td><code>compare_snapshots</code></td><td>Diff current graph topology against historical snapshots to detect structural drift.</td></tr>
+              <tr><td><strong>Developer Memory</strong></td><td><code>query_developer_memory</code></td><td>Query the timeline ledger for architectural decisions, past refactorings, and epistemic claims.</td></tr>
+              <tr><td><strong>Developer Memory</strong></td><td><code>get_intelligence</code></td><td>Retrieve detected design patterns (PR-01 to PR-07), smells, and component clusters.</td></tr>
+              <tr><td><strong>Visualization</strong></td><td><code>generate_diagram</code></td><td>Generate C4, sequence, class, or dataflow diagrams directly from the current subgraph.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="mcp-resources">Resources &amp; Dynamic Prompts <a class="anchor" href="#mcp-resources">#</a></h3>
+        <p>The MCP server exposes standard <code>gmb://</code> URIs that AI clients can read as contextual resources, as well as prompt templates for common architectural workflows:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Resource URI</th><th>MIME Type</th><th>Content</th></tr></thead>
+            <tbody>
+              <tr><td><code>gmb://status</code></td><td><code>application/json</code></td><td>Workspace health, schema version, verified flag, node/edge counts, and commit hash.</td></tr>
+              <tr><td><code>gmb://intelligence</code></td><td><code>application/json</code></td><td>Recognized architectural patterns, system components, and detected code smells.</td></tr>
+              <tr><td><code>gmb://timeline</code></td><td><code>application/json</code></td><td>Chronological ledger of architectural changes and commit snapshot metadata.</td></tr>
+              <tr><td><code>gmb://memory</code></td><td><code>application/json</code></td><td>Developer memory claims with <code>FACT</code>, <code>EXPLICIT_REASON</code>, and <code>INFERENCE</code> trust labels.</td></tr>
+              <tr><td><code>gmb://rules</code></td><td><code>application/yaml</code></td><td>Configured layer boundary rules, forbidden imports, and architectural invariants.</td></tr>
+              <tr><td><code>gmb://config</code></td><td><code>application/yaml</code></td><td>Active repository configuration from <code>.glassmarble/config.yaml</code>.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Built-in prompt templates available to clients include:</p>
+        <ul>
+          <li><strong><code>assess-pr</code></strong>: Prompts the model to evaluate staged git changes or PR commits against the graph, computing blast radius and flagging new architectural violations.</li>
+          <li><strong><code>refactor-component</code></strong>: Guides the model through generating an invariant-preserving refactoring plan with sequenced step-by-step dependency migrations.</li>
+        </ul>
+
+        <h3 id="mcp-security">Security &amp; Sandboxing <a class="anchor" href="#mcp-security">#</a></h3>
+        <p>Because AI agents execute tools semi-autonomously, GlassMarble enforces rigorous defense-in-depth security boundaries:</p>
+        <div class="grid2">
+          <div class="mini-card">
+            <h4>Enforced Read-Only Mode</h4>
+            <p>Runs in <code>--read-only</code> mode by default. All mutations, snapshot writes, or config modifications via MCP tools are blocked unless explicitly opted-in.</p>
+          </div>
+          <div class="mini-card">
+            <h4>Roots-Aware Path Sandboxing</h4>
+            <p>Every file path passed to tools is canonicalized and validated against client-declared workspace roots. Directory traversal attacks (<code>../../</code>) fail closed with <code>AccessDenied</code>.</p>
+          </div>
+          <div class="mini-card">
+            <h4>Constant-Time Bearer Auth</h4>
+            <p>In HTTP transport mode (<code>--transport http</code>), requests require a bearer token verified using <code>crypto/subtle.ConstantTimeCompare</code> to prevent timing side-channels.</p>
+          </div>
+          <div class="mini-card">
+            <h4>Zero Cloud Telemetry</h4>
+            <p>The MCP server runs 100% on your local machine over standard I/O or localhost sockets. Your code and graph topology are never sent to third-party telemetry collectors.</p>
+          </div>
         </div>
 
         <!-- INTEL -->
